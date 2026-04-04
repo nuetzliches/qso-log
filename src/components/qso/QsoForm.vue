@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 import { useQsoStore } from '../../stores/qsoStore'
 import { useOperatorStore } from '../../stores/operatorStore'
 import { useNextSequenceNumber } from '../../composables/useNextSequenceNumber'
@@ -12,9 +13,12 @@ import ModeSelect from './ModeSelect.vue'
 import BandSelect from './BandSelect.vue'
 import OperatorSelect from '../operators/OperatorSelect.vue'
 import { useFormDraftStore } from '../../stores/formDraftStore'
-import type { QslStatus } from '../../types/qso'
+import type { QslStatus, QSO } from '../../types/qso'
+
+const props = defineProps<{ editQso?: QSO }>()
 
 const { t } = useI18n()
+const router = useRouter()
 const qsoStore = useQsoStore()
 const operatorStore = useOperatorStore()
 const { nextNumber, refresh: refreshSequenceNumber } = useNextSequenceNumber()
@@ -65,7 +69,24 @@ watch(callsignInfo, (info) => {
 onMounted(async () => {
   await operatorStore.loadOperators()
 
-  if (formDraft.hasDraft && formDraft.draft) {
+  if (props.editQso) {
+    const q = props.editQso
+    const d = q.date // ISO string like "2024-01-15T14:30:00.000Z"
+    date.value = d.slice(0, 10)
+    time.value = d.slice(11, 16)
+    callsign.value = q.callsign
+    name.value = q.name ?? ''
+    mode.value = q.mode
+    power.value = q.power
+    frequency.value = q.frequency
+    band.value = q.band
+    rstSent.value = q.rstSent
+    rstReceived.value = q.rstReceived
+    remarks.value = q.remarks
+    qslSent.value = q.qslSent
+    qslReceived.value = q.qslReceived
+    operatorId.value = q.operatorId
+  } else if (formDraft.hasDraft && formDraft.draft) {
     const d = formDraft.draft
     date.value = d.date
     time.value = d.time
@@ -92,6 +113,7 @@ onMounted(async () => {
 })
 
 onBeforeUnmount(() => {
+  if (props.editQso) return
   if (callsign.value || remarks.value) {
     formDraft.saveDraft({
       date: date.value,
@@ -116,6 +138,26 @@ onBeforeUnmount(() => {
 
 async function handleSubmit() {
   const isoDate = `${date.value}T${time.value}:00.000Z`
+
+  if (props.editQso?.id) {
+    await qsoStore.updateQso(props.editQso.id, {
+      date: isoDate,
+      callsign: callsign.value.toUpperCase(),
+      name: name.value || undefined,
+      mode: mode.value,
+      power: power.value,
+      frequency: frequency.value,
+      band: band.value,
+      rstSent: rstSent.value,
+      rstReceived: rstReceived.value,
+      remarks: remarks.value,
+      qslSent: qslSent.value,
+      qslReceived: qslReceived.value,
+      operatorId: operatorId.value,
+    })
+    router.push({ name: 'qso-history' })
+    return
+  }
 
   await qsoStore.addQso({
     date: isoDate,
@@ -191,75 +233,77 @@ async function handleSubmit() {
       </div>
     </div>
 
-    <!-- Callsign -->
-    <div>
-      <label for="qso-callsign" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-        {{ t('qso.callsign') }}
-      </label>
-      <input
-        id="qso-callsign"
-        v-model="callsign"
-        type="text"
-        required
-        autocomplete="off"
-        class="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm uppercase shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-        @input="callsign = ($event.target as HTMLInputElement).value.toUpperCase(); lookupCallsign(callsign); lookupPrevious(callsign)"
-      />
-      <!-- Callsign lookup info -->
-      <div v-if="lookupLoading" class="mt-1 text-xs text-gray-400">
-        Looking up...
+    <!-- Callsign & Name -->
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div>
+        <label for="qso-callsign" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          {{ t('qso.callsign') }}
+        </label>
+        <input
+          id="qso-callsign"
+          v-model="callsign"
+          type="text"
+          required
+          autocomplete="off"
+          class="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm uppercase shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          @input="callsign = ($event.target as HTMLInputElement).value.toUpperCase(); lookupCallsign(callsign); lookupPrevious(callsign)"
+        />
+        <!-- Callsign lookup info -->
+        <div v-if="lookupLoading" class="mt-1 text-xs text-gray-400">
+          Looking up...
+        </div>
+        <div
+          v-else-if="callsignInfo"
+          class="mt-1 rounded-md bg-blue-50 px-3 py-1.5 text-xs text-blue-800 dark:bg-blue-900/30 dark:text-blue-200"
+        >
+          <span class="font-medium">{{ callsignInfo.name }}</span>
+          <span v-if="callsignInfo.qth"> &middot; {{ callsignInfo.qth }}</span>
+          <span v-if="callsignInfo.country"> &middot; {{ callsignInfo.country }}</span>
+          <span v-if="callsignInfo.locator"> &middot; {{ callsignInfo.locator }}</span>
+          <span class="ml-1 text-blue-500 dark:text-blue-400">({{ callsignInfo.provider }})</span>
+        </div>
+        <!-- Previous contact info -->
+        <div
+          v-if="previousQsos.length > 0"
+          class="mt-1 rounded-md bg-green-50 px-3 py-1.5 text-xs text-green-800 dark:bg-green-900/30 dark:text-green-200"
+        >
+          <span class="font-medium">{{ t('qso.previousContact') }}:</span>
+          {{ t('qso.lastQso') }} {{ previousQsos[0].date.slice(0, 10) }} &middot; {{ previousQsos[0].mode }} &middot; {{ previousQsos[0].band }}
+          <span v-if="previousQsos.length > 1" class="ml-1 text-green-600 dark:text-green-400">
+            ({{ t('qso.totalPreviousQsos', { count: previousQsos.length }) }})
+          </span>
+        </div>
       </div>
-      <div
-        v-else-if="callsignInfo"
-        class="mt-1 rounded-md bg-blue-50 px-3 py-1.5 text-xs text-blue-800 dark:bg-blue-900/30 dark:text-blue-200"
-      >
-        <span class="font-medium">{{ callsignInfo.name }}</span>
-        <span v-if="callsignInfo.qth"> &middot; {{ callsignInfo.qth }}</span>
-        <span v-if="callsignInfo.country"> &middot; {{ callsignInfo.country }}</span>
-        <span v-if="callsignInfo.locator"> &middot; {{ callsignInfo.locator }}</span>
-        <span class="ml-1 text-blue-500 dark:text-blue-400">({{ callsignInfo.provider }})</span>
-      </div>
-      <!-- Previous contact info -->
-      <div
-        v-if="previousQsos.length > 0"
-        class="mt-1 rounded-md bg-green-50 px-3 py-1.5 text-xs text-green-800 dark:bg-green-900/30 dark:text-green-200"
-      >
-        <span class="font-medium">{{ t('qso.previousContact') }}:</span>
-        {{ t('qso.lastQso') }} {{ previousQsos[0].date.slice(0, 10) }} &middot; {{ previousQsos[0].mode }} &middot; {{ previousQsos[0].band }}
-        <span v-if="previousQsos.length > 1" class="ml-1 text-green-600 dark:text-green-400">
-          ({{ t('qso.totalPreviousQsos', { count: previousQsos.length }) }})
-        </span>
+
+      <div>
+        <label for="qso-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          {{ t('qso.name') }}
+        </label>
+        <input
+          id="qso-name"
+          v-model="name"
+          type="text"
+          class="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+        />
       </div>
     </div>
 
-    <!-- Name -->
-    <div>
-      <label for="qso-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-        {{ t('qso.name') }}
-      </label>
-      <input
-        id="qso-name"
-        v-model="name"
-        type="text"
-        class="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-      />
-    </div>
+    <!-- Mode & Power -->
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <ModeSelect v-model="mode" :label="t('qso.mode')" id="qso-mode" />
 
-    <!-- Mode -->
-    <ModeSelect v-model="mode" :label="t('qso.mode')" id="qso-mode" />
-
-    <!-- Power -->
-    <div>
-      <label for="qso-power" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-        {{ t('qso.power') }}
-      </label>
-      <input
-        id="qso-power"
-        v-model="power"
-        type="text"
-        placeholder="100W"
-        class="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-      />
+      <div>
+        <label for="qso-power" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          {{ t('qso.power') }}
+        </label>
+        <input
+          id="qso-power"
+          v-model="power"
+          type="text"
+          placeholder="100W"
+          class="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+        />
+      </div>
     </div>
 
     <!-- Frequency & Band -->
@@ -352,7 +396,7 @@ async function handleSubmit() {
         type="submit"
         class="rounded-md bg-primary-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary-500 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
       >
-        {{ t('qso.save') }}
+        {{ editQso ? t('common.update') : t('qso.save') }}
       </button>
 
       <!-- Success feedback (aria-live for screen readers) -->

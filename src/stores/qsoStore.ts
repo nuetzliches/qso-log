@@ -10,7 +10,7 @@ export const useQsoStore = defineStore('qsos', () => {
   const totalCount = ref(0)
   const filters = ref<QSOFilters>({})
   const sort = ref<QSOSort>({ field: 'date', direction: 'desc' })
-  const pagination = ref<QSOPagination>({ page: 1, pageSize: 50 })
+  const pagination = ref<QSOPagination>({ page: 1, pageSize: 25 })
 
   async function loadQsos(
     newFilters?: QSOFilters,

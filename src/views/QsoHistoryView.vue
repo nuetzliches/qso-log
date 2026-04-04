@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 import { useQsoStore } from '../stores/qsoStore'
 import { useOperatorStore } from '../stores/operatorStore'
 import { useExportImport } from '../composables/useExportImport'
@@ -14,6 +15,7 @@ import type { ExportFormat } from '../types/export'
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
 
 const { t } = useI18n()
+const router = useRouter()
 const qsoStore = useQsoStore()
 const operatorStore = useOperatorStore()
 const { importResult, importing, doExport, prepareImport, confirmImport, cancelImport } = useExportImport()
@@ -30,7 +32,7 @@ onMounted(async () => {
 })
 
 function handleFilter(filters: QSOFiltersType) {
-  qsoStore.loadQsos(filters, undefined, { page: 1, pageSize: 50 })
+  qsoStore.loadQsos(filters, undefined, { page: 1, pageSize: 25 })
 }
 
 function handleSort(field: keyof QSO) {
@@ -40,7 +42,7 @@ function handleSort(field: keyof QSO) {
 }
 
 function handlePage(page: number) {
-  qsoStore.loadQsos(undefined, undefined, { page, pageSize: 50 })
+  qsoStore.loadQsos(undefined, undefined, { page, pageSize: 25 })
 }
 
 async function confirmDelete() {
@@ -128,7 +130,7 @@ async function handleConfirmImport() {
       :page-size="qsoStore.pagination.pageSize"
       @sort="handleSort"
       @page="handlePage"
-      @edit="() => {}"
+      @edit="(qso) => router.push({ name: 'qso-entry', query: { edit: String(qso.id) } })"
       @delete="deleteTarget = $event"
     />
 

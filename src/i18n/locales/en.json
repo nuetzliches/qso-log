@@ -7,6 +7,7 @@
   },
   "qso": {
     "title": "New Contact",
+    "editTitle": "Edit Contact",
     "sequenceNumber": "No.",
     "date": "Date/Time (UTC)",
     "callsign": "Callsign",

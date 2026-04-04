@@ -1,25 +1,33 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 import { useQsoStore } from '../stores/qsoStore'
+import { qsoRepository } from '../db/repositories/qsoRepository'
 import QsoForm from '../components/qso/QsoForm.vue'
 import { formatUtcDateTime } from '../utils/dateTime'
+import type { QSO } from '../types/qso'
 
 const { t } = useI18n()
+const route = useRoute()
 const qsoStore = useQsoStore()
+const editQso = ref<QSO | undefined>(undefined)
 
-onMounted(() => {
+onMounted(async () => {
   qsoStore.loadRecentQsos()
+  if (route.query.edit) {
+    editQso.value = await qsoRepository.getById(Number(route.query.edit))
+  }
 })
 </script>
 
 <template>
   <div class="space-y-8">
     <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
-      {{ t('qso.title') }}
+      {{ editQso ? t('qso.editTitle') : t('qso.title') }}
     </h1>
 
-    <QsoForm />
+    <QsoForm :edit-qso="editQso" />
 
     <!-- Recent QSOs -->
     <div v-if="qsoStore.recentQsos.length > 0">
