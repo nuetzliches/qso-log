@@ -22,6 +22,7 @@ const { importResult, importing, doExport, prepareImport, confirmImport, cancelI
 const { generate: generatePdf } = usePdfReport()
 
 const filtersOpen = ref(typeof window !== 'undefined' && window.innerWidth >= 768)
+const filtersRef = ref<InstanceType<typeof QsoFilters>>()
 const deleteTarget = ref<QSO | null>(null)
 const showExportDialog = ref(false)
 const showImportDialog = ref(false)
@@ -96,7 +97,7 @@ async function handleConfirmImport() {
       </button>
 
       <div v-show="filtersOpen" id="filter-section" class="mt-2 space-y-4">
-        <QsoFilters @filter="handleFilter" />
+        <QsoFilters ref="filtersRef" @filter="handleFilter" />
 
         <!-- Action buttons -->
         <div class="flex flex-wrap gap-2">
@@ -117,6 +118,12 @@ async function handleConfirmImport() {
             @click="generatePdf(qsoStore.qsos)"
           >
             {{ t('history.pdfReport') }}
+          </button>
+          <button
+            class="ml-auto rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
+            @click="filtersRef?.clearFilters()"
+          >
+            Reset
           </button>
         </div>
       </div>

@@ -43,20 +43,12 @@ function clearFilters() {
   selectedBands.value = []
   operatorId.value = undefined
 }
+
+defineExpose({ clearFilters })
 </script>
 
 <template>
   <div class="space-y-3 rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900">
-    <div class="flex items-center justify-between">
-      <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-300">{{ t('history.filter') }}</h2>
-      <button
-        class="text-xs text-primary-600 hover:underline dark:text-primary-400"
-        @click="clearFilters"
-      >
-        Reset
-      </button>
-    </div>
-
     <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
       <!-- Callsign search -->
       <div>
