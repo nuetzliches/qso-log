@@ -24,6 +24,9 @@ function handleSelect(e: Event) {
 
 <template>
   <div
+    role="button"
+    tabindex="0"
+    :aria-label="t('common.dragDropHint')"
     class="flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed p-6 transition-colors"
     :class="dragging
       ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
@@ -32,11 +35,13 @@ function handleSelect(e: Event) {
     @dragleave="dragging = false"
     @drop.prevent="handleDrop"
     @click="fileInput?.click()"
+    @keydown.enter="fileInput?.click()"
+    @keydown.space.prevent="fileInput?.click()"
   >
-    <svg class="mb-2 h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+    <svg class="mb-2 h-8 w-8 text-gray-400" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
     </svg>
     <p class="text-sm text-gray-500 dark:text-gray-400">{{ t('common.dragDropHint') }}</p>
-    <input ref="fileInput" type="file" class="hidden" accept=".csv,.json,.adi,.adif" @change="handleSelect" />
+    <input ref="fileInput" type="file" class="hidden" accept=".csv,.json,.adi,.adif" aria-label="Select file" @change="handleSelect" />
   </div>
 </template>

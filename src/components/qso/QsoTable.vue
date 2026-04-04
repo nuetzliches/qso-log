@@ -59,7 +59,12 @@ function qslLabel(value: string): string {
               :key="col.field"
               class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400"
               :class="{ 'cursor-pointer hover:text-gray-700 dark:hover:text-gray-200': col.sortable }"
+              :tabindex="col.sortable ? 0 : undefined"
+              :role="col.sortable ? 'button' : undefined"
+              :aria-sort="col.sortable && sort.field === col.field ? (sort.direction === 'asc' ? 'ascending' : 'descending') : undefined"
               @click="col.sortable && emit('sort', col.field)"
+              @keydown.enter="col.sortable && emit('sort', col.field)"
+              @keydown.space.prevent="col.sortable && emit('sort', col.field)"
             >
               <span class="flex items-center gap-1">
                 {{ t(col.labelKey) }}
@@ -98,12 +103,14 @@ function qslLabel(value: string): string {
             <td class="whitespace-nowrap px-3 py-2 text-right">
               <button
                 class="text-xs text-primary-600 hover:underline dark:text-primary-400"
+                :aria-label="`${t('qso.edit')} ${qso.callsign}`"
                 @click="emit('edit', qso)"
               >
                 {{ t('qso.edit') }}
               </button>
               <button
                 class="ml-2 text-xs text-red-600 hover:underline dark:text-red-400"
+                :aria-label="`${t('qso.delete')} ${qso.callsign}`"
                 @click="emit('delete', qso)"
               >
                 {{ t('qso.delete') }}
@@ -123,6 +130,7 @@ function qslLabel(value: string): string {
     <div v-if="totalCount > pageSize" class="mt-3 flex items-center justify-between">
       <button
         :disabled="currentPage <= 1"
+        :aria-label="t('history.previousPage')"
         class="rounded-md px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:opacity-50 dark:text-gray-300 dark:hover:bg-gray-800"
         @click="emit('page', currentPage - 1)"
       >
@@ -133,6 +141,7 @@ function qslLabel(value: string): string {
       </span>
       <button
         :disabled="currentPage >= Math.ceil(totalCount / pageSize)"
+        :aria-label="t('history.nextPage')"
         class="rounded-md px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:opacity-50 dark:text-gray-300 dark:hover:bg-gray-800"
         @click="emit('page', currentPage + 1)"
       >

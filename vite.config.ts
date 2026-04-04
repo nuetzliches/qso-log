@@ -8,7 +8,7 @@ export default defineConfig({
     vue(),
     tailwindcss(),
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: 'prompt',
       includeAssets: ['icons/icon-192x192.png', 'icons/icon-512x512.png'],
       manifest: {
         name: 'funk-log',
@@ -19,6 +19,21 @@ export default defineConfig({
         display: 'standalone',
         scope: '/',
         start_url: '/',
+        categories: ['productivity', 'utilities'],
+        shortcuts: [
+          {
+            name: 'New QSO',
+            short_name: 'New QSO',
+            url: '/',
+            icons: [{ src: 'icons/icon-192x192.png', sizes: '192x192' }],
+          },
+          {
+            name: 'QSO History',
+            short_name: 'History',
+            url: '/history',
+            icons: [{ src: 'icons/icon-192x192.png', sizes: '192x192' }],
+          },
+        ],
         icons: [
           {
             src: 'icons/icon-192x192.png',

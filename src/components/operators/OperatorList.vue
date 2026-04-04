@@ -32,12 +32,14 @@ const emit = defineEmits<{
       <div class="flex gap-2">
         <button
           class="rounded px-3 py-1 text-sm text-primary-600 hover:bg-primary-50 dark:text-primary-400 dark:hover:bg-primary-900/50"
+          :aria-label="`${t('operators.edit')} ${op.callsign}`"
           @click="emit('edit', op)"
         >
           {{ t('operators.edit') }}
         </button>
         <button
           class="rounded px-3 py-1 text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/50"
+          :aria-label="`${t('operators.delete')} ${op.callsign}`"
           @click="emit('delete', op)"
         >
           {{ t('operators.delete') }}

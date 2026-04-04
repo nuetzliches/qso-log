@@ -41,7 +41,9 @@
     "selectFormat": "Select Format",
     "importPreview": "Import Preview",
     "importConfirm": "Import {count} QSO | Import {count} QSOs",
-    "duplicatesFound": "{count} duplicate found | {count} duplicates found"
+    "duplicatesFound": "{count} duplicate found | {count} duplicates found",
+    "previousPage": "Previous page",
+    "nextPage": "Next page"
   },
   "operators": {
     "title": "Operator Management",
@@ -79,6 +81,9 @@
     "online": "Online",
     "offline": "Offline",
     "skipToContent": "Skip to content",
-    "dragDropHint": "Drag file here or click to select"
+    "dragDropHint": "Drag file here or click to select",
+    "offlineReady": "App is ready for offline use.",
+    "updateAvailable": "A new version is available.",
+    "update": "Update"
   }
 }

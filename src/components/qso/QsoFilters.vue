@@ -124,12 +124,14 @@ function clearFilters() {
           <label
             v-for="mode in MODES"
             :key="mode"
+            :for="`filter-mode-${mode}`"
             class="inline-flex cursor-pointer items-center rounded-md border px-2 py-0.5 text-xs transition-colors"
             :class="selectedModes.includes(mode)
               ? 'border-primary-500 bg-primary-50 text-primary-700 dark:bg-primary-900/50 dark:text-primary-300'
               : 'border-gray-300 text-gray-600 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-800'"
           >
             <input
+              :id="`filter-mode-${mode}`"
               type="checkbox"
               :value="mode"
               v-model="selectedModes"
@@ -146,12 +148,14 @@ function clearFilters() {
           <label
             v-for="bandName in BANDS"
             :key="bandName"
+            :for="`filter-band-${bandName}`"
             class="inline-flex cursor-pointer items-center rounded-md border px-2 py-0.5 text-xs transition-colors"
             :class="selectedBands.includes(bandName)
               ? 'border-primary-500 bg-primary-50 text-primary-700 dark:bg-primary-900/50 dark:text-primary-300'
               : 'border-gray-300 text-gray-600 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-800'"
           >
             <input
+              :id="`filter-band-${bandName}`"
               type="checkbox"
               :value="bandName"
               v-model="selectedBands"

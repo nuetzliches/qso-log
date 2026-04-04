@@ -41,7 +41,9 @@
     "selectFormat": "Format wählen",
     "importPreview": "Import-Vorschau",
     "importConfirm": "{count} QSO importieren | {count} QSOs importieren",
-    "duplicatesFound": "{count} Duplikat gefunden | {count} Duplikate gefunden"
+    "duplicatesFound": "{count} Duplikat gefunden | {count} Duplikate gefunden",
+    "previousPage": "Vorherige Seite",
+    "nextPage": "Nächste Seite"
   },
   "operators": {
     "title": "Operator-Verwaltung",
@@ -79,6 +81,9 @@
     "online": "Online",
     "offline": "Offline",
     "skipToContent": "Zum Inhalt springen",
-    "dragDropHint": "Datei hierher ziehen oder klicken zum Auswählen"
+    "dragDropHint": "Datei hierher ziehen oder klicken zum Auswählen",
+    "offlineReady": "App ist bereit für Offline-Nutzung.",
+    "updateAvailable": "Eine neue Version ist verfügbar.",
+    "update": "Aktualisieren"
   }
 }
