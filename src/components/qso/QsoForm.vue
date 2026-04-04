@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n'
 import { useQsoStore } from '../../stores/qsoStore'
 import { useOperatorStore } from '../../stores/operatorStore'
 import { useNextSequenceNumber } from '../../composables/useNextSequenceNumber'
+import { useCallsignLookup } from '../../composables/useCallsignLookup'
 import { nowUtcIso, formatUtcDate, formatUtcTime } from '../../utils/dateTime'
 import { getDefaultRst } from '../../utils/rst'
 import ModeSelect from './ModeSelect.vue'
@@ -15,6 +16,7 @@ const { t } = useI18n()
 const qsoStore = useQsoStore()
 const operatorStore = useOperatorStore()
 const { nextNumber, refresh: refreshSequenceNumber } = useNextSequenceNumber()
+const { info: callsignInfo, loading: lookupLoading, lookup: lookupCallsign, clear: clearLookup } = useCallsignLookup()
 
 const savedMessage = ref(false)
 
@@ -70,6 +72,7 @@ async function handleSubmit() {
   // Smart defaults: keep mode, power, frequency, band, operator
   callsign.value = ''
   remarks.value = ''
+  clearLookup()
   const now = nowUtcIso()
   date.value = formatUtcDate(now)
   time.value = formatUtcTime(now)
@@ -133,8 +136,22 @@ async function handleSubmit() {
         required
         autocomplete="off"
         class="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm uppercase shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-        @input="callsign = ($event.target as HTMLInputElement).value.toUpperCase()"
+        @input="callsign = ($event.target as HTMLInputElement).value.toUpperCase(); lookupCallsign(callsign)"
       />
+      <!-- Callsign lookup info -->
+      <div v-if="lookupLoading" class="mt-1 text-xs text-gray-400">
+        Looking up...
+      </div>
+      <div
+        v-else-if="callsignInfo"
+        class="mt-1 rounded-md bg-blue-50 px-3 py-1.5 text-xs text-blue-800 dark:bg-blue-900/30 dark:text-blue-200"
+      >
+        <span class="font-medium">{{ callsignInfo.name }}</span>
+        <span v-if="callsignInfo.qth"> &middot; {{ callsignInfo.qth }}</span>
+        <span v-if="callsignInfo.country"> &middot; {{ callsignInfo.country }}</span>
+        <span v-if="callsignInfo.locator"> &middot; {{ callsignInfo.locator }}</span>
+        <span class="ml-1 text-blue-500 dark:text-blue-400">({{ callsignInfo.provider }})</span>
+      </div>
     </div>
 
     <!-- Mode -->
