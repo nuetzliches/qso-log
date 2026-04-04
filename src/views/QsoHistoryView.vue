@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n'
 import { useQsoStore } from '../stores/qsoStore'
 import { useOperatorStore } from '../stores/operatorStore'
 import { useExportImport } from '../composables/useExportImport'
+import { usePdfReport } from '../composables/usePdfReport'
 import QsoFilters from '../components/qso/QsoFilters.vue'
 import QsoTable from '../components/qso/QsoTable.vue'
 import ConfirmDialog from '../components/common/ConfirmDialog.vue'
@@ -16,6 +17,7 @@ const { t } = useI18n()
 const qsoStore = useQsoStore()
 const operatorStore = useOperatorStore()
 const { importResult, importing, doExport, prepareImport, confirmImport, cancelImport } = useExportImport()
+const { generate: generatePdf } = usePdfReport()
 
 const deleteTarget = ref<QSO | null>(null)
 const showExportDialog = ref(false)
@@ -85,7 +87,10 @@ async function handleConfirmImport() {
       >
         {{ t('history.import') }}
       </button>
-      <button class="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800">
+      <button
+        class="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
+        @click="generatePdf(qsoStore.qsos)"
+      >
         {{ t('history.pdfReport') }}
       </button>
     </div>
