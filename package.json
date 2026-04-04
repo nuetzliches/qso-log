@@ -1,6 +1,6 @@
 {
   "name": "qsolog",
-  "private": false,
+  "private": true,
   "version": "0.1.0",
   "description": "Offline-first PWA logbook for amateur radio operators",
   "license": "MIT",
@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "release": "release-it"
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.23",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",
+    "@release-it/conventional-changelog": "^10.0.6",
     "@tailwindcss/vite": "^4.2.2",
     "@testing-library/vue": "^8.1.0",
     "@types/node": "^24.12.0",
@@ -33,6 +35,7 @@
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.9.0",
     "jsdom": "^29.0.1",
+    "release-it": "^19.2.4",
     "tailwindcss": "^4.2.2",
     "typescript": "~5.9.3",
     "vite": "^7.3.1",
