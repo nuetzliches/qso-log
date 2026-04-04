@@ -1,0 +1,75 @@
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+import { qsoRepository } from '../db/repositories/qsoRepository'
+import type { QSO, QSOFilters, QSOSort, QSOPagination, QSOInput } from '../types/qso'
+
+export const useQsoStore = defineStore('qsos', () => {
+  const qsos = ref<QSO[]>([])
+  const recentQsos = ref<QSO[]>([])
+  const loading = ref(false)
+  const totalCount = ref(0)
+  const filters = ref<QSOFilters>({})
+  const sort = ref<QSOSort>({ field: 'date', direction: 'desc' })
+  const pagination = ref<QSOPagination>({ page: 1, pageSize: 50 })
+
+  async function loadQsos(
+    newFilters?: QSOFilters,
+    newSort?: QSOSort,
+    newPagination?: QSOPagination,
+  ) {
+    if (newFilters !== undefined) filters.value = newFilters
+    if (newSort) sort.value = newSort
+    if (newPagination) pagination.value = newPagination
+
+    loading.value = true
+    try {
+      const result = await qsoRepository.getAll(filters.value, sort.value, pagination.value)
+      qsos.value = result.qsos
+      totalCount.value = result.totalCount
+    } finally {
+      loading.value = false
+    }
+  }
+
+  async function loadRecentQsos() {
+    recentQsos.value = await qsoRepository.getRecentQsos(5)
+  }
+
+  async function addQso(input: QSOInput): Promise<number> {
+    const id = await qsoRepository.add(input)
+    await loadRecentQsos()
+    return id
+  }
+
+  async function updateQso(id: number, changes: Partial<QSO>): Promise<void> {
+    await qsoRepository.update(id, changes)
+    await loadQsos()
+    await loadRecentQsos()
+  }
+
+  async function deleteQso(id: number): Promise<void> {
+    await qsoRepository.delete(id)
+    await loadQsos()
+    await loadRecentQsos()
+  }
+
+  async function getNextSequenceNumber(): Promise<number> {
+    return qsoRepository.getNextSequenceNumber()
+  }
+
+  return {
+    qsos,
+    recentQsos,
+    loading,
+    totalCount,
+    filters,
+    sort,
+    pagination,
+    loadQsos,
+    loadRecentQsos,
+    addQso,
+    updateQso,
+    deleteQso,
+    getNextSequenceNumber,
+  }
+})
