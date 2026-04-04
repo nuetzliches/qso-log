@@ -74,6 +74,15 @@ export const qsoRepository = {
     return { qsos: allResults, totalCount }
   },
 
+  async findByCallsign(callsign: string, limit: number = 5): Promise<QSO[]> {
+    const results = await db.qsos
+      .where('callsign')
+      .equals(callsign.toUpperCase())
+      .reverse()
+      .sortBy('date')
+    return results.slice(0, limit)
+  },
+
   async getNextSequenceNumber(): Promise<number> {
     const last = await db.qsos.orderBy('sequenceNumber').last()
     return last ? last.sequenceNumber + 1 : 1

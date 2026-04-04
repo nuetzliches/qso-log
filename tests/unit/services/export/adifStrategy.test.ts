@@ -26,7 +26,7 @@ describe('adifStrategy', () => {
   it('includes ADIF header', () => {
     const result = adifStrategy.export([sampleQso], { stationCallsign: '' })
     expect(result).toContain('<ADIF_VER:5>3.1.4')
-    expect(result).toContain('<PROGRAMID:8>funk-log')
+    expect(result).toContain('<PROGRAMID:6>QSOlog')
     expect(result).toContain('<EOH>')
   })
 

@@ -33,6 +33,7 @@ export const adifImporter: ImportStrategy = {
       return {
         date: parseAdifDate(record.qso_date, record.time_on),
         callsign: (record.call || '').toUpperCase(),
+        name: record.name || '',
         mode: (record.mode || '').toUpperCase(),
         power: record.tx_pwr || '',
         frequency: freq,

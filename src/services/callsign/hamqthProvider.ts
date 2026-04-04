@@ -39,7 +39,7 @@ export const hamqthProvider: CallsignLookupProvider = {
 
     try {
       const response = await fetch(
-        `https://www.hamqth.com/xml.php?id=${sid}&callsign=${encodeURIComponent(callsign)}&prg=funk-log`,
+        `https://www.hamqth.com/xml.php?id=${sid}&callsign=${encodeURIComponent(callsign)}&prg=QSOlog`,
       )
       const text = await response.text()
 

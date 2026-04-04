@@ -7,6 +7,7 @@ export interface QSO {
   sequenceNumber: number
   date: string
   callsign: string
+  name?: string
   mode: string
   power: string
   frequency: string

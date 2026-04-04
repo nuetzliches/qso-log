@@ -8,7 +8,7 @@ async function getSessionKey(apiKey: string): Promise<string | null> {
 
   try {
     const response = await fetch(
-      `https://xmldata.qrz.com/xml/current/?username=${encodeURIComponent(apiKey)}&password=&agent=funk-log-0.1`,
+      `https://xmldata.qrz.com/xml/current/?username=${encodeURIComponent(apiKey)}&password=&agent=QSOlog-0.1`,
     )
     const text = await response.text()
     const match = text.match(/<Key>([^<]+)<\/Key>/)

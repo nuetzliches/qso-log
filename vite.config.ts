@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
+  base: '/qso-log/',
   plugins: [
     vue(),
     tailwindcss(),
@@ -11,26 +12,26 @@ export default defineConfig({
       registerType: 'prompt',
       includeAssets: ['icons/icon-192x192.png', 'icons/icon-512x512.png'],
       manifest: {
-        name: 'funk-log',
-        short_name: 'funk-log',
+        name: 'QSOlog',
+        short_name: 'QSOlog',
         description: 'Offline-first logbook for amateur radio operators',
         theme_color: '#1e293b',
         background_color: '#0f172a',
         display: 'standalone',
-        scope: '/',
-        start_url: '/',
+        scope: '/qso-log/',
+        start_url: '/qso-log/',
         categories: ['productivity', 'utilities'],
         shortcuts: [
           {
             name: 'New QSO',
             short_name: 'New QSO',
-            url: '/',
+            url: '/qso-log/',
             icons: [{ src: 'icons/icon-192x192.png', sizes: '192x192' }],
           },
           {
             name: 'QSO History',
             short_name: 'History',
-            url: '/history',
+            url: '/qso-log/history',
             icons: [{ src: 'icons/icon-192x192.png', sizes: '192x192' }],
           },
         ],

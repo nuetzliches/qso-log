@@ -37,7 +37,7 @@ const navItems = [
     <!-- Desktop Sidebar -->
     <aside class="hidden w-64 flex-shrink-0 border-r border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900 md:flex md:flex-col">
       <div class="flex h-16 items-center gap-2 border-b border-gray-200 px-4 dark:border-gray-800">
-        <span class="text-xl font-bold text-primary-600 dark:text-primary-400">funk-log</span>
+        <span class="text-xl font-bold text-primary-600 dark:text-primary-400">QSOlog</span>
         <span
           v-if="!isOnline"
           class="ml-auto rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-800 dark:bg-amber-900 dark:text-amber-200"

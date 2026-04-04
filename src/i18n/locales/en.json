@@ -25,7 +25,11 @@
     "edit": "Edit",
     "delete": "Delete",
     "deleteConfirm": "Really delete this contact?",
-    "recentQsos": "Recent Entries"
+    "recentQsos": "Recent Entries",
+    "name": "Name (Remote Station)",
+    "previousContact": "Previous Contact",
+    "lastQso": "Last QSO",
+    "totalPreviousQsos": "{count} previous QSOs"
   },
   "history": {
     "title": "QSO History",
@@ -64,6 +68,8 @@
     "themeSystem": "System",
     "ownCallsign": "Own Callsign",
     "ownCallsignHint": "Used in PDF report header",
+    "vorname": "First Name",
+    "vornameHint": "Optional operator first name",
     "qrzApiKey": "QRZ.com API Key",
     "hamqthUsername": "HamQTH Username",
     "hamqthPassword": "HamQTH Password",

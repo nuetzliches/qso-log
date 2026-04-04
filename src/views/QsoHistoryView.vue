@@ -19,6 +19,7 @@ const operatorStore = useOperatorStore()
 const { importResult, importing, doExport, prepareImport, confirmImport, cancelImport } = useExportImport()
 const { generate: generatePdf } = usePdfReport()
 
+const filtersOpen = ref(typeof window !== 'undefined' && window.innerWidth >= 768)
 const deleteTarget = ref<QSO | null>(null)
 const showExportDialog = ref(false)
 const showImportDialog = ref(false)
@@ -71,28 +72,52 @@ async function handleConfirmImport() {
       {{ t('history.title') }}
     </h1>
 
-    <QsoFilters @filter="handleFilter" />
+    <!-- Collapsible filter & actions -->
+    <div>
+      <button
+        type="button"
+        class="flex w-full items-center justify-between rounded-md border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
+        :aria-expanded="filtersOpen"
+        aria-controls="filter-section"
+        @click="filtersOpen = !filtersOpen"
+      >
+        {{ t('history.filter') }}
+        <svg
+          class="h-4 w-4 transition-transform"
+          :class="{ 'rotate-180': filtersOpen }"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
 
-    <!-- Action buttons -->
-    <div class="flex flex-wrap gap-2">
-      <button
-        class="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
-        @click="showExportDialog = true"
-      >
-        {{ t('history.export') }}
-      </button>
-      <button
-        class="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
-        @click="showImportDialog = true"
-      >
-        {{ t('history.import') }}
-      </button>
-      <button
-        class="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
-        @click="generatePdf(qsoStore.qsos)"
-      >
-        {{ t('history.pdfReport') }}
-      </button>
+      <div v-show="filtersOpen" id="filter-section" class="mt-2 space-y-4">
+        <QsoFilters @filter="handleFilter" />
+
+        <!-- Action buttons -->
+        <div class="flex flex-wrap gap-2">
+          <button
+            class="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
+            @click="showExportDialog = true"
+          >
+            {{ t('history.export') }}
+          </button>
+          <button
+            class="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
+            @click="showImportDialog = true"
+          >
+            {{ t('history.import') }}
+          </button>
+          <button
+            class="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
+            @click="generatePdf(qsoStore.qsos)"
+          >
+            {{ t('history.pdfReport') }}
+          </button>
+        </div>
+      </div>
     </div>
 
     <QsoTable

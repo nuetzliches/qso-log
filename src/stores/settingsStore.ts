@@ -7,6 +7,7 @@ export const useSettingsStore = defineStore('settings', () => {
   const locale = ref('de')
   const theme = ref<ThemeMode>('system')
   const ownCallsign = ref('')
+  const vorname = ref('')
   const qrzApiKey = ref('')
   const hamqthUsername = ref('')
   const hamqthPassword = ref('')
@@ -18,6 +19,7 @@ export const useSettingsStore = defineStore('settings', () => {
         case 'locale': locale.value = s.value as string; break
         case 'theme': theme.value = s.value as ThemeMode; break
         case 'ownCallsign': ownCallsign.value = s.value as string; break
+        case 'vorname': vorname.value = s.value as string; break
         case 'qrzApiKey': qrzApiKey.value = s.value as string; break
         case 'hamqthUsername': hamqthUsername.value = s.value as string; break
         case 'hamqthPassword': hamqthPassword.value = s.value as string; break
@@ -32,6 +34,7 @@ export const useSettingsStore = defineStore('settings', () => {
       case 'locale': locale.value = value as string; break
       case 'theme': theme.value = value as ThemeMode; applyTheme(); break
       case 'ownCallsign': ownCallsign.value = value as string; break
+      case 'vorname': vorname.value = value as string; break
       case 'qrzApiKey': qrzApiKey.value = value as string; break
       case 'hamqthUsername': hamqthUsername.value = value as string; break
       case 'hamqthPassword': hamqthPassword.value = value as string; break
@@ -67,6 +70,7 @@ export const useSettingsStore = defineStore('settings', () => {
     locale,
     theme,
     ownCallsign,
+    vorname,
     qrzApiKey,
     hamqthUsername,
     hamqthPassword,

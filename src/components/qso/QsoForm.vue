@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useQsoStore } from '../../stores/qsoStore'
 import { useOperatorStore } from '../../stores/operatorStore'
 import { useNextSequenceNumber } from '../../composables/useNextSequenceNumber'
 import { useCallsignLookup } from '../../composables/useCallsignLookup'
+import { usePreviousContact } from '../../composables/usePreviousContact'
 import { nowUtcIso, formatUtcDate, formatUtcTime } from '../../utils/dateTime'
 import { getDefaultRst } from '../../utils/rst'
 import ModeSelect from './ModeSelect.vue'
 import BandSelect from './BandSelect.vue'
 import OperatorSelect from '../operators/OperatorSelect.vue'
+import { useFormDraftStore } from '../../stores/formDraftStore'
 import type { QslStatus } from '../../types/qso'
 
 const { t } = useI18n()
@@ -17,6 +19,8 @@ const qsoStore = useQsoStore()
 const operatorStore = useOperatorStore()
 const { nextNumber, refresh: refreshSequenceNumber } = useNextSequenceNumber()
 const { info: callsignInfo, loading: lookupLoading, lookup: lookupCallsign, clear: clearLookup } = useCallsignLookup()
+const { previousQsos, lookup: lookupPrevious, clear: clearPrevious } = usePreviousContact()
+const formDraft = useFormDraftStore()
 
 const savedMessage = ref(false)
 
@@ -24,6 +28,7 @@ const savedMessage = ref(false)
 const date = ref(formatUtcDate(nowUtcIso()))
 const time = ref(formatUtcTime(nowUtcIso()))
 const callsign = ref('')
+const name = ref('')
 const mode = ref('SSB')
 const power = ref('')
 const frequency = ref('')
@@ -44,10 +49,68 @@ watch(mode, (newMode) => {
   }
 })
 
+// Auto-fill name from previous contacts
+watch(previousQsos, (qsos) => {
+  if (qsos.length > 0 && !name.value) {
+    const withName = qsos.find(q => q.name)
+    if (withName?.name) name.value = withName.name
+  }
+})
+
+// Auto-fill name from external callsign lookup (fallback)
+watch(callsignInfo, (info) => {
+  if (info?.name && !name.value) name.value = info.name
+})
+
 onMounted(async () => {
   await operatorStore.loadOperators()
-  if (operatorStore.currentOperator?.id) {
+
+  if (formDraft.hasDraft && formDraft.draft) {
+    const d = formDraft.draft
+    date.value = d.date
+    time.value = d.time
+    callsign.value = d.callsign
+    name.value = d.name
+    mode.value = d.mode
+    power.value = d.power
+    frequency.value = d.frequency
+    band.value = d.band
+    rstSent.value = d.rstSent
+    rstReceived.value = d.rstReceived
+    remarks.value = d.remarks
+    qslSent.value = d.qslSent
+    qslReceived.value = d.qslReceived
+    operatorId.value = d.operatorId
+    formDraft.clearDraft()
+    if (callsign.value.length >= 3) {
+      lookupCallsign(callsign.value)
+      lookupPrevious(callsign.value)
+    }
+  } else if (operatorStore.currentOperator?.id) {
     operatorId.value = operatorStore.currentOperator.id
+  }
+})
+
+onBeforeUnmount(() => {
+  if (callsign.value || remarks.value) {
+    formDraft.saveDraft({
+      date: date.value,
+      time: time.value,
+      callsign: callsign.value,
+      name: name.value,
+      mode: mode.value,
+      power: power.value,
+      frequency: frequency.value,
+      band: band.value,
+      rstSent: rstSent.value,
+      rstReceived: rstReceived.value,
+      remarks: remarks.value,
+      qslSent: qslSent.value,
+      qslReceived: qslReceived.value,
+      operatorId: operatorId.value,
+    })
+  } else {
+    formDraft.clearDraft()
   }
 })
 
@@ -57,6 +120,7 @@ async function handleSubmit() {
   await qsoStore.addQso({
     date: isoDate,
     callsign: callsign.value.toUpperCase(),
+    name: name.value || undefined,
     mode: mode.value,
     power: power.value,
     frequency: frequency.value,
@@ -71,8 +135,11 @@ async function handleSubmit() {
 
   // Smart defaults: keep mode, power, frequency, band, operator
   callsign.value = ''
+  name.value = ''
   remarks.value = ''
   clearLookup()
+  clearPrevious()
+  formDraft.clearDraft()
   const now = nowUtcIso()
   date.value = formatUtcDate(now)
   time.value = formatUtcTime(now)
@@ -136,7 +203,7 @@ async function handleSubmit() {
         required
         autocomplete="off"
         class="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm uppercase shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-        @input="callsign = ($event.target as HTMLInputElement).value.toUpperCase(); lookupCallsign(callsign)"
+        @input="callsign = ($event.target as HTMLInputElement).value.toUpperCase(); lookupCallsign(callsign); lookupPrevious(callsign)"
       />
       <!-- Callsign lookup info -->
       <div v-if="lookupLoading" class="mt-1 text-xs text-gray-400">
@@ -152,6 +219,30 @@ async function handleSubmit() {
         <span v-if="callsignInfo.locator"> &middot; {{ callsignInfo.locator }}</span>
         <span class="ml-1 text-blue-500 dark:text-blue-400">({{ callsignInfo.provider }})</span>
       </div>
+      <!-- Previous contact info -->
+      <div
+        v-if="previousQsos.length > 0"
+        class="mt-1 rounded-md bg-green-50 px-3 py-1.5 text-xs text-green-800 dark:bg-green-900/30 dark:text-green-200"
+      >
+        <span class="font-medium">{{ t('qso.previousContact') }}:</span>
+        {{ t('qso.lastQso') }} {{ previousQsos[0].date.slice(0, 10) }} &middot; {{ previousQsos[0].mode }} &middot; {{ previousQsos[0].band }}
+        <span v-if="previousQsos.length > 1" class="ml-1 text-green-600 dark:text-green-400">
+          ({{ t('qso.totalPreviousQsos', { count: previousQsos.length }) }})
+        </span>
+      </div>
+    </div>
+
+    <!-- Name -->
+    <div>
+      <label for="qso-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        {{ t('qso.name') }}
+      </label>
+      <input
+        id="qso-name"
+        v-model="name"
+        type="text"
+        class="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+      />
     </div>
 
     <!-- Mode -->

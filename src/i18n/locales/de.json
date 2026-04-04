@@ -25,7 +25,11 @@
     "edit": "Bearbeiten",
     "delete": "Löschen",
     "deleteConfirm": "Diesen Funkkontakt wirklich löschen?",
-    "recentQsos": "Letzte Einträge"
+    "recentQsos": "Letzte Einträge",
+    "name": "Vorname (Gegenstation)",
+    "previousContact": "Früherer Kontakt",
+    "lastQso": "Letztes QSO",
+    "totalPreviousQsos": "{count} frühere QSOs"
   },
   "history": {
     "title": "QSO-Historie",
@@ -64,6 +68,8 @@
     "themeSystem": "System",
     "ownCallsign": "Eigenes Rufzeichen",
     "ownCallsignHint": "Wird im PDF-Header verwendet",
+    "vorname": "Vorname",
+    "vornameHint": "Optionaler Vorname des Operators",
     "qrzApiKey": "QRZ.com API-Key",
     "hamqthUsername": "HamQTH Benutzername",
     "hamqthPassword": "HamQTH Passwort",

@@ -21,7 +21,7 @@ export function exportQsos(qsos: QSO[], options: ExportOptions): void {
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
   a.href = url
-  a.download = `funk-log-export.${strategy.fileExtension}`
+  a.download = `qsolog-export.${strategy.fileExtension}`
   document.body.appendChild(a)
   a.click()
   document.body.removeChild(a)

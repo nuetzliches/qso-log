@@ -53,6 +53,10 @@ export const useQsoStore = defineStore('qsos', () => {
     await loadRecentQsos()
   }
 
+  async function findPreviousContacts(callsign: string): Promise<QSO[]> {
+    return qsoRepository.findByCallsign(callsign)
+  }
+
   async function getNextSequenceNumber(): Promise<number> {
     return qsoRepository.getNextSequenceNumber()
   }
@@ -70,6 +74,7 @@ export const useQsoStore = defineStore('qsos', () => {
     addQso,
     updateQso,
     deleteQso,
+    findPreviousContacts,
     getNextSequenceNumber,
   }
 })

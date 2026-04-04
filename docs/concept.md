@@ -1,8 +1,8 @@
-# funk-log: PWA Amateurfunk-Logbuch -- Design Spec
+# qso-log: PWA Amateurfunk-Logbuch -- Design Spec
 
 ## Context
 
-Amateurfunker brauchen ein digitales Logbuch, um ihre Funkkontakte (QSOs) zu erfassen und zu verwalten. Bestehende Lösungen sind oft Desktop-only, proprietär oder erfordern permanente Internetverbindung. funk-log ist eine offline-first PWA, die nach einmaliger Installation vollständig ohne Internet funktioniert, leicht bedienbar und barrierefrei ist, und optional über eine self-hosted API synchronisiert werden kann.
+Amateurfunker brauchen ein digitales Logbuch, um ihre Funkkontakte (QSOs) zu erfassen und zu verwalten. Bestehende Lösungen sind oft Desktop-only, proprietär oder erfordern permanente Internetverbindung. qso-log ist eine offline-first PWA, die nach einmaliger Installation vollständig ohne Internet funktioniert, leicht bedienbar und barrierefrei ist, und optional über eine self-hosted API synchronisiert werden kann.
 
 **Lizenz:** MIT (Open Source)
 
@@ -324,7 +324,7 @@ Bei späterer Implementierung ändern sich nur Repositories und ein neuer SyncSe
 ## Projektstruktur
 
 ```
-funk-log/
+qso-log/
   public/
     icons/                          -- PWA-Icons
   src/

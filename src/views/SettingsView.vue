@@ -46,6 +46,21 @@ onMounted(() => {
       />
     </section>
 
+    <!-- First Name -->
+    <section class="space-y-2">
+      <label for="settings-vorname" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+        {{ t('settings.vorname') }}
+      </label>
+      <p class="text-xs text-gray-500 dark:text-gray-400">{{ t('settings.vornameHint') }}</p>
+      <input
+        id="settings-vorname"
+        :value="settings.vorname"
+        type="text"
+        class="w-full max-w-xs rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+        @change="settings.setSetting('vorname', ($event.target as HTMLInputElement).value)"
+      />
+    </section>
+
     <!-- Callsign Lookup -->
     <section class="space-y-4">
       <div>
