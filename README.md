@@ -74,6 +74,60 @@ npx playwright install
 npm run test:e2e
 ```
 
+## Releasing
+
+This project uses [release-it](https://github.com/release-it/release-it) for semi-automatic releases. A single command bumps the version, generates the changelog, creates a git tag, and publishes a GitHub Release.
+
+### Commit conventions
+
+Commits must follow [Conventional Commits](https://www.conventionalcommits.org/) so the changelog is generated correctly:
+
+| Prefix | Example | Changelog section | Version bump |
+|--------|---------|-------------------|--------------|
+| `feat:` | `feat(qso): add SOTA field` | Features | minor |
+| `fix:` | `fix: correct RST default` | Bug Fixes | patch |
+| `docs:` | `docs: update README` | Documentation | patch |
+| `perf:` | `perf: speed up import` | Performance | patch |
+| `refactor:` | `refactor: extract utils` | Refactoring | patch |
+| `test:` | `test: add export tests` | Tests | patch |
+| `BREAKING CHANGE` | footer in any commit | — | **major** |
+
+Commits prefixed with `chore:`, `style:`, `ci:`, or `build:` are hidden from the changelog.
+
+### Prerequisites
+
+Authenticate with GitHub so release-it can create GitHub Releases:
+
+```bash
+gh auth login
+```
+
+Alternatively, set a `GITHUB_TOKEN` environment variable with `contents: write` permission.
+
+### Creating a release
+
+```bash
+# Interactive -- prompts for patch / minor / major
+npm run release
+
+# Directly bump a specific level
+npm run release -- patch
+npm run release -- minor
+
+# Preview without making any changes
+npm run release -- --dry-run
+```
+
+### What happens automatically
+
+1. Unit tests and production build run as a safety gate
+2. Version in `package.json` is bumped
+3. `CHANGELOG.md` is updated from commits since the last tag
+4. A git commit (`chore: release vX.Y.Z`) and annotated tag (`vX.Y.Z`) are created
+5. Commit and tag are pushed to `origin/main`
+6. A GitHub Release with auto-generated notes is published
+7. The existing GitHub Pages workflow deploys the new build
+
 ## License
 
 [MIT](LICENSE)
