@@ -32,7 +32,7 @@
     "recentQsos": "Recent Entries",
     "locator": "Locator (Remote Station)",
     "locatorHint": "Maidenhead (e.g. JN47ao)",
-    "myLocator": "Own Locator",
+    "myLocator": "Locator (own station)",
     "distance": "{km} km",
     "distanceLabel": "Distance",
     "bearing": "{deg}\u00b0 {dir}",
