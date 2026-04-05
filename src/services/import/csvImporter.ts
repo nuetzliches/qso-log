@@ -53,6 +53,8 @@ export const csvImporter: ImportStrategy = {
         power: record.power || '',
         frequency: record.frequency || '',
         band: record.band || '',
+        locator: record.locator || '',
+        myLocator: record.myLocator || '',
         rstSent: record.rstSent || '59',
         rstReceived: record.rstReceived || '59',
         remarks: record.remarks || '',

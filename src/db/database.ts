@@ -17,6 +17,13 @@ export class FunkLogDB extends Dexie {
       settings: 'key',
     })
 
+    // v2: Added locator field to QSO (no index change needed, Dexie stores all properties)
+    this.version(2).stores({
+      qsos: '++id, uuid, sequenceNumber, date, callsign, mode, band, operatorId, _syncStatus, [date+operatorId], [band+mode]',
+      operators: '++id, uuid, callsign',
+      settings: 'key',
+    })
+
     this.qsos.hook('creating', (_primKey, obj) => {
       if (!obj.uuid) {
         obj.uuid = crypto.randomUUID()

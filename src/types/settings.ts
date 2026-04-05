@@ -9,6 +9,7 @@ export interface AppSettings {
   locale: string
   theme: ThemeMode
   ownCallsign: string
+  ownLocator: string
   qrzApiKey: string
   hamqthUsername: string
   hamqthPassword: string

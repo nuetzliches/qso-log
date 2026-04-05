@@ -16,6 +16,8 @@ export interface QSO {
   rstReceived: string
   remarks: string
   qslSent: QslStatus
+  locator?: string
+  myLocator?: string
   qslReceived: QslStatus
   operatorId: number
   _lastModified: number

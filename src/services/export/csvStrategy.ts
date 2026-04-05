@@ -3,7 +3,7 @@ import type { ExportStrategy, ExportOptions } from '../../types/export'
 
 const CSV_HEADERS = [
   'sequenceNumber', 'date', 'callsign', 'name', 'mode', 'power', 'frequency',
-  'band', 'rstSent', 'rstReceived', 'remarks', 'qslSent', 'qslReceived',
+  'band', 'rstSent', 'rstReceived', 'locator', 'myLocator', 'remarks', 'qslSent', 'qslReceived',
 ]
 
 function escapeCsv(value: string): string {

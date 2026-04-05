@@ -13,6 +13,8 @@ export interface QsoDraft {
   band: string
   rstSent: string
   rstReceived: string
+  locator: string
+  myLocator: string
   remarks: string
   qslSent: QslStatus
   qslReceived: QslStatus

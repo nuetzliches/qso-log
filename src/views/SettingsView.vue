@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '../stores/settingsStore'
 import ThemeToggle from '../components/common/ThemeToggle.vue'
 import LocaleSwitch from '../components/common/LocaleSwitch.vue'
+import LocatorInput from '../components/common/LocatorInput.vue'
 import { version } from '../../package.json'
 
 const isDev = import.meta.env.DEV
@@ -47,6 +48,18 @@ onMounted(() => {
         class="w-full max-w-xs rounded-md border border-gray-300 bg-white px-3 py-2 text-sm uppercase shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         @change="settings.setSetting('ownCallsign', ($event.target as HTMLInputElement).value.toUpperCase())"
       />
+    </section>
+
+    <!-- Own Locator -->
+    <section class="space-y-2">
+      <LocatorInput
+        :model-value="settings.ownLocator"
+        :show-distance="false"
+        :label="t('settings.ownLocator')"
+        id="settings-locator"
+        @update:model-value="settings.setSetting('ownLocator', $event)"
+      />
+      <p class="text-xs text-gray-500 dark:text-gray-400">{{ t('settings.ownLocatorHint') }}</p>
     </section>
 
     <!-- First Name -->

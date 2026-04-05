@@ -33,6 +33,8 @@ export const adifStrategy: ExportStrategy = {
       if (qso.power) fields.push(adifField('TX_PWR', qso.power))
       fields.push(adifField('RST_SENT', qso.rstSent))
       fields.push(adifField('RST_RCVD', qso.rstReceived))
+      if (qso.locator) fields.push(adifField('GRIDSQUARE', qso.locator))
+      if (qso.myLocator) fields.push(adifField('MY_GRIDSQUARE', qso.myLocator))
       if (qso.remarks) fields.push(adifField('COMMENT', qso.remarks))
 
       const qslSentMap: Record<string, string> = { yes: 'Y', no: 'N', requested: 'R' }

@@ -38,6 +38,8 @@ export const adifImporter: ImportStrategy = {
         power: record.tx_pwr || '',
         frequency: freq,
         band,
+        locator: record.gridsquare || '',
+        myLocator: record.my_gridsquare || '',
         rstSent: record.rst_sent || '59',
         rstReceived: record.rst_rcvd || '59',
         remarks: record.comment || record.notes || '',

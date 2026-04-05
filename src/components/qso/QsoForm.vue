@@ -12,7 +12,9 @@ import { getDefaultRst } from '../../utils/rst'
 import ModeSelect from './ModeSelect.vue'
 import BandSelect from './BandSelect.vue'
 import OperatorSelect from '../operators/OperatorSelect.vue'
+import LocatorInput from '../common/LocatorInput.vue'
 import { useFormDraftStore } from '../../stores/formDraftStore'
+import { useSettingsStore } from '../../stores/settingsStore'
 import type { QslStatus, QSO } from '../../types/qso'
 
 const props = defineProps<{ editQso?: QSO }>()
@@ -25,6 +27,7 @@ const { nextNumber, refresh: refreshSequenceNumber } = useNextSequenceNumber()
 const { info: callsignInfo, loading: lookupLoading, lookup: lookupCallsign, clear: clearLookup } = useCallsignLookup()
 const { previousQsos, lookup: lookupPrevious, clear: clearPrevious } = usePreviousContact()
 const formDraft = useFormDraftStore()
+const settings = useSettingsStore()
 
 const savedMessage = ref(false)
 
@@ -42,6 +45,8 @@ const rstReceived = ref('59')
 const remarks = ref('')
 const qslSent = ref<QslStatus>('no')
 const qslReceived = ref<QslStatus>('no')
+const locator = ref('')
+const myLocator = ref('')
 const operatorId = ref(0)
 
 // Update RST defaults when mode changes
@@ -53,17 +58,24 @@ watch(mode, (newMode) => {
   }
 })
 
-// Auto-fill name from previous contacts
+// Auto-fill name and locator from previous contacts
 watch(previousQsos, (qsos) => {
-  if (qsos.length > 0 && !name.value) {
-    const withName = qsos.find(q => q.name)
-    if (withName?.name) name.value = withName.name
+  if (qsos.length > 0) {
+    if (!name.value) {
+      const withName = qsos.find(q => q.name)
+      if (withName?.name) name.value = withName.name
+    }
+    if (!locator.value) {
+      const withLocator = qsos.find(q => q.locator)
+      if (withLocator?.locator) locator.value = withLocator.locator
+    }
   }
 })
 
-// Auto-fill name from external callsign lookup (fallback)
+// Auto-fill name and locator from external callsign lookup (fallback)
 watch(callsignInfo, (info) => {
   if (info?.name && !name.value) name.value = info.name
+  if (info?.locator && !locator.value) locator.value = info.locator
 })
 
 onMounted(async () => {
@@ -76,6 +88,8 @@ onMounted(async () => {
     time.value = d.slice(11, 16)
     callsign.value = q.callsign
     name.value = q.name ?? ''
+    locator.value = q.locator ?? ''
+    myLocator.value = q.myLocator ?? ''
     mode.value = q.mode
     power.value = q.power
     frequency.value = q.frequency
@@ -92,6 +106,8 @@ onMounted(async () => {
     time.value = d.time
     callsign.value = d.callsign
     name.value = d.name
+    locator.value = d.locator
+    myLocator.value = d.myLocator
     mode.value = d.mode
     power.value = d.power
     frequency.value = d.frequency
@@ -107,8 +123,11 @@ onMounted(async () => {
       lookupCallsign(callsign.value)
       lookupPrevious(callsign.value)
     }
-  } else if (operatorStore.currentOperator?.id) {
-    operatorId.value = operatorStore.currentOperator.id
+  } else {
+    if (operatorStore.currentOperator?.id) {
+      operatorId.value = operatorStore.currentOperator.id
+    }
+    myLocator.value = settings.ownLocator
   }
 })
 
@@ -120,6 +139,8 @@ onBeforeUnmount(() => {
       time: time.value,
       callsign: callsign.value,
       name: name.value,
+      locator: locator.value,
+      myLocator: myLocator.value,
       mode: mode.value,
       power: power.value,
       frequency: frequency.value,
@@ -150,6 +171,8 @@ async function handleSubmit() {
       date: isoDate,
       callsign: callsign.value.toUpperCase(),
       name: name.value || undefined,
+      locator: locator.value || undefined,
+      myLocator: myLocator.value || undefined,
       mode: mode.value,
       power: power.value,
       frequency: frequency.value,
@@ -169,6 +192,8 @@ async function handleSubmit() {
     date: isoDate,
     callsign: callsign.value.toUpperCase(),
     name: name.value || undefined,
+    locator: locator.value || undefined,
+    myLocator: myLocator.value || undefined,
     mode: mode.value,
     power: power.value,
     frequency: frequency.value,
@@ -181,9 +206,10 @@ async function handleSubmit() {
     operatorId: operatorId.value,
   })
 
-  // Smart defaults: keep mode, power, frequency, band, operator
+  // Smart defaults: keep mode, power, frequency, band, operator, myLocator
   callsign.value = ''
   name.value = ''
+  locator.value = ''
   remarks.value = ''
   clearLookup()
   clearPrevious()
@@ -307,6 +333,23 @@ async function handleSubmit() {
           class="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         />
       </div>
+    </div>
+
+    <!-- Locator (contact) & own locator -->
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <LocatorInput
+        v-model="locator"
+        :own-locator="myLocator"
+        :show-distance="true"
+        :label="t('qso.locator')"
+        id="qso-locator"
+      />
+      <LocatorInput
+        v-model="myLocator"
+        :show-distance="false"
+        :label="t('qso.myLocator')"
+        id="qso-my-locator"
+      />
     </div>
 
     <!-- Mode & Power -->
