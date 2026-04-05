@@ -3,7 +3,9 @@
     "logbook": "Logbook",
     "history": "History",
     "operators": "Operators",
-    "settings": "Settings"
+    "map": "Map",
+    "settings": "Settings",
+    "about": "About"
   },
   "qso": {
     "title": "New Contact",
@@ -85,8 +87,40 @@
     "hamqthUsername": "HamQTH Username",
     "hamqthPassword": "HamQTH Password",
     "callsignLookup": "Callsign Lookup",
-    "callsignLookupHint": "Requires internet connection",
-    "about": "About"
+    "callsignLookupHint": "Requires internet connection"
+  },
+  "map": {
+    "title": "Map",
+    "noLocator": "No locator set",
+    "status": "{shown} QSOs on map, {hidden} without locator",
+    "centerMap": "Center",
+    "connections": "Connection lines",
+    "ownStation": "Own station",
+    "filterDate": "Date range",
+    "filterMode": "Mode",
+    "filterBand": "Band",
+    "loading": "Loading map…",
+    "emptyState": "No QSOs with locator found"
+  },
+  "about": {
+    "title": "About QSOlog",
+    "appHeading": "The App",
+    "appDescription": "QSOlog is an offline-first logbook for amateur radio operators. All QSO data is stored locally in your browser (IndexedDB) – no data is transmitted to a server unless you enable the optional callsign lookup feature.",
+    "openSource": "The source code is freely available on",
+    "legalHeading": "Legal Notice (Impressum)",
+    "legalBasis": "Information pursuant to § 5 DDG (German Digital Services Act)",
+    "email": "Email",
+    "privacyHeading": "Privacy Notice",
+    "privacyLocal": "QSOlog stores all data exclusively in your browser (IndexedDB). No personal data is transmitted to the operator of this website.",
+    "privacyLookup": "If you enable the optional callsign lookup via QRZ.com or HamQTH, requests are sent directly from your browser to the respective third-party service. The privacy policies of the respective providers apply.",
+    "privacyGitHub": "This website is hosted on GitHub Pages. GitHub may collect technical access data (e.g. IP addresses). For details, see the GitHub Privacy Statement.",
+    "licenseHeading": "License",
+    "licenseText": "QSOlog is free software under the",
+    "disclaimerHeading": "Disclaimer",
+    "disclaimerContent": "The contents of this website are created with the utmost care. However, the operator assumes no liability for the accuracy, completeness, or timeliness of the provided content.",
+    "disclaimerLinks": "This website contains links to third-party websites whose content is beyond the operator's control. The respective provider is always responsible for the content of linked pages.",
+    "aiHeading": "AI Disclosure",
+    "aiText": "Parts of this software were developed with the assistance of AI coding tools (e.g. Claude, GitHub Copilot). All code has been reviewed and is maintained by human contributors."
   },
   "common": {
     "yes": "Yes",

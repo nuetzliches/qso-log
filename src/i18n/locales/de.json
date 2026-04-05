@@ -3,7 +3,9 @@
     "logbook": "Logbuch",
     "history": "Historie",
     "operators": "Operatoren",
-    "settings": "Einstellungen"
+    "map": "Karte",
+    "settings": "Einstellungen",
+    "about": "Über"
   },
   "qso": {
     "title": "Neuer Funkkontakt",
@@ -85,8 +87,40 @@
     "hamqthUsername": "HamQTH Benutzername",
     "hamqthPassword": "HamQTH Passwort",
     "callsignLookup": "Rufzeichen-Lookup",
-    "callsignLookupHint": "Erfordert Internetverbindung",
-    "about": "Über"
+    "callsignLookupHint": "Erfordert Internetverbindung"
+  },
+  "map": {
+    "title": "Karte",
+    "noLocator": "Kein Locator gesetzt",
+    "status": "{shown} QSOs auf Karte, {hidden} ohne Locator",
+    "centerMap": "Zentrieren",
+    "connections": "Verbindungslinien",
+    "ownStation": "Eigene Station",
+    "filterDate": "Zeitraum",
+    "filterMode": "Betriebsart",
+    "filterBand": "Band",
+    "loading": "Karte lädt…",
+    "emptyState": "Keine QSOs mit Locator gefunden"
+  },
+  "about": {
+    "title": "Über QSOlog",
+    "appHeading": "Die App",
+    "appDescription": "QSOlog ist ein Offline-first Logbuch für Funkamateure. Alle QSO-Daten werden lokal im Browser (IndexedDB) gespeichert – es werden keine Daten an einen Server übertragen, solange die optionale Rufzeichen-Abfrage nicht aktiviert ist.",
+    "openSource": "Der Quellcode ist frei verfügbar auf",
+    "legalHeading": "Impressum",
+    "legalBasis": "Angaben gemäß § 5 DDG",
+    "email": "E-Mail",
+    "privacyHeading": "Datenschutzhinweis",
+    "privacyLocal": "QSOlog speichert alle Daten ausschließlich lokal in Ihrem Browser (IndexedDB). Es werden keine personenbezogenen Daten an den Betreiber dieser Website übermittelt.",
+    "privacyLookup": "Wenn Sie die optionale Rufzeichen-Abfrage über QRZ.com oder HamQTH aktivieren, werden Anfragen direkt von Ihrem Browser an den jeweiligen Drittanbieter gesendet. Es gelten die Datenschutzbestimmungen des jeweiligen Anbieters.",
+    "privacyGitHub": "Diese Website wird über GitHub Pages bereitgestellt. GitHub kann dabei technische Zugriffsdaten (z. B. IP-Adresse) erheben. Näheres regelt die Datenschutzerklärung von GitHub.",
+    "licenseHeading": "Lizenz",
+    "licenseText": "QSOlog ist freie Software unter der",
+    "disclaimerHeading": "Haftungsausschluss",
+    "disclaimerContent": "Die Inhalte dieser Website werden mit größtmöglicher Sorgfalt erstellt. Der Anbieter übernimmt jedoch keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der bereitgestellten Inhalte.",
+    "disclaimerLinks": "Diese Website enthält Links zu externen Websites Dritter, auf deren Inhalte der Anbieter keinen Einfluss hat. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter verantwortlich.",
+    "aiHeading": "KI-Hinweis",
+    "aiText": "Teile dieser Software wurden mit Unterstützung von KI-Codierungswerkzeugen (z. B. Claude, GitHub Copilot) entwickelt. Der gesamte Code wurde von menschlichen Entwicklern geprüft und wird von diesen gepflegt."
   },
   "common": {
     "yes": "Ja",

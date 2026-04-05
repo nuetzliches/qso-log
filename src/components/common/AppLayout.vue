@@ -23,8 +23,13 @@ const navItems = [
   { to: '/', labelKey: 'nav.logbook', icon: 'logbook' },
   { to: '/history', labelKey: 'nav.history', icon: 'history' },
   { to: '/operators', labelKey: 'nav.operators', icon: 'operators' },
+  { to: '/map', labelKey: 'nav.map', icon: 'map' },
   { to: '/settings', labelKey: 'nav.settings', icon: 'settings' },
+  { to: '/about', labelKey: 'nav.about', icon: 'about' },
 ]
+
+// Mobile bottom nav: replace /about with /map (keep 5 items)
+const mobileNavItems = navItems.filter((item) => item.to !== '/about')
 </script>
 
 <template>
@@ -76,11 +81,23 @@ const navItems = [
             <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
           </svg>
+          <!-- Map icon -->
+          <svg v-else-if="item.icon === 'map'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z" />
+          </svg>
+          <!-- About icon -->
+          <svg v-else-if="item.icon === 'about'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+          </svg>
           {{ t(item.labelKey) }}
         </RouterLink>
       </nav>
 
       <div class="flex-shrink-0 space-y-1 border-t border-gray-200 p-3 dark:border-gray-800">
+        <p class="flex items-center justify-center gap-1.5 text-xs text-gray-400 dark:text-gray-600">
+          v{{ version }}
+          <span v-if="isDev" class="rounded bg-amber-100 px-1.5 py-0.5 font-medium text-amber-800 dark:bg-amber-900 dark:text-amber-200">dev</span>
+        </p>
         <div v-if="settings.ownCallsign" class="px-2 py-1 text-center text-sm font-semibold text-gray-600 dark:text-gray-400">
           {{ settings.ownCallsign }}
         </div>
@@ -88,16 +105,17 @@ const navItems = [
           <div class="flex-1"><ThemeToggle placement="top" /></div>
           <div class="flex-1"><LocaleSwitch placement="top" /></div>
         </div>
-        <p class="flex items-center justify-center gap-1.5 text-xs text-gray-400 dark:text-gray-600">
-          v{{ version }}
-          <span v-if="isDev" class="rounded bg-amber-100 px-1.5 py-0.5 font-medium text-amber-800 dark:bg-amber-900 dark:text-amber-200">dev</span>
-        </p>
       </div>
     </aside>
 
     <!-- Main content -->
-    <main id="main-content" class="flex-1 overflow-auto pb-20 md:pb-0">
-      <div class="mx-auto max-w-5xl px-4 py-6">
+    <main
+      id="main-content"
+      :class="route.name === 'map'
+        ? 'flex flex-1 flex-col overflow-hidden pb-16 md:pb-0'
+        : 'flex-1 overflow-auto pb-20 md:pb-0'"
+    >
+      <div :class="route.name === 'map' ? 'flex flex-1 flex-col overflow-hidden' : 'mx-auto max-w-5xl px-4 py-6'">
         <RouterView />
       </div>
     </main>
@@ -108,7 +126,7 @@ const navItems = [
       aria-label="Main navigation"
     >
       <RouterLink
-        v-for="item in navItems"
+        v-for="item in mobileNavItems"
         :key="item.to"
         :to="item.to"
         class="flex flex-1 flex-col items-center gap-1 py-2 text-xs font-medium transition-colors"
@@ -132,6 +150,14 @@ const navItems = [
         <svg v-else-if="item.icon === 'settings'" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+        </svg>
+        <!-- Map icon -->
+        <svg v-else-if="item.icon === 'map'" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z" />
+        </svg>
+        <!-- About icon -->
+        <svg v-else-if="item.icon === 'about'" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
         </svg>
         {{ t(item.labelKey) }}
       </RouterLink>
