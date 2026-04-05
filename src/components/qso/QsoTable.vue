@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { formatUtcDateTime } from '../../utils/dateTime'
+import { useOperatorStore } from '../../stores/operatorStore'
 import type { QSO, QSOSort } from '../../types/qso'
 
 const { t } = useI18n()
+const operatorStore = useOperatorStore()
 
 defineProps<{
   qsos: QSO[]
@@ -78,6 +80,7 @@ function qslLabel(value: string): string {
                 </template>
               </span>
             </th>
+            <th v-if="operatorStore.hasMultipleOperators" class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.operator') }}</th>
             <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.qslSent') }}</th>
             <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.qslReceived') }}</th>
             <th class="px-3 py-2 text-right text-xs font-medium uppercase text-gray-500 dark:text-gray-400"></th>
@@ -98,6 +101,7 @@ function qslLabel(value: string): string {
             <td class="px-3 py-2">{{ qso.rstSent }}</td>
             <td class="px-3 py-2">{{ qso.rstReceived }}</td>
             <td class="max-w-[200px] truncate px-3 py-2" :title="qso.remarks">{{ qso.remarks }}</td>
+            <td v-if="operatorStore.hasMultipleOperators" class="px-3 py-2">{{ operatorStore.operators.find(o => o.id === qso.operatorId)?.callsign ?? '' }}</td>
             <td class="px-3 py-2">{{ qslLabel(qso.qslSent) }}</td>
             <td class="px-3 py-2">{{ qslLabel(qso.qslReceived) }}</td>
             <td class="whitespace-nowrap px-3 py-2 text-right">
@@ -118,7 +122,7 @@ function qslLabel(value: string): string {
             </td>
           </tr>
           <tr v-if="qsos.length === 0">
-            <td :colspan="12" class="px-3 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
+            <td :colspan="operatorStore.hasMultipleOperators ? 13 : 12" class="px-3 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
               {{ t('history.noResults') }}
             </td>
           </tr>

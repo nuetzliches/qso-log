@@ -1,12 +1,14 @@
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import type { QSO } from '../../types/qso'
+import type { Operator } from '../../types/operator'
 import { formatUtcDateTime } from '../../utils/dateTime'
 
 export interface PdfReportOptions {
   stationCallsign: string
   dateFrom?: string
   dateTo?: string
+  operators?: Operator[]
 }
 
 export function generatePdfReport(qsos: QSO[], options: PdfReportOptions): void {
@@ -30,7 +32,8 @@ export function generatePdfReport(qsos: QSO[], options: PdfReportOptions): void 
   }
 
   // Table
-  const headers = [['#', 'Date/Time', 'Callsign', 'Mode', 'Freq', 'Band', 'RST S', 'RST R', 'QSL S', 'QSL R', 'Remarks']]
+  const showOperator = (options.operators?.length ?? 0) > 1
+  const headers = [['#', 'Date/Time', 'Callsign', 'Mode', 'Freq', 'Band', 'RST S', 'RST R', ...(showOperator ? ['Operator'] : []), 'QSL S', 'QSL R', 'Remarks']]
 
   const body = qsos.map((qso) => [
     String(qso.sequenceNumber),
@@ -41,6 +44,7 @@ export function generatePdfReport(qsos: QSO[], options: PdfReportOptions): void 
     qso.band,
     qso.rstSent,
     qso.rstReceived,
+    ...(showOperator ? [options.operators!.find((o) => o.id === qso.operatorId)?.callsign ?? ''] : []),
     qso.qslSent === 'yes' ? 'Y' : qso.qslSent === 'requested' ? 'R' : 'N',
     qso.qslReceived === 'yes' ? 'Y' : qso.qslReceived === 'requested' ? 'R' : 'N',
     qso.remarks.slice(0, 40),

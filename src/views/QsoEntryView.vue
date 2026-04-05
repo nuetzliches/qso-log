@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import { useQsoStore } from '../stores/qsoStore'
+import { useOperatorStore } from '../stores/operatorStore'
 import { qsoRepository } from '../db/repositories/qsoRepository'
 import QsoForm from '../components/qso/QsoForm.vue'
 import { formatUtcDateTime } from '../utils/dateTime'
@@ -11,6 +12,7 @@ import type { QSO } from '../types/qso'
 const { t } = useI18n()
 const route = useRoute()
 const qsoStore = useQsoStore()
+const operatorStore = useOperatorStore()
 const editQso = ref<QSO | undefined>(undefined)
 
 onMounted(async () => {
@@ -45,6 +47,7 @@ onMounted(async () => {
               <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.band') }}</th>
               <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.rstSent') }}</th>
               <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.rstReceived') }}</th>
+              <th v-if="operatorStore.hasMultipleOperators" class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.operator') }}</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
@@ -56,6 +59,7 @@ onMounted(async () => {
               <td class="px-3 py-2">{{ qso.band }}</td>
               <td class="px-3 py-2">{{ qso.rstSent }}</td>
               <td class="px-3 py-2">{{ qso.rstReceived }}</td>
+              <td v-if="operatorStore.hasMultipleOperators" class="px-3 py-2">{{ operatorStore.operators.find(o => o.id === qso.operatorId)?.callsign ?? '' }}</td>
             </tr>
           </tbody>
         </table>
