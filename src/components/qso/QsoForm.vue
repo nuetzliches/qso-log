@@ -136,6 +136,12 @@ onBeforeUnmount(() => {
   }
 })
 
+function setNow() {
+  const now = nowUtcIso()
+  date.value = formatUtcDate(now)
+  time.value = formatUtcTime(now)
+}
+
 async function handleSubmit() {
   const isoDate = `${date.value}T${time.value}:00.000Z`
 
@@ -205,6 +211,9 @@ async function handleSubmit() {
       <span class="rounded bg-gray-100 px-2 py-0.5 font-mono dark:bg-gray-800">{{ nextNumber }}</span>
     </div>
 
+    <!-- Operator -->
+    <OperatorSelect v-model="operatorId" />
+
     <!-- Date & Time -->
     <div class="grid grid-cols-2 gap-4">
       <div>
@@ -220,9 +229,21 @@ async function handleSubmit() {
         />
       </div>
       <div>
-        <label for="qso-time" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-          UTC
-        </label>
+        <div class="flex items-center justify-between">
+          <label for="qso-time" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            UTC
+          </label>
+          <button
+            type="button"
+            @click="setNow()"
+            title="Now"
+            class="rounded p-0.5 text-gray-400 hover:text-primary-600 dark:hover:text-primary-400"
+          >
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+          </button>
+        </div>
         <input
           id="qso-time"
           v-model="time"
@@ -373,9 +394,6 @@ async function handleSubmit() {
         </select>
       </div>
     </div>
-
-    <!-- Operator -->
-    <OperatorSelect v-model="operatorId" />
 
     <!-- Remarks -->
     <div>
