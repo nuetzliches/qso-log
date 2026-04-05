@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.4.0](https://github.com/nuetzliches/qso-log/compare/v0.3.0...v0.4.0) (2026-04-05)
+
+### Features
+
+* **mobile-nav:** add "Mehr"-button with slide-up panel for Karte, Einstellungen, Über ([f8a7b49](https://github.com/nuetzliches/qso-log/commit/f8a7b49540a2070d39cc7cb617ec5ce25bc9ef97))
+* **settings:** remove language and appearance selectors from settings page ([dab1dcf](https://github.com/nuetzliches/qso-log/commit/dab1dcf66e5fc8ae0c2eb8ec695fff20faf907dc))
+
+### Bug Fixes
+
+* prevent data loss on SW update with persistent storage and draft auto-save ([e188699](https://github.com/nuetzliches/qso-log/commit/e188699f8cf8ff2fcdf414130d61a0122bd012f8))
+* raise mobile nav z-index above Leaflet panes ([ba37c5f](https://github.com/nuetzliches/qso-log/commit/ba37c5fe09a1c633dd5cf419f397aceef63bd274))
+* restore "Mehr" menu functionality on mobile map view ([fcf333c](https://github.com/nuetzliches/qso-log/commit/fcf333c2aec5cccc8da130a699cd186e5921ccba))
+* **settings:** align input widths consistently ([7a92804](https://github.com/nuetzliches/qso-log/commit/7a92804622874fa428863f99d59f4f19f498feea))
+
 ## [0.3.0](https://github.com/nuetzliches/qso-log/compare/v0.2.0...v0.3.0) (2026-04-05)
 
 ### Features
