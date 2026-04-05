@@ -79,3 +79,8 @@ npm run test:e2e
 ## License
 
 [MIT](LICENSE)
+
+## AI Usage
+Parts of this codebase were developed with the assistance of AI coding tools 
+(e.g. Claude, GitHub Copilot). All code has been reviewed and is maintained 
+by human contributors.
