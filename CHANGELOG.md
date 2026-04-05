@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.1](https://github.com/nuetzliches/qso-log/compare/v0.4.0...v0.4.1) (2026-04-05)
+
+### Bug Fixes
+
+* add periodic service worker update checks ([a43e463](https://github.com/nuetzliches/qso-log/commit/a43e46351213397e5ab2d5ede6b2198d8cad6914))
+
 ## [0.4.0](https://github.com/nuetzliches/qso-log/compare/v0.3.0...v0.4.0) (2026-04-05)
 
 ### Features
