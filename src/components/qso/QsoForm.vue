@@ -9,6 +9,7 @@ import { useCallsignLookup } from '../../composables/useCallsignLookup'
 import { usePreviousContact } from '../../composables/usePreviousContact'
 import { nowUtcIso, formatUtcDate, formatUtcTime } from '../../utils/dateTime'
 import { getDefaultRst } from '../../utils/rst'
+import { lookupDxcc, toFlagEmoji } from '../../utils/dxcc'
 import ModeSelect from './ModeSelect.vue'
 import BandSelect from './BandSelect.vue'
 import OperatorSelect from '../operators/OperatorSelect.vue'
@@ -48,6 +49,8 @@ const qslReceived = ref<QslStatus>('no')
 const locator = ref('')
 const myLocator = ref('')
 const operatorId = ref(0)
+const country = ref('')
+const countryCode = ref('')
 
 // Update RST defaults when mode changes
 watch(mode, (newMode) => {
@@ -72,10 +75,11 @@ watch(previousQsos, (qsos) => {
   }
 })
 
-// Auto-fill name and locator from external callsign lookup (fallback)
+// Auto-fill name, locator and country from external callsign lookup (overrides local DXCC)
 watch(callsignInfo, (info) => {
   if (info?.name && !name.value) name.value = info.name
   if (info?.locator && !locator.value) locator.value = info.locator
+  if (info?.country) country.value = info.country
 })
 
 onMounted(async () => {
@@ -88,6 +92,8 @@ onMounted(async () => {
     time.value = d.slice(11, 16)
     callsign.value = q.callsign
     name.value = q.name ?? ''
+    country.value = q.country ?? ''
+    countryCode.value = q.countryCode ?? ''
     locator.value = q.locator ?? ''
     myLocator.value = q.myLocator ?? ''
     mode.value = q.mode
@@ -106,6 +112,8 @@ onMounted(async () => {
     time.value = d.time
     callsign.value = d.callsign
     name.value = d.name
+    country.value = d.country
+    countryCode.value = d.countryCode
     locator.value = d.locator
     myLocator.value = d.myLocator
     mode.value = d.mode
@@ -139,6 +147,8 @@ onBeforeUnmount(() => {
       time: time.value,
       callsign: callsign.value,
       name: name.value,
+      country: country.value,
+      countryCode: countryCode.value,
       locator: locator.value,
       myLocator: myLocator.value,
       mode: mode.value,
@@ -156,6 +166,20 @@ onBeforeUnmount(() => {
     formDraft.clearDraft()
   }
 })
+
+function handleCallsignInput(event: Event) {
+  callsign.value = (event.target as HTMLInputElement).value.toUpperCase()
+  const dxcc = lookupDxcc(callsign.value)
+  if (dxcc) {
+    country.value = dxcc.country
+    countryCode.value = dxcc.iso2 ?? ''
+  } else {
+    country.value = ''
+    countryCode.value = ''
+  }
+  lookupCallsign(callsign.value)
+  lookupPrevious(callsign.value)
+}
 
 function setNow() {
   const now = nowUtcIso()
@@ -192,6 +216,8 @@ async function handleSubmit() {
     date: isoDate,
     callsign: callsign.value.toUpperCase(),
     name: name.value || undefined,
+    country: country.value || undefined,
+    countryCode: countryCode.value || undefined,
     locator: locator.value || undefined,
     myLocator: myLocator.value || undefined,
     mode: mode.value,
@@ -209,6 +235,8 @@ async function handleSubmit() {
   // Smart defaults: keep mode, power, frequency, band, operator, myLocator
   callsign.value = ''
   name.value = ''
+  country.value = ''
+  countryCode.value = ''
   locator.value = ''
   remarks.value = ''
   clearLookup()
@@ -293,7 +321,7 @@ async function handleSubmit() {
           required
           autocomplete="off"
           class="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm uppercase shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-          @input="callsign = ($event.target as HTMLInputElement).value.toUpperCase(); lookupCallsign(callsign); lookupPrevious(callsign)"
+          @input="handleCallsignInput($event)"
         />
         <!-- Callsign lookup info -->
         <div v-if="lookupLoading" class="mt-1 text-xs text-gray-400">
@@ -333,6 +361,12 @@ async function handleSubmit() {
           class="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         />
       </div>
+    </div>
+
+    <!-- Country (derived from callsign) -->
+    <div v-if="country" class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+      <span v-if="countryCode" class="text-base leading-none">{{ toFlagEmoji(countryCode) }}</span>
+      <span>{{ country }}</span>
     </div>
 
     <!-- Locator (contact) & own locator -->

@@ -25,7 +25,7 @@ const sampleQso: QSO = {
 describe('csvStrategy', () => {
   it('exports header row', () => {
     const result = csvStrategy.export([], { stationCallsign: '' })
-    expect(result).toBe('sequenceNumber,date,callsign,name,mode,power,frequency,band,rstSent,rstReceived,locator,myLocator,remarks,qslSent,qslReceived')
+    expect(result).toBe('sequenceNumber,date,callsign,name,country,mode,power,frequency,band,rstSent,rstReceived,locator,myLocator,remarks,qslSent,qslReceived')
   })
 
   it('exports QSO data', () => {

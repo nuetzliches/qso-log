@@ -7,6 +7,7 @@ import { useOperatorStore } from '../stores/operatorStore'
 import { qsoRepository } from '../db/repositories/qsoRepository'
 import QsoForm from '../components/qso/QsoForm.vue'
 import { formatUtcDateTime } from '../utils/dateTime'
+import { toFlagEmoji } from '../utils/dxcc'
 import type { QSO } from '../types/qso'
 
 const { t } = useI18n()
@@ -54,7 +55,9 @@ onMounted(async () => {
             <tr v-for="qso in qsoStore.recentQsos" :key="qso.id" class="text-sm text-gray-700 dark:text-gray-300">
               <td class="px-3 py-2 font-mono">{{ qso.sequenceNumber }}</td>
               <td class="px-3 py-2">{{ formatUtcDateTime(qso.date) }}</td>
-              <td class="px-3 py-2 font-semibold">{{ qso.callsign }}</td>
+              <td class="px-3 py-2 font-semibold">
+                <span v-if="qso.countryCode" :title="qso.country" class="mr-1">{{ toFlagEmoji(qso.countryCode) }}</span>{{ qso.callsign }}
+              </td>
               <td class="px-3 py-2">{{ qso.mode }}</td>
               <td class="px-3 py-2">{{ qso.band }}</td>
               <td class="px-3 py-2">{{ qso.rstSent }}</td>

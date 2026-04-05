@@ -2,7 +2,7 @@ import type { QSO } from '../../types/qso'
 import type { ExportStrategy, ExportOptions } from '../../types/export'
 
 const CSV_HEADERS = [
-  'sequenceNumber', 'date', 'callsign', 'name', 'mode', 'power', 'frequency',
+  'sequenceNumber', 'date', 'callsign', 'name', 'country', 'mode', 'power', 'frequency',
   'band', 'rstSent', 'rstReceived', 'locator', 'myLocator', 'remarks', 'qslSent', 'qslReceived',
 ]
 

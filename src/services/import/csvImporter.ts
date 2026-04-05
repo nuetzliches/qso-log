@@ -49,6 +49,7 @@ export const csvImporter: ImportStrategy = {
         date: record.date || '',
         callsign: record.callsign || '',
         name: record.name || '',
+        country: record.country || undefined,
         mode: record.mode || '',
         power: record.power || '',
         frequency: record.frequency || '',

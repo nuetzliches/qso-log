@@ -8,6 +8,8 @@ export interface QSO {
   date: string
   callsign: string
   name?: string
+  country?: string
+  countryCode?: string
   mode: string
   power: string
   frequency: string

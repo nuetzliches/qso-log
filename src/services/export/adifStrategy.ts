@@ -27,6 +27,7 @@ export const adifStrategy: ExportStrategy = {
       fields.push(adifField('TIME_ON', formatTimeForAdif(qso.date)))
       fields.push(adifField('CALL', qso.callsign))
       if (qso.name) fields.push(adifField('NAME', qso.name))
+      if (qso.country) fields.push(adifField('COUNTRY', qso.country))
       fields.push(adifField('MODE', qso.mode))
       if (qso.band) fields.push(adifField('BAND', qso.band))
       if (qso.frequency) fields.push(adifField('FREQ', qso.frequency))

@@ -24,6 +24,13 @@ export class FunkLogDB extends Dexie {
       settings: 'key',
     })
 
+    // v3: Added country/countryCode fields to QSO (no index change needed)
+    this.version(3).stores({
+      qsos: '++id, uuid, sequenceNumber, date, callsign, mode, band, operatorId, _syncStatus, [date+operatorId], [band+mode]',
+      operators: '++id, uuid, callsign',
+      settings: 'key',
+    })
+
     this.qsos.hook('creating', (_primKey, obj) => {
       if (!obj.uuid) {
         obj.uuid = crypto.randomUUID()

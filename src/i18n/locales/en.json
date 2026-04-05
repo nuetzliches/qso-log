@@ -33,6 +33,7 @@
     "distance": "{km} km",
     "bearing": "{deg}\u00b0 {dir}",
     "name": "Name (Remote Station)",
+    "country": "Country",
     "previousContact": "Previous Contact",
     "lastQso": "Last QSO",
     "totalPreviousQsos": "{count} previous QSOs"

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { formatUtcDateTime } from '../../utils/dateTime'
+import { toFlagEmoji } from '../../utils/dxcc'
 import { useOperatorStore } from '../../stores/operatorStore'
 import type { QSO, QSOSort } from '../../types/qso'
 
@@ -94,7 +95,9 @@ function qslLabel(value: string): string {
           >
             <td class="px-3 py-2 font-mono">{{ qso.sequenceNumber }}</td>
             <td class="whitespace-nowrap px-3 py-2">{{ formatUtcDateTime(qso.date) }}</td>
-            <td class="px-3 py-2 font-semibold">{{ qso.callsign }}</td>
+            <td class="px-3 py-2 font-semibold">
+              <span v-if="qso.countryCode" :title="qso.country" class="mr-1">{{ toFlagEmoji(qso.countryCode) }}</span>{{ qso.callsign }}
+            </td>
             <td class="px-3 py-2">{{ qso.mode }}</td>
             <td class="px-3 py-2">{{ qso.frequency }}</td>
             <td class="px-3 py-2">{{ qso.band }}</td>
