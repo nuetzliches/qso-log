@@ -1,0 +1,100 @@
+name: Bug Report
+description: Report a bug / Einen Fehler melden
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug!
+        Danke, dass du dir die Zeit nimmst, einen Fehler zu melden!
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened? / Was ist passiert?
+      description: |
+        A clear description of the bug.
+        Eine klare Beschreibung des Fehlers.
+      placeholder: |
+        EN: Describe what happened...
+        DE: Beschreibe, was passiert ist...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior / Erwartetes Verhalten
+      description: |
+        What did you expect to happen?
+        Was hättest du erwartet?
+      placeholder: |
+        EN: I expected...
+        DE: Ich hätte erwartet...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce / Schritte zum Reproduzieren
+      description: |
+        Step-by-step instructions to reproduce the bug.
+        Schritt-für-Schritt-Anleitung, um den Fehler nachzustellen.
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots / Logs (optional)
+      description: |
+        Add screenshots or paste console logs if helpful.
+        Screenshots oder Konsolenausgaben einfügen, falls hilfreich.
+
+  - type: input
+    id: app-version
+    attributes:
+      label: App version / App-Version
+      placeholder: "e.g. 0.2.0"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      options:
+        - Chrome / Chromium
+        - Firefox
+        - Safari
+        - Edge
+        - Other / Sonstiges
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating system / Betriebssystem
+      placeholder: "e.g. Windows 11, macOS 14, Android 14, iOS 17"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority / Priorität
+      description: |
+        How severely does this affect your usage?
+        Wie stark beeinträchtigt dieser Fehler deine Nutzung?
+      options:
+        - Low – minor inconvenience / Geringfügig
+        - Medium – workaround exists / Mittel – Workaround möglich
+        - High – blocks core functionality / Hoch – Kernfunktion betroffen
+    validations:
+      required: false

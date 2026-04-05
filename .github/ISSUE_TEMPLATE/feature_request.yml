@@ -1,0 +1,54 @@
+name: Feature Request
+description: Suggest a new feature or improvement / Neues Feature oder Verbesserung vorschlagen
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an improvement to qso-log!
+        Danke für deinen Verbesserungsvorschlag für qso-log!
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / Motivation
+      description: |
+        What problem does this feature solve? Is it related to a specific frustration?
+        Welches Problem löst dieses Feature? Gibt es einen konkreten Auslöser?
+      placeholder: |
+        EN: I'm always frustrated when...
+        DE: Es ist immer umständlich, wenn...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution / Vorgeschlagene Lösung
+      description: |
+        Describe what you'd like to see. Be as specific as possible.
+        Beschreibe, was du dir vorstellst. Je konkreter, desto besser.
+      placeholder: |
+        EN: I would like...
+        DE: Ich würde mir wünschen...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered / Betrachtete Alternativen
+      description: |
+        Have you considered other solutions or workarounds?
+        Hast du andere Lösungen oder Workarounds in Betracht gezogen?
+      placeholder: |
+        EN: I also considered...
+        DE: Ich habe auch überlegt...
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context / Zusätzlicher Kontext
+      description: |
+        Screenshots, mockups, links to similar features in other tools – anything that helps.
+        Screenshots, Mockups, Links zu ähnlichen Features in anderen Tools – alles, was hilft.
