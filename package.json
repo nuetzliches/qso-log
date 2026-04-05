@@ -1,7 +1,7 @@
 {
   "name": "qsolog",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Offline-first PWA logbook for amateur radio operators",
   "license": "MIT",
   "type": "module",
