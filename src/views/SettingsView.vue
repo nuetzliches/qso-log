@@ -4,6 +4,9 @@ import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '../stores/settingsStore'
 import ThemeToggle from '../components/common/ThemeToggle.vue'
 import LocaleSwitch from '../components/common/LocaleSwitch.vue'
+import { version } from '../../package.json'
+
+const isDev = import.meta.env.DEV
 
 const { t } = useI18n()
 const settings = useSettingsStore()
@@ -109,6 +112,15 @@ onMounted(() => {
           />
         </div>
       </div>
+    </section>
+
+    <!-- About -->
+    <section class="space-y-1 border-t border-gray-200 pt-4 dark:border-gray-700">
+      <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-300">{{ t('settings.about') }}</h2>
+      <p class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+        QSOlog v{{ version }}
+        <span v-if="isDev" class="rounded bg-amber-100 px-1.5 py-0.5 text-xs font-medium text-amber-800 dark:bg-amber-900 dark:text-amber-200">dev</span>
+      </p>
     </section>
   </div>
 </template>

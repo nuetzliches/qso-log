@@ -75,7 +75,8 @@
     "hamqthUsername": "HamQTH Benutzername",
     "hamqthPassword": "HamQTH Passwort",
     "callsignLookup": "Rufzeichen-Lookup",
-    "callsignLookupHint": "Erfordert Internetverbindung"
+    "callsignLookupHint": "Erfordert Internetverbindung",
+    "about": "Über"
   },
   "common": {
     "yes": "Ja",

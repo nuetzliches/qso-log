@@ -6,6 +6,9 @@ import { useOnlineStatus } from '../../composables/useOnlineStatus'
 import ThemeToggle from './ThemeToggle.vue'
 import LocaleSwitch from './LocaleSwitch.vue'
 import { onMounted } from 'vue'
+import { version } from '../../../package.json'
+
+const isDev = import.meta.env.DEV
 
 const { t } = useI18n()
 const route = useRoute()
@@ -83,6 +86,10 @@ const navItems = [
         </div>
         <ThemeToggle />
         <LocaleSwitch />
+        <p class="flex items-center justify-center gap-1.5 text-xs text-gray-400 dark:text-gray-600">
+          v{{ version }}
+          <span v-if="isDev" class="rounded bg-amber-100 px-1.5 py-0.5 font-medium text-amber-800 dark:bg-amber-900 dark:text-amber-200">dev</span>
+        </p>
       </div>
     </aside>
 
