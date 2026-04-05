@@ -119,7 +119,7 @@ const isMoreActive = computed(() => route.path === '/map' || route.path === '/se
         ? 'flex flex-1 flex-col overflow-hidden pb-16 md:pb-0'
         : 'flex-1 overflow-auto pb-20 md:pb-0'"
     >
-      <div :class="route.name === 'map' ? 'flex flex-1 flex-col overflow-hidden' : 'mx-auto max-w-5xl px-4 py-6'">
+      <div :class="route.name === 'map' ? 'flex flex-1 flex-col' : 'mx-auto max-w-5xl px-4 py-6'">
         <RouterView />
       </div>
     </main>
@@ -203,6 +203,10 @@ const isMoreActive = computed(() => route.path === '/map' || route.path === '/se
             </svg>
             {{ t(item.labelKey) }}
           </RouterLink>
+          <div class="flex gap-2 border-t border-gray-100 px-6 py-3 dark:border-gray-800">
+            <div class="flex-1"><ThemeToggle placement="top" /></div>
+            <div class="flex-1"><LocaleSwitch placement="top" /></div>
+          </div>
         </div>
       </div>
     </Teleport>
