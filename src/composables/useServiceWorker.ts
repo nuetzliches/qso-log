@@ -5,7 +5,19 @@ export function useServiceWorker() {
     needRefresh,
     offlineReady,
     updateServiceWorker,
-  } = useRegisterSW()
+  } = useRegisterSW({
+    onRegistered(registration) {
+      if (!registration) return
+
+      setInterval(() => registration.update(), 60 * 60 * 1000)
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          registration.update()
+        }
+      })
+    },
+  })
 
   function close() {
     needRefresh.value = false
