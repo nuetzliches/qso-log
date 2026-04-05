@@ -2,8 +2,6 @@
 import { onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '../stores/settingsStore'
-import ThemeToggle from '../components/common/ThemeToggle.vue'
-import LocaleSwitch from '../components/common/LocaleSwitch.vue'
 import LocatorInput from '../components/common/LocatorInput.vue'
 const { t } = useI18n()
 const settings = useSettingsStore()
@@ -18,18 +16,6 @@ onMounted(() => {
     <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
       {{ t('settings.title') }}
     </h1>
-
-    <!-- Language + Theme -->
-    <section class="grid grid-cols-2 gap-4">
-      <div class="space-y-2">
-        <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-300">{{ t('settings.language') }}</h2>
-        <LocaleSwitch />
-      </div>
-      <div class="space-y-2">
-        <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-300">{{ t('settings.theme') }}</h2>
-        <ThemeToggle />
-      </div>
-    </section>
 
     <!-- Own Callsign and Locator -->
     <section class="grid grid-cols-1 gap-3 sm:grid-cols-2">
