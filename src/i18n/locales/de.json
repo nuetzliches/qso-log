@@ -67,6 +67,8 @@
     "themeLight": "Hell",
     "themeDark": "Dunkel",
     "themeSystem": "System",
+    "localeDe": "Deutsch",
+    "localeEn": "Englisch",
     "ownCallsign": "Eigenes Rufzeichen",
     "ownCallsignHint": "Wird im PDF-Header verwendet",
     "vorname": "Vorname",

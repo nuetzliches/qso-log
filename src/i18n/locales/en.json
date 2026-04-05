@@ -67,6 +67,8 @@
     "themeLight": "Light",
     "themeDark": "Dark",
     "themeSystem": "System",
+    "localeDe": "German",
+    "localeEn": "English",
     "ownCallsign": "Own Callsign",
     "ownCallsignHint": "Used in PDF report header",
     "vorname": "First Name",

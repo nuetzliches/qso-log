@@ -38,8 +38,8 @@ const navItems = [
     </a>
 
     <!-- Desktop Sidebar -->
-    <aside class="hidden w-64 flex-shrink-0 border-r border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900 md:flex md:flex-col">
-      <div class="flex h-16 items-center gap-2 border-b border-gray-200 px-4 dark:border-gray-800">
+    <aside class="sticky top-0 hidden h-screen w-64 flex-shrink-0 border-r border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900 md:flex md:flex-col">
+      <div class="flex h-16 flex-shrink-0 items-center gap-2 border-b border-gray-200 px-4 dark:border-gray-800">
         <span class="text-xl font-bold text-primary-600 dark:text-primary-400">QSOlog</span>
         <span
           v-if="!isOnline"
@@ -49,7 +49,7 @@ const navItems = [
         </span>
       </div>
 
-      <nav class="flex-1 space-y-1 px-3 py-4" aria-label="Main navigation">
+      <nav class="flex-1 overflow-y-auto space-y-1 px-3 py-4" aria-label="Main navigation">
         <RouterLink
           v-for="item in navItems"
           :key="item.to"
@@ -80,12 +80,14 @@ const navItems = [
         </RouterLink>
       </nav>
 
-      <div class="space-y-3 border-t border-gray-200 p-4 dark:border-gray-800">
-        <div v-if="settings.ownCallsign" class="text-center text-sm font-semibold text-gray-600 dark:text-gray-400">
+      <div class="flex-shrink-0 space-y-1 border-t border-gray-200 p-3 dark:border-gray-800">
+        <div v-if="settings.ownCallsign" class="px-2 py-1 text-center text-sm font-semibold text-gray-600 dark:text-gray-400">
           {{ settings.ownCallsign }}
         </div>
-        <ThemeToggle />
-        <LocaleSwitch />
+        <div class="flex gap-1">
+          <div class="flex-1"><ThemeToggle placement="top" /></div>
+          <div class="flex-1"><LocaleSwitch placement="top" /></div>
+        </div>
         <p class="flex items-center justify-center gap-1.5 text-xs text-gray-400 dark:text-gray-600">
           v{{ version }}
           <span v-if="isDev" class="rounded bg-amber-100 px-1.5 py-0.5 font-medium text-amber-800 dark:bg-amber-900 dark:text-amber-200">dev</span>
