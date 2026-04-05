@@ -119,14 +119,14 @@ const isMoreActive = computed(() => route.path === '/map' || route.path === '/se
         ? 'flex flex-1 flex-col overflow-hidden pb-16 md:pb-0'
         : 'flex-1 overflow-auto pb-20 md:pb-0'"
     >
-      <div :class="route.name === 'map' ? 'flex flex-1 flex-col' : 'mx-auto max-w-5xl px-4 py-6'">
+      <div :class="route.name === 'map' ? 'flex flex-1 flex-col overflow-hidden' : 'mx-auto max-w-5xl px-4 py-6'">
         <RouterView />
       </div>
     </main>
 
     <!-- Mobile bottom tab bar -->
     <nav
-      class="fixed bottom-0 left-0 right-0 z-40 flex border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950 md:hidden"
+      class="fixed bottom-0 left-0 right-0 z-[800] flex border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950 md:hidden"
       aria-label="Main navigation"
     >
       <RouterLink
@@ -175,7 +175,7 @@ const isMoreActive = computed(() => route.path === '/map' || route.path === '/se
 
     <!-- Mehr-Panel -->
     <Teleport to="body">
-      <div v-if="showMore" class="fixed inset-0 z-50 md:hidden" @click.self="showMore = false">
+      <div v-if="showMore" class="fixed inset-0 z-[900] md:hidden" @click.self="showMore = false">
         <div class="absolute inset-0 bg-black/30" @click="showMore = false" />
         <div class="absolute bottom-16 left-0 right-0 rounded-t-2xl border-t border-gray-200 bg-white shadow-xl dark:border-gray-800 dark:bg-gray-950">
           <RouterLink
