@@ -32,7 +32,8 @@
     "myLocator": "Eigener Locator",
     "distance": "{km} km",
     "bearing": "{deg}\u00b0 {dir}",
-    "name": "Vorname (Gegenstation)",
+    "name": "Name (Gegenstation)",
+    "country": "Land",
     "previousContact": "Früherer Kontakt",
     "lastQso": "Letztes QSO",
     "totalPreviousQsos": "{count} frühere QSOs"

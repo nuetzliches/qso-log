@@ -35,46 +35,35 @@ onMounted(() => {
       <ThemeToggle />
     </section>
 
-    <!-- Own Callsign -->
-    <section class="space-y-2">
-      <label for="settings-callsign" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-        {{ t('settings.ownCallsign') }}
-      </label>
-      <p class="text-xs text-gray-500 dark:text-gray-400">{{ t('settings.ownCallsignHint') }}</p>
-      <input
-        id="settings-callsign"
-        :value="settings.ownCallsign"
-        type="text"
-        class="w-full max-w-xs rounded-md border border-gray-300 bg-white px-3 py-2 text-sm uppercase shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-        @change="settings.setSetting('ownCallsign', ($event.target as HTMLInputElement).value.toUpperCase())"
-      />
-    </section>
+    <!-- Own Callsign and Locator -->
+    <section class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div class="space-y-2">
+        <label for="settings-callsign" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+          {{ t('settings.ownCallsign') }}
+        </label>
+        <p class="text-xs text-gray-500 dark:text-gray-400">{{ t('settings.ownCallsignHint') }}</p>
+        <input
+          id="settings-callsign"
+          :value="settings.ownCallsign"
+          type="text"
+          class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm uppercase shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          @change="settings.setSetting('ownCallsign', ($event.target as HTMLInputElement).value.toUpperCase())"
+        />
+      </div>
 
-    <!-- Own Locator -->
-    <section class="space-y-2">
-      <LocatorInput
-        :model-value="settings.ownLocator"
-        :show-distance="false"
-        :label="t('settings.ownLocator')"
-        id="settings-locator"
-        @update:model-value="settings.setSetting('ownLocator', $event)"
-      />
-      <p class="text-xs text-gray-500 dark:text-gray-400">{{ t('settings.ownLocatorHint') }}</p>
-    </section>
-
-    <!-- First Name -->
-    <section class="space-y-2">
-      <label for="settings-vorname" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-        {{ t('settings.vorname') }}
-      </label>
-      <p class="text-xs text-gray-500 dark:text-gray-400">{{ t('settings.vornameHint') }}</p>
-      <input
-        id="settings-vorname"
-        :value="settings.vorname"
-        type="text"
-        class="w-full max-w-xs rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-        @change="settings.setSetting('vorname', ($event.target as HTMLInputElement).value)"
-      />
+      <div class="space-y-2">
+        <label for="settings-locator" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+          {{ t('settings.ownLocator') }}
+        </label>
+        <p class="text-xs text-gray-500 dark:text-gray-400">{{ t('settings.ownLocatorHint') }}</p>
+        <LocatorInput
+          :model-value="settings.ownLocator"
+          :show-distance="false"
+          :label="''"
+          id="settings-locator"
+          @update:model-value="settings.setSetting('ownLocator', $event)"
+        />
+      </div>
     </section>
 
     <!-- Callsign Lookup -->
