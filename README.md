@@ -2,6 +2,8 @@
 
 Offline-first PWA logbook for amateur radio operators.
 
+**Live app:** https://nuetzliches.github.io/qso-log/
+
 [![GitHub Release](https://img.shields.io/github/v/release/nuetzliches/qso-log)](https://github.com/nuetzliches/qso-log/releases) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![Vue 3](https://img.shields.io/badge/Vue-3-4FC08D.svg)](https://vuejs.org/) [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6.svg)](https://www.typescriptlang.org/)
 
 ## Features
