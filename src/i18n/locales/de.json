@@ -33,6 +33,7 @@
     "locatorHint": "Maidenhead (z.B. JN47ao)",
     "myLocator": "Eigener Locator",
     "distance": "{km} km",
+    "distanceLabel": "Entfernung",
     "bearing": "{deg}\u00b0 {dir}",
     "name": "Name (Gegenstation)",
     "country": "Land",

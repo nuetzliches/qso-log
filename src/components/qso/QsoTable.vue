@@ -2,6 +2,7 @@
 import { useI18n } from 'vue-i18n'
 import { formatUtcDateTime } from '../../utils/dateTime'
 import { toFlagEmoji } from '../../utils/dxcc'
+import { calculateDistanceKm, isValidLocator } from '../../utils/locator'
 import { useOperatorStore } from '../../stores/operatorStore'
 import type { QSO, QSOSort } from '../../types/qso'
 
@@ -27,12 +28,12 @@ const columns: { field: keyof QSO; labelKey: string; sortable: boolean }[] = [
   { field: 'sequenceNumber', labelKey: 'qso.sequenceNumber', sortable: true },
   { field: 'date', labelKey: 'qso.date', sortable: true },
   { field: 'callsign', labelKey: 'qso.callsign', sortable: true },
+  { field: 'locator', labelKey: 'qso.distanceLabel', sortable: false },
   { field: 'mode', labelKey: 'qso.mode', sortable: true },
   { field: 'frequency', labelKey: 'qso.frequency', sortable: false },
   { field: 'band', labelKey: 'qso.band', sortable: true },
   { field: 'rstSent', labelKey: 'qso.rstSent', sortable: false },
   { field: 'rstReceived', labelKey: 'qso.rstReceived', sortable: false },
-  { field: 'remarks', labelKey: 'qso.remarks', sortable: false },
 ]
 
 function qslLabel(value: string): string {
@@ -84,6 +85,7 @@ function qslLabel(value: string): string {
             <th v-if="operatorStore.hasMultipleOperators" class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.operator') }}</th>
             <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.qslSent') }}</th>
             <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.qslReceived') }}</th>
+            <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.remarks') }}</th>
             <th class="px-3 py-2 text-right text-xs font-medium uppercase text-gray-500 dark:text-gray-400"></th>
           </tr>
         </thead>
@@ -98,15 +100,20 @@ function qslLabel(value: string): string {
             <td class="px-3 py-2 font-semibold">
               <span v-if="qso.countryCode" :title="qso.country" class="mr-1">{{ toFlagEmoji(qso.countryCode) }}</span>{{ qso.callsign }}
             </td>
+            <td class="px-3 py-2 text-gray-500 dark:text-gray-400">
+              <template v-if="qso.locator && qso.myLocator && isValidLocator(qso.locator) && isValidLocator(qso.myLocator)">
+                {{ calculateDistanceKm(qso.myLocator, qso.locator) }} km
+              </template>
+            </td>
             <td class="px-3 py-2">{{ qso.mode }}</td>
             <td class="px-3 py-2">{{ qso.frequency }}</td>
             <td class="px-3 py-2">{{ qso.band }}</td>
             <td class="px-3 py-2">{{ qso.rstSent }}</td>
             <td class="px-3 py-2">{{ qso.rstReceived }}</td>
-            <td class="max-w-[200px] truncate px-3 py-2" :title="qso.remarks">{{ qso.remarks }}</td>
             <td v-if="operatorStore.hasMultipleOperators" class="px-3 py-2">{{ operatorStore.operators.find(o => o.id === qso.operatorId)?.callsign ?? '' }}</td>
             <td class="px-3 py-2">{{ qslLabel(qso.qslSent) }}</td>
             <td class="px-3 py-2">{{ qslLabel(qso.qslReceived) }}</td>
+            <td class="max-w-[200px] truncate px-3 py-2" :title="qso.remarks">{{ qso.remarks }}</td>
             <td class="whitespace-nowrap px-3 py-2 text-right">
               <button
                 class="text-xs text-primary-600 hover:underline dark:text-primary-400"
@@ -125,7 +132,7 @@ function qslLabel(value: string): string {
             </td>
           </tr>
           <tr v-if="qsos.length === 0">
-            <td :colspan="operatorStore.hasMultipleOperators ? 13 : 12" class="px-3 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
+            <td :colspan="operatorStore.hasMultipleOperators ? 14 : 13" class="px-3 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
               {{ t('history.noResults') }}
             </td>
           </tr>
