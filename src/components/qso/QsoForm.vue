@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
+import { ref, watch, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useQsoStore } from '../../stores/qsoStore'
@@ -139,7 +139,7 @@ onMounted(async () => {
   }
 })
 
-onBeforeUnmount(() => {
+function persistDraft() {
   if (props.editQso) return
   if (callsign.value || remarks.value) {
     formDraft.saveDraft({
@@ -165,6 +165,22 @@ onBeforeUnmount(() => {
   } else {
     formDraft.clearDraft()
   }
+}
+
+// Auto-save draft to localStorage so data survives page reloads (e.g. SW updates)
+const draftKey = computed(() =>
+  [callsign.value, name.value, remarks.value, mode.value, band.value, frequency.value, power.value, locator.value].join('|'),
+)
+
+let autoSaveTimer: ReturnType<typeof setTimeout> | undefined
+watch(draftKey, () => {
+  clearTimeout(autoSaveTimer)
+  autoSaveTimer = setTimeout(persistDraft, 500)
+})
+
+onBeforeUnmount(() => {
+  clearTimeout(autoSaveTimer)
+  persistDraft()
 })
 
 function handleCallsignInput(event: Event) {

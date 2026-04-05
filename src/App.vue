@@ -2,9 +2,11 @@
 import { useI18n } from 'vue-i18n'
 import AppLayout from './components/common/AppLayout.vue'
 import { useServiceWorker } from './composables/useServiceWorker'
+import { useStoragePersistence } from './composables/useStoragePersistence'
 
 const { t } = useI18n()
 const { needRefresh, offlineReady, updateServiceWorker, close } = useServiceWorker()
+useStoragePersistence()
 </script>
 
 <template>

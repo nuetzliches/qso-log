@@ -9,11 +9,30 @@ const { locale, t } = useI18n()
 const settings = useSettingsStore()
 const open = ref(false)
 const container = ref<HTMLElement | null>(null)
+const button = ref<HTMLElement | null>(null)
+const dropdownStyle = ref<Record<string, string>>({})
 
 const locales = [
   { code: 'de', flag: '🇩🇪', labelKey: 'settings.localeDe' },
   { code: 'en', flag: '🇬🇧', labelKey: 'settings.localeEn' },
 ]
+
+function openDropdown() {
+  if (button.value) {
+    const rect = button.value.getBoundingClientRect()
+    const openUpward = props.placement === 'top'
+    dropdownStyle.value = {
+      position: 'fixed',
+      left: rect.left + 'px',
+      minWidth: rect.width + 'px',
+      zIndex: '9999',
+      ...(openUpward
+        ? { bottom: (window.innerHeight - rect.top) + 'px' }
+        : { top: rect.bottom + 'px' }),
+    }
+  }
+  open.value = true
+}
 
 function setLocale(code: string) {
   locale.value = code
@@ -47,12 +66,13 @@ const current = () => locales.find(l => l.code === locale.value) ?? locales[0]
 <template>
   <div ref="container" class="relative">
     <button
+      ref="button"
       :aria-label="t('settings.language')"
       :title="t(current().labelKey)"
       aria-haspopup="listbox"
       :aria-expanded="open"
       class="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
-      @click="open = !open"
+      @click="open ? open = false : openDropdown()"
     >
       <span aria-hidden="true" class="text-base leading-none">{{ current().flag }}</span>
       <span class="flex-1 text-left">{{ t(current().labelKey) }}</span>
@@ -62,28 +82,30 @@ const current = () => locales.find(l => l.code === locale.value) ?? locales[0]
       </svg>
     </button>
 
-    <div
-      v-if="open"
-      role="listbox"
-      :aria-label="t('settings.language')"
-      class="absolute left-0 z-50 min-w-full rounded-lg border border-gray-200 bg-white py-1 shadow-lg dark:border-gray-700 dark:bg-gray-900"
-      :class="props.placement === 'top' ? 'bottom-full mb-1' : 'top-full mt-1'"
-    >
-      <button
-        v-for="loc in locales"
-        :key="loc.code"
-        role="option"
-        :aria-selected="locale === loc.code"
-        :aria-label="t(loc.labelKey)"
-        class="flex w-full items-center gap-2 px-3 py-2 text-sm transition-colors"
-        :class="locale === loc.code
-          ? 'bg-primary-50 text-primary-700 dark:bg-primary-900/40 dark:text-primary-300'
-          : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'"
-        @click="setLocale(loc.code)"
+    <Teleport to="body">
+      <div
+        v-if="open"
+        role="listbox"
+        :aria-label="t('settings.language')"
+        :style="dropdownStyle"
+        class="rounded-lg border border-gray-200 bg-white py-1 shadow-lg dark:border-gray-700 dark:bg-gray-900"
       >
-        <span aria-hidden="true" class="text-base leading-none">{{ loc.flag }}</span>
-        {{ t(loc.labelKey) }}
-      </button>
-    </div>
+        <button
+          v-for="loc in locales"
+          :key="loc.code"
+          role="option"
+          :aria-selected="locale === loc.code"
+          :aria-label="t(loc.labelKey)"
+          class="flex w-full items-center gap-2 px-3 py-2 text-sm transition-colors"
+          :class="locale === loc.code
+            ? 'bg-primary-50 text-primary-700 dark:bg-primary-900/40 dark:text-primary-300'
+            : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'"
+          @click="setLocale(loc.code)"
+        >
+          <span aria-hidden="true" class="text-base leading-none">{{ loc.flag }}</span>
+          {{ t(loc.labelKey) }}
+        </button>
+      </div>
+    </Teleport>
   </div>
 </template>
