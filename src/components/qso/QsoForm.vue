@@ -301,7 +301,7 @@ async function handleSubmit() {
       <div>
         <div class="flex items-center justify-between">
           <label for="qso-time" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            UTC
+            {{ t('qso.time') }}
           </label>
           <button
             type="button"
@@ -325,11 +325,17 @@ async function handleSubmit() {
     </div>
 
     <!-- Callsign & Name -->
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div class="grid grid-cols-2 gap-4">
       <div>
-        <label for="qso-callsign" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-          {{ t('qso.callsign') }}
-        </label>
+        <div class="flex items-center justify-between">
+          <label for="qso-callsign" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            {{ t('qso.callsign') }}
+          </label>
+          <span v-if="country" class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400" :title="country">
+            <span v-if="countryCode">[{{ countryCode }}] {{ toFlagEmoji(countryCode) }}</span>
+            <span v-else>{{ country }}</span>
+          </span>
+        </div>
         <input
           id="qso-callsign"
           v-model="callsign"
@@ -353,17 +359,6 @@ async function handleSubmit() {
           <span v-if="callsignInfo.locator"> &middot; {{ callsignInfo.locator }}</span>
           <span class="ml-1 text-blue-500 dark:text-blue-400">({{ callsignInfo.provider }})</span>
         </div>
-        <!-- Previous contact info -->
-        <div
-          v-if="previousQsos.length > 0"
-          class="mt-1 rounded-md bg-green-50 px-3 py-1.5 text-xs text-green-800 dark:bg-green-900/30 dark:text-green-200"
-        >
-          <span class="font-medium">{{ t('qso.previousContact') }}:</span>
-          {{ t('qso.lastQso') }} {{ previousQsos[0].date.slice(0, 10) }} &middot; {{ previousQsos[0].mode }} &middot; {{ previousQsos[0].band }}
-          <span v-if="previousQsos.length > 1" class="ml-1 text-green-600 dark:text-green-400">
-            ({{ t('qso.totalPreviousQsos', { count: previousQsos.length }) }})
-          </span>
-        </div>
       </div>
 
       <div>
@@ -379,14 +374,8 @@ async function handleSubmit() {
       </div>
     </div>
 
-    <!-- Country (derived from callsign) -->
-    <div v-if="country" class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-      <span v-if="countryCode" class="text-base leading-none">{{ toFlagEmoji(countryCode) }}</span>
-      <span>{{ country }}</span>
-    </div>
-
     <!-- Locator (contact) & own locator -->
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div class="grid grid-cols-2 gap-4">
       <LocatorInput
         v-model="locator"
         :own-locator="myLocator"
@@ -402,8 +391,30 @@ async function handleSubmit() {
       />
     </div>
 
+    <!-- Previous contacts -->
+    <div
+      v-if="previousQsos.length > 0"
+      class="rounded-md bg-green-50 px-3 py-2 text-xs text-green-800 dark:bg-green-900/30 dark:text-green-200"
+    >
+      <div class="mb-1.5 font-medium">{{ t('qso.previousContact') }}</div>
+      <div class="space-y-1">
+        <div v-for="qso in previousQsos" :key="qso.id" class="flex items-center gap-2">
+          <span class="w-20 shrink-0">{{ qso.date.slice(0, 10) }}</span>
+          <span class="w-11 shrink-0">{{ qso.date.slice(11, 16) }}</span>
+          <span class="w-10 shrink-0 font-medium">{{ qso.mode }}</span>
+          <span class="w-12 shrink-0">{{ qso.band }}</span>
+          <router-link
+            :to="{ name: 'qso-entry', query: { edit: String(qso.id) } }"
+            class="ml-auto shrink-0 text-green-600 underline hover:text-green-800 dark:text-green-400 dark:hover:text-green-200"
+          >
+            {{ t('common.open') }}
+          </router-link>
+        </div>
+      </div>
+    </div>
+
     <!-- Mode & Power -->
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div class="grid grid-cols-2 gap-4">
       <ModeSelect v-model="mode" :label="t('qso.mode')" id="qso-mode" />
 
       <div>
