@@ -30,13 +30,13 @@
     "delete": "Delete",
     "deleteConfirm": "Really delete this contact?",
     "recentQsos": "Recent Entries",
-    "locator": "Locator (Remote Station)",
+    "locator": "Locator (remote station)",
     "locatorHint": "Maidenhead (e.g. JN47ao)",
     "myLocator": "Locator (own station)",
     "distance": "{km} km",
     "distanceLabel": "Distance",
     "bearing": "{deg}\u00b0 {dir}",
-    "name": "Name (Remote Station)",
+    "name": "Name (remote station)",
     "country": "Country",
     "previousContact": "Previous Contact",
     "lastQso": "Last QSO",
@@ -138,6 +138,8 @@
     "dragDropHint": "Drag file here or click to select",
     "offlineReady": "App is ready for offline use.",
     "updateAvailable": "A new version is available.",
-    "update": "Update"
+    "update": "Update",
+    "installPrompt": "Install QSOlog as an app for quick access.",
+    "install": "Install"
   }
 }

@@ -138,6 +138,8 @@
     "dragDropHint": "Datei hierher ziehen oder klicken zum Auswählen",
     "offlineReady": "App ist bereit für Offline-Nutzung.",
     "updateAvailable": "Eine neue Version ist verfügbar.",
-    "update": "Aktualisieren"
+    "update": "Aktualisieren",
+    "installPrompt": "QSOlog als App installieren für schnellen Zugriff.",
+    "install": "Installieren"
   }
 }
