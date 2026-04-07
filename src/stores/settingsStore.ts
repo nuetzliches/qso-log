@@ -15,9 +15,10 @@ export const useSettingsStore = defineStore('settings', () => {
 
   async function loadSettings() {
     const settings = await db.settings.toArray()
+    let localeFromDB = false
     for (const s of settings) {
       switch (s.key) {
-        case 'locale': locale.value = s.value as string; break
+        case 'locale': locale.value = s.value as string; localeFromDB = true; break
         case 'theme': theme.value = s.value as ThemeMode; break
         case 'ownCallsign': ownCallsign.value = s.value as string; break
         case 'ownLocator': ownLocator.value = s.value as string; break
@@ -26,7 +27,11 @@ export const useSettingsStore = defineStore('settings', () => {
         case 'hamqthPassword': hamqthPassword.value = s.value as string; break
       }
     }
-    // Sync i18n locale with loaded settings
+    if (!localeFromDB) {
+      const browserLang = navigator.language.split('-')[0]
+      const supported = ['de', 'en']
+      locale.value = supported.includes(browserLang) ? browserLang : 'en'
+    }
     i18n.global.locale.value = locale.value
     applyTheme()
   }
