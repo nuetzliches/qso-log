@@ -18,7 +18,7 @@ useStoragePersistence()
   <div
     v-if="needRefresh || offlineReady"
     role="alert"
-    class="fixed bottom-4 left-4 right-4 z-50 mx-auto max-w-md rounded-lg border border-gray-200 bg-white p-4 shadow-lg dark:border-gray-700 dark:bg-gray-800"
+    class="fixed bottom-20 left-4 right-4 z-[950] mx-auto max-w-md rounded-lg border border-gray-200 bg-white p-4 shadow-lg dark:border-gray-700 dark:bg-gray-800 md:bottom-4"
   >
     <p v-if="offlineReady" class="text-sm text-gray-700 dark:text-gray-300">
       {{ t('common.offlineReady') }}
@@ -48,7 +48,7 @@ useStoragePersistence()
     v-if="showInstallBanner"
     role="complementary"
     aria-label="Install app"
-    class="fixed bottom-4 left-4 right-4 z-50 mx-auto max-w-md rounded-lg border border-gray-200 bg-white p-4 shadow-lg dark:border-gray-700 dark:bg-gray-800"
+    class="fixed bottom-20 left-4 right-4 z-[950] mx-auto max-w-md rounded-lg border border-gray-200 bg-white p-4 shadow-lg dark:border-gray-700 dark:bg-gray-800 md:bottom-4"
   >
     <p class="text-sm text-gray-700 dark:text-gray-300">
       {{ t('common.installPrompt') }}
