@@ -8,17 +8,19 @@ Offline-first PWA logbook for amateur radio operators.
 
 ## Features
 
-- **Offline-first** -- works entirely without internet after the first load. All data is stored locally in the browser (IndexedDB).
-- **QSO logging** -- log contacts with auto-incrementing sequence numbers, UTC timestamps, mode-aware RST defaults, and automatic band detection from frequency.
-- **Import & Export** -- ADIF 3.1.4, CSV, and JSON. Import includes validation, duplicate detection, and preview before committing.
-- **PDF reports** -- generate printable QSO reports (A4 landscape) with summary statistics.
-- **Callsign lookup** -- optional online lookup via [QRZ.com](https://www.qrz.com/) or [HamQTH](https://www.hamqth.com/) to auto-fill name, QTH, country, and grid square.
-- **Multi-operator** -- manage multiple operator profiles and switch between them.
-- **Internationalization** -- German and English UI.
-- **Dark mode** -- light, dark, or system-preference theme.
-- **PWA** -- installable on desktop and mobile with home screen shortcuts.
-- **Accessible** -- semantic HTML, ARIA roles, keyboard navigable.
-
+- **Offline-first** - works entirely without internet after the first load. All data is stored locally in the browser (IndexedDB).
+- **QSO logging** - log contacts with auto-incrementing sequence numbers, UTC timestamps, mode-aware RST defaults, and automatic band detection from frequency. Form drafts are auto-saved so nothing is lost on accidental page reloads.
+- **Map view** - visualize QSO locations on an interactive Leaflet map with marker clustering and dark-mode support.
+- **Maidenhead locator** - enter grid squares for your station and contacts. Distance and bearing are calculated automatically.
+- **QSL tracking** - track QSL sent/received status per QSO (yes / no / requested).
+- **Import & Export** - ADIF 3.1.4, CSV, and JSON. Import includes validation, duplicate detection, and preview before committing.
+- **PDF reports** - generate printable QSO reports (A4 landscape) with summary statistics.
+- **Callsign lookup** - optional online lookup via [QRZ.com](https://www.qrz.com/) or [HamQTH](https://www.hamqth.com/) to auto-fill name, QTH, country, and grid square.
+- **Multi-operator** - manage multiple operator profiles and switch between them.
+- **Internationalization** - German and English UI with automatic browser-language detection on first visit.
+- **Dark mode** - light, dark, or system-preference theme.
+- **PWA** - installable on desktop and mobile with home screen shortcuts and a custom install prompt.
+- **Mobile-optimized** - responsive navigation 
 ## Quick Start
 
 **Prerequisites:** Node.js 18+
@@ -39,14 +41,16 @@ npm run preview
 
 ## Usage
 
-QSOlog has four main views:
+QSOlog has six main views:
 
 | View | Description |
 |------|-------------|
-| **New QSO** | Log a new contact. Select mode, enter frequency (band auto-detects), callsign, RST, and remarks. Common FT8/SSB/FM frequencies are available as presets. |
+| **New QSO** | Log a new contact. Select mode, enter frequency (band auto-detects), callsign, RST, locator, and remarks. Common FT8/SSB/FM frequencies are available as presets. |
 | **History** | Browse, filter, and search your logged QSOs. Export to ADIF/CSV/JSON, import from files (drag & drop supported), and generate PDF reports. |
+| **Map** | Interactive map showing QSO locations based on Maidenhead locators, with marker clustering. |
 | **Operators** | Manage operator profiles with callsign, name, and QTH. |
 | **Settings** | Configure language, theme, your station callsign (used in PDF headers), and optional QRZ.com / HamQTH API credentials for callsign lookups. |
+| **About** | Version info, licenses, and AI disclosure. |
 
 ## Supported Bands
 
@@ -58,7 +62,8 @@ IARU Region 1: 160m, 80m, 60m, 40m, 30m, 20m, 17m, 15m, 12m, 10m, 6m, 2m, 70cm, 
 - [Pinia](https://pinia.vuejs.org/) (state management)
 - [Dexie.js](https://dexie.org/) (IndexedDB)
 - [Tailwind CSS](https://tailwindcss.com/) + [Headless UI](https://headlessui.com/)
-- [jsPDF](https://github.com/parallax/jsPDF) (PDF generation)
+- [Leaflet](https://leafletjs.com/) + [leaflet.markercluster](https://github.com/Leaflet/Leaflet.markercluster) (map & clustering)
+- [jsPDF](https://github.com/parallax/jsPDF) + [jspdf-autotable](https://github.com/simonbengtsson/jsPDF-AutoTable) (PDF generation)
 - [adif-parser-ts](https://github.com/tcort/adif-parser-ts) (ADIF parsing)
 - [vite-plugin-pwa](https://vite-pwa-org.netlify.app/) (service worker & manifest)
 
