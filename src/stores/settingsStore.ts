@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import i18n from '../i18n'
 import { db } from '../db/database'
 import type { ThemeMode } from '../types/settings'
 
@@ -25,13 +26,18 @@ export const useSettingsStore = defineStore('settings', () => {
         case 'hamqthPassword': hamqthPassword.value = s.value as string; break
       }
     }
+    // Sync i18n locale with loaded settings
+    i18n.global.locale.value = locale.value
     applyTheme()
   }
 
   async function setSetting(key: string, value: unknown) {
     await db.settings.put({ key, value })
     switch (key) {
-      case 'locale': locale.value = value as string; break
+      case 'locale':
+        locale.value = value as string
+        i18n.global.locale.value = locale.value
+        break
       case 'theme': theme.value = value as ThemeMode; applyTheme(); break
       case 'ownCallsign': ownCallsign.value = value as string; break
       case 'ownLocator': ownLocator.value = value as string; break
