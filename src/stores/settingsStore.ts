@@ -5,7 +5,7 @@ import { db } from '../db/database'
 import type { ThemeMode } from '../types/settings'
 
 export const useSettingsStore = defineStore('settings', () => {
-  const locale = ref('de')
+  const locale = ref<'de' | 'en'>('en')
   const theme = ref<ThemeMode>('system')
   const ownCallsign = ref('')
   const ownLocator = ref('')
@@ -18,7 +18,7 @@ export const useSettingsStore = defineStore('settings', () => {
     let localeFromDB = false
     for (const s of settings) {
       switch (s.key) {
-        case 'locale': locale.value = s.value as string; localeFromDB = true; break
+        case 'locale': locale.value = s.value as 'de' | 'en'; localeFromDB = true; break
         case 'theme': theme.value = s.value as ThemeMode; break
         case 'ownCallsign': ownCallsign.value = s.value as string; break
         case 'ownLocator': ownLocator.value = s.value as string; break
@@ -30,7 +30,7 @@ export const useSettingsStore = defineStore('settings', () => {
     if (!localeFromDB) {
       const browserLang = navigator.language.split('-')[0]
       const supported = ['de', 'en']
-      locale.value = supported.includes(browserLang) ? browserLang : 'en'
+      locale.value = supported.includes(browserLang) ? (browserLang as 'de' | 'en') : 'en'
     }
     i18n.global.locale.value = locale.value
     applyTheme()
@@ -40,7 +40,7 @@ export const useSettingsStore = defineStore('settings', () => {
     await db.settings.put({ key, value })
     switch (key) {
       case 'locale':
-        locale.value = value as string
+        locale.value = value as 'de' | 'en'
         i18n.global.locale.value = locale.value
         break
       case 'theme': theme.value = value as ThemeMode; applyTheme(); break

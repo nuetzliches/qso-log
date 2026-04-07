@@ -6,7 +6,7 @@ export interface Setting {
 export type ThemeMode = 'light' | 'dark' | 'system'
 
 export interface AppSettings {
-  locale: string
+  locale: 'de' | 'en'
   theme: ThemeMode
   ownCallsign: string
   ownLocator: string
