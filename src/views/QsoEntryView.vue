@@ -48,7 +48,7 @@ watch(
           <thead class="bg-gray-50 dark:bg-gray-800">
             <tr>
               <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.sequenceNumber') }}</th>
-              <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.date') }}</th>
+              <th class="whitespace-nowrap px-2 py-2 md:px-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.date') }}</th>
               <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.callsign') }}</th>
               <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.mode') }}</th>
               <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.band') }}</th>
@@ -60,7 +60,7 @@ watch(
           <tbody class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
             <tr v-for="qso in qsoStore.recentQsos" :key="qso.id" class="text-sm text-gray-700 dark:text-gray-300">
               <td class="px-3 py-2 font-mono">{{ qso.sequenceNumber }}</td>
-              <td class="px-3 py-2">{{ formatUtcDateTime(qso.date) }}</td>
+              <td class="whitespace-nowrap px-2 py-2 text-base md:px-3 md:text-sm">{{ formatUtcDateTime(qso.date) }}</td>
               <td class="px-3 py-2 font-semibold">
                 <span v-if="qso.countryCode" :title="qso.country" class="mr-1">{{ toFlagEmoji(qso.countryCode) }}</span>{{ qso.callsign }}
               </td>
