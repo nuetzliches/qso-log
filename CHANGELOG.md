@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.5.0](https://github.com/nuetzliches/qso-log/compare/v0.4.1...v0.5.0) (2026-04-07)
+
+### Features
+
+* add custom PWA install prompt banner ([5fafef8](https://github.com/nuetzliches/qso-log/commit/5fafef86688eaea7232d6d5849d4d30922af1a26))
+* auto-detect browser language on first visit ([283f47c](https://github.com/nuetzliches/qso-log/commit/283f47ccf83342e401a5534058e8951d653876af))
+* **form:** display RST and QSL fields in single row on desktop ([cf18777](https://github.com/nuetzliches/qso-log/commit/cf187774f7e2bf9bfea57f5eae4074d47353fd79))
+* **form:** mobile layout improvements and UX enhancements ([ac8dbe1](https://github.com/nuetzliches/qso-log/commit/ac8dbe19e5cf8d0bd45fae70b2df75d6e7257ad1))
+* persist language and appearance settings on reload ([d49e220](https://github.com/nuetzliches/qso-log/commit/d49e22036ca5ac038a4fae40b5eca639488e2ea3))
+* **qso:** improve date field readability on mobile in recent entries table ([b9461d9](https://github.com/nuetzliches/qso-log/commit/b9461d90fe92aa7fdc13a4c6af4e5c47daa1d4fa))
+
+### Bug Fixes
+
+* **qso:** fix edit mode URL param, add updatedAt tracking, reset form on nav ([64f5049](https://github.com/nuetzliches/qso-log/commit/64f50494552948e8bb3a2e3235453beea8c01221))
+* resolve TypeScript type error for locale assignment ([b8d6953](https://github.com/nuetzliches/qso-log/commit/b8d69539a9715a19cfcab75908b86852f7f02ffb))
+
 ## [0.4.1](https://github.com/nuetzliches/qso-log/compare/v0.4.0...v0.4.1) (2026-04-05)
 
 ### Bug Fixes
