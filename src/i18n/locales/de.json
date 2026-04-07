@@ -12,6 +12,7 @@
     "title": "Neuer Funkkontakt",
     "editTitle": "Funkkontakt bearbeiten",
     "sequenceNumber": "Nr.",
+    "updatedAt": "Bearbeitet am",
     "date": "Datum",
     "time": "Uhrzeit (UTC)",
     "callsign": "Rufzeichen",
@@ -84,12 +85,10 @@
     "ownCallsignHint": "Wird im PDF-Header verwendet",
     "ownLocator": "Eigener Locator",
     "ownLocatorHint": "Maidenhead-Locator der eigenen Station (z.B. JN47ao)",
-    "vorname": "Vorname",
-    "vornameHint": "Optionaler Vorname des Operators",
     "qrzApiKey": "QRZ.com API-Key",
     "hamqthUsername": "HamQTH Benutzername",
     "hamqthPassword": "HamQTH Passwort",
-    "callsignLookup": "Rufzeichen-Lookup",
+    "callsignLookup": "Rufzeichen-Lookup (ungetestet)",
     "callsignLookupHint": "Erfordert Internetverbindung"
   },
   "map": {

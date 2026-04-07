@@ -14,7 +14,7 @@ export const qsoRepository = {
   },
 
   async update(id: number, changes: Partial<QSO>): Promise<void> {
-    await db.qsos.update(id, changes)
+    await db.qsos.update(id, { ...changes, updatedAt: Date.now() })
   },
 
   async delete(id: number): Promise<void> {

@@ -24,6 +24,7 @@ export interface QSO {
   operatorId: number
   _lastModified: number
   _syncStatus: SyncStatus
+  updatedAt?: number
 }
 
 export type QSOInput = Omit<QSO, 'id' | 'uuid' | 'sequenceNumber' | '_lastModified' | '_syncStatus'>

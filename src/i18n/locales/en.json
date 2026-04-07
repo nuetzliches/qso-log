@@ -12,6 +12,7 @@
     "title": "New Contact",
     "editTitle": "Edit Contact",
     "sequenceNumber": "No.",
+    "updatedAt": "Last edited",
     "date": "Date",
     "time": "Time (UTC)",
     "callsign": "Callsign",
@@ -84,12 +85,10 @@
     "ownCallsignHint": "Used in PDF report header",
     "ownLocator": "Own Locator",
     "ownLocatorHint": "Maidenhead locator of your station (e.g. JN47ao)",
-    "vorname": "First Name",
-    "vornameHint": "Optional operator first name",
     "qrzApiKey": "QRZ.com API Key",
     "hamqthUsername": "HamQTH Username",
     "hamqthPassword": "HamQTH Password",
-    "callsignLookup": "Callsign Lookup",
+    "callsignLookup": "Callsign Lookup (untested)",
     "callsignLookupHint": "Requires internet connection"
   },
   "map": {

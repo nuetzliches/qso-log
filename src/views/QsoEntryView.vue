@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import { useQsoStore } from '../stores/qsoStore'
@@ -16,12 +16,18 @@ const qsoStore = useQsoStore()
 const operatorStore = useOperatorStore()
 const editQso = ref<QSO | undefined>(undefined)
 
-onMounted(async () => {
-  qsoStore.loadRecentQsos()
-  if (route.query.edit) {
-    editQso.value = await qsoRepository.getById(Number(route.query.edit))
-  }
-})
+watch(
+  () => route.query.edit,
+  async (editId) => {
+    qsoStore.loadRecentQsos()
+    if (editId) {
+      editQso.value = await qsoRepository.getById(Number(editId))
+    } else {
+      editQso.value = undefined
+    }
+  },
+  { immediate: true },
+)
 </script>
 
 <template>

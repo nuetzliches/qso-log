@@ -82,31 +82,63 @@ watch(callsignInfo, (info) => {
   if (info?.country) country.value = info.country
 })
 
+function resetToNew() {
+  date.value = formatUtcDate(nowUtcIso())
+  time.value = formatUtcTime(nowUtcIso())
+  callsign.value = ''
+  name.value = ''
+  country.value = ''
+  countryCode.value = ''
+  locator.value = ''
+  myLocator.value = settings.ownLocator
+  mode.value = 'SSB'
+  power.value = ''
+  frequency.value = ''
+  band.value = ''
+  rstSent.value = '59'
+  rstReceived.value = '59'
+  remarks.value = ''
+  qslSent.value = 'no'
+  qslReceived.value = 'no'
+  operatorId.value = operatorStore.currentOperator?.id ?? 0
+}
+
+watch(
+  () => props.editQso,
+  (q) => {
+    if (q) {
+      const d = q.date // ISO string like "2024-01-15T14:30:00.000Z"
+      date.value = d.slice(0, 10)
+      time.value = d.slice(11, 16)
+      callsign.value = q.callsign
+      name.value = q.name ?? ''
+      country.value = q.country ?? ''
+      countryCode.value = q.countryCode ?? ''
+      locator.value = q.locator ?? ''
+      myLocator.value = q.myLocator ?? ''
+      mode.value = q.mode ?? ''
+      power.value = q.power ?? ''
+      frequency.value = q.frequency ?? ''
+      band.value = q.band ?? ''
+      rstSent.value = q.rstSent ?? ''
+      rstReceived.value = q.rstReceived ?? ''
+      remarks.value = q.remarks ?? ''
+      qslSent.value = q.qslSent
+      qslReceived.value = q.qslReceived
+      operatorId.value = q.operatorId
+    } else {
+      resetToNew()
+    }
+  },
+  { immediate: true },
+)
+
 onMounted(async () => {
   await operatorStore.loadOperators()
 
-  if (props.editQso) {
-    const q = props.editQso
-    const d = q.date // ISO string like "2024-01-15T14:30:00.000Z"
-    date.value = d.slice(0, 10)
-    time.value = d.slice(11, 16)
-    callsign.value = q.callsign
-    name.value = q.name ?? ''
-    country.value = q.country ?? ''
-    countryCode.value = q.countryCode ?? ''
-    locator.value = q.locator ?? ''
-    myLocator.value = q.myLocator ?? ''
-    mode.value = q.mode
-    power.value = q.power
-    frequency.value = q.frequency
-    band.value = q.band
-    rstSent.value = q.rstSent
-    rstReceived.value = q.rstReceived
-    remarks.value = q.remarks
-    qslSent.value = q.qslSent
-    qslReceived.value = q.qslReceived
-    operatorId.value = q.operatorId
-  } else if (formDraft.hasDraft && formDraft.draft) {
+  if (props.editQso) return
+
+  if (formDraft.hasDraft && formDraft.draft) {
     const d = formDraft.draft
     date.value = d.date
     time.value = d.time
@@ -278,7 +310,10 @@ async function handleSubmit() {
     <!-- Sequence number (read-only) -->
     <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
       <span class="font-medium">{{ t('qso.sequenceNumber') }}</span>
-      <span class="rounded bg-gray-100 px-2 py-0.5 font-mono dark:bg-gray-800">{{ nextNumber }}</span>
+      <span class="rounded bg-gray-100 px-2 py-0.5 font-mono dark:bg-gray-800">{{ props.editQso ? props.editQso.sequenceNumber : nextNumber }}</span>
+      <span v-if="props.editQso?.updatedAt" class="text-xs text-amber-600 dark:text-amber-400">
+        {{ t('qso.updatedAt') }}: {{ new Date(props.editQso.updatedAt).toLocaleString() }}
+      </span>
     </div>
 
     <!-- Operator -->
