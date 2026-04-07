@@ -476,8 +476,8 @@ async function handleSubmit() {
       band-id="qso-band"
     />
 
-    <!-- RST Sent & Received -->
-    <div class="grid grid-cols-2 gap-4">
+    <!-- RST & QSL in einer Zeile (4 Spalten) -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
       <div>
         <label for="qso-rst-sent" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
           {{ t('qso.rstSent') }}
@@ -500,10 +500,6 @@ async function handleSubmit() {
           class="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         />
       </div>
-    </div>
-
-    <!-- QSL Sent & Received -->
-    <div class="grid grid-cols-2 gap-4">
       <div>
         <label for="qso-qsl-sent" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
           {{ t('qso.qslSent') }}
