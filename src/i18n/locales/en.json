@@ -46,7 +46,7 @@
   },
   "history": {
     "title": "QSO History",
-    "filter": "Filter",
+    "filter": "Filter / Import & Export",
     "noResults": "No contacts found",
     "totalCount": "{count} contact | {count} contacts",
     "dateRange": "Date Range",
@@ -141,6 +141,8 @@
     "updateAvailable": "A new version is available.",
     "update": "Update",
     "installPrompt": "Install QSOlog as an app for quick access.",
-    "install": "Install"
+    "install": "Install",
+    "useGpsLocation": "Use GPS location",
+    "gpsError": "GPS not available"
   }
 }

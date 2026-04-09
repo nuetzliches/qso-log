@@ -45,8 +45,8 @@
     "totalPreviousQsos": "{count} frühere QSOs"
   },
   "history": {
-    "title": "QSO-Historie",
-    "filter": "Filtern",
+    "title": "QSO-Historie", 
+    "filter": "Filtern / Im- & Export",
     "noResults": "Keine Funkkontakte gefunden",
     "totalCount": "{count} Funkkontakt | {count} Funkkontakte",
     "dateRange": "Zeitraum",
@@ -141,6 +141,8 @@
     "updateAvailable": "Eine neue Version ist verfügbar.",
     "update": "Aktualisieren",
     "installPrompt": "QSOlog als App installieren für schnellen Zugriff.",
-    "install": "Installieren"
+    "install": "Installieren",
+    "useGpsLocation": "GPS-Position verwenden",
+    "gpsError": "GPS nicht verfügbar"
   }
 }

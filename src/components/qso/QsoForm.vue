@@ -421,6 +421,7 @@ async function handleSubmit() {
       <LocatorInput
         v-model="myLocator"
         :show-distance="false"
+        :show-gps-button="true"
         :label="t('qso.myLocator')"
         id="qso-my-locator"
       />
