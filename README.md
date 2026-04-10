@@ -114,7 +114,34 @@ gh auth login
 
 Alternatively, set a `GITHUB_TOKEN` environment variable with `contents: write` permission.
 
-### Creating a release
+### Workflow
+
+Da auf `main` keine direkten Commits erlaubt sind, läuft jeder Release über einen Release-Branch:
+
+1. Stelle sicher, dass `main` aktuell ist:
+   ```bash
+   git checkout main
+   git pull
+   ```
+2. Erstelle einen Release-Branch und pushe ihn:
+   ```bash
+   git checkout -b release/v0.6.0
+   git push -u origin release/v0.6.0
+   ```
+3. Führe den Release aus (bumpt Version, erstellt Tag + GitHub Release):
+   ```bash
+   npm run release
+   ```
+4. Erstelle einen Pull Request nach `main`:
+   ```bash
+   gh pr create --base main --title "chore: release v0.6.0"
+   ```
+5. Nach Review den PR **mit Merge-Commit** mergen (kein Squash, damit der Tag-Commit in der main-History bleibt)
+6. GitHub Pages Deployment läuft automatisch nach dem Merge
+
+> **Hinweis:** `npm run release` wird *nie* direkt auf `main` ausgeführt, sondern immer auf einem Release-Branch.
+
+### release-it Optionen
 
 ```bash
 # Interactive -- prompts for patch / minor / major
@@ -134,7 +161,7 @@ npm run release -- --dry-run
 2. Version in `package.json` is bumped
 3. `CHANGELOG.md` is updated from commits since the last tag
 4. A git commit (`chore: release vX.Y.Z`) and annotated tag (`vX.Y.Z`) are created
-5. Commit and tag are pushed to `origin/main`
+5. Commit and tag are pushed to `origin`
 6. A GitHub Release with auto-generated notes is published
 7. The existing GitHub Pages workflow deploys the new build
 
