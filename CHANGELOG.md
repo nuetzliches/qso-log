@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.6.0](https://github.com/nuetzliches/qso-log/compare/v0.5.0...v0.6.0) (2026-04-10)
+
+### Features
+
+* **locator:** add GPS button to own locator field ([ad47392](https://github.com/nuetzliches/qso-log/commit/ad47392cb006a15075c10b8b62f2c3dba8760750))
+* **statistics:** add statistics page with interactive charts ([4d1a779](https://github.com/nuetzliches/qso-log/commit/4d1a779bec539d43d2733841c767f8fe0234d019))
+
+### Bug Fixes
+
+* ensure PWA banners are visible above bottom navigation on mobile ([ea852ba](https://github.com/nuetzliches/qso-log/commit/ea852baa40c5cb27615fd74a0926b28aad7dd172))
+* prevent line breaks between flag emoji and callsign in tables ([6fa67b3](https://github.com/nuetzliches/qso-log/commit/6fa67b30c1c71f49755301d46828c69d4423d5c5))
+
+### Documentation
+
+* update README with statistics page, GPS locator, and Chart.js ([b7a40c3](https://github.com/nuetzliches/qso-log/commit/b7a40c362d49e66c1d3d3ffd868cd688d0d7df09))
+
 ## [0.5.0](https://github.com/nuetzliches/qso-log/compare/v0.4.1...v0.5.0) (2026-04-07)
 
 ### Features
