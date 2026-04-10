@@ -34,6 +34,15 @@ const { t } = useI18n()
           GitHub
         </a>
       </p>
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        {{ t('about.licenseText') }}
+        <a
+          href="https://opensource.org/licenses/MIT"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-primary-600 hover:underline dark:text-primary-400"
+        >MIT License</a>.
+      </p>
     </section>
 
     <!-- Impressum -->
@@ -60,20 +69,6 @@ const { t } = useI18n()
           rel="noopener noreferrer"
           class="text-primary-600 hover:underline dark:text-primary-400"
         >GitHub Privacy Statement</a>
-      </p>
-    </section>
-
-    <!-- Lizenz -->
-    <section class="space-y-2 border-t border-gray-200 pt-6 dark:border-gray-700">
-      <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-300">{{ t('about.licenseHeading') }}</h2>
-      <p class="text-sm text-gray-600 dark:text-gray-400">
-        {{ t('about.licenseText') }}
-        <a
-          href="https://opensource.org/licenses/MIT"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-primary-600 hover:underline dark:text-primary-400"
-        >MIT License</a>.
       </p>
     </section>
 
