@@ -90,7 +90,9 @@
     "hamqthUsername": "HamQTH Benutzername",
     "hamqthPassword": "HamQTH Passwort",
     "callsignLookup": "Rufzeichen-Lookup (ungetestet)",
-    "callsignLookupHint": "Erfordert Internetverbindung"
+    "callsignLookupHint": "Erfordert Internetverbindung",
+    "installApp": "Als App installieren",
+    "installAppHint": "QSOlog als Progressive Web App auf dem Gerät installieren."
   },
   "map": {
     "title": "Karte",

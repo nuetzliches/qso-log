@@ -6,10 +6,12 @@ interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>
 }
 
+const DISMISS_KEY = 'pwa-install-dismissed'
+
 export function usePwaInstall() {
   const deferredPrompt = ref<BeforeInstallPromptEvent | null>(null)
   const isInstallable = ref(false)
-  const isDismissed = ref(false)
+  const isDismissed = ref(localStorage.getItem(DISMISS_KEY) === '1')
 
   function handleBeforeInstallPrompt(event: Event) {
     event.preventDefault()
@@ -42,11 +44,11 @@ export function usePwaInstall() {
 
   function dismissInstall() {
     isDismissed.value = true
-    isInstallable.value = false
-    deferredPrompt.value = null
+    localStorage.setItem(DISMISS_KEY, '1')
   }
 
   const showInstallBanner = computed(() => isInstallable.value && !isDismissed.value)
+  const canInstall = computed(() => deferredPrompt.value !== null)
 
-  return { showInstallBanner, promptInstall, dismissInstall }
+  return { showInstallBanner, canInstall, promptInstall, dismissInstall }
 }
