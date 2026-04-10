@@ -116,32 +116,12 @@ Alternatively, set a `GITHUB_TOKEN` environment variable with `contents: write` 
 
 ### Workflow
 
-Da auf `main` keine direkten Commits erlaubt sind, läuft jeder Release über einen Release-Branch:
+Since direct commits to `main` are not allowed, every release is created from a release branch:
 
-1. Stelle sicher, dass `main` aktuell ist:
+1. Make sure `main` is up to date:
    ```bash
    git checkout main
    git pull
-   ```
-2. Erstelle einen Release-Branch und pushe ihn:
-   ```bash
-   git checkout -b release/v0.6.0
-   git push -u origin release/v0.6.0
-   ```
-3. Führe den Release aus (bumpt Version, erstellt Tag + GitHub Release):
-   ```bash
-   npm run release
-   ```
-4. Erstelle einen Pull Request nach `main`:
-   ```bash
-   gh pr create --base main --title "chore: release v0.6.0"
-   ```
-5. Nach Review den PR **mit Merge-Commit** mergen (kein Squash, damit der Tag-Commit in der main-History bleibt)
-6. GitHub Pages Deployment läuft automatisch nach dem Merge
-
-> **Hinweis:** `npm run release` wird *nie* direkt auf `main` ausgeführt, sondern immer auf einem Release-Branch.
-
-### release-it Optionen
 
 ```bash
 # Interactive -- prompts for patch / minor / major
