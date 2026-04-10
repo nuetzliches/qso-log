@@ -2,9 +2,11 @@
 import { onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '../stores/settingsStore'
+import { usePwaInstall } from '../composables/usePwaInstall'
 import LocatorInput from '../components/common/LocatorInput.vue'
 const { t } = useI18n()
 const settings = useSettingsStore()
+const { canInstall, promptInstall } = usePwaInstall()
 
 onMounted(() => {
   settings.loadSettings()
@@ -96,6 +98,17 @@ onMounted(() => {
           />
         </div>
       </div>
+    </section>
+
+    <!-- PWA Install -->
+    <section v-if="canInstall">
+      <button
+        class="rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-500"
+        @click="promptInstall()"
+      >
+        {{ t('settings.installApp') }}
+      </button>
+      <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ t('settings.installAppHint') }}</p>
     </section>
 
   </div>
