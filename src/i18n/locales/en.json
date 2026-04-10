@@ -92,7 +92,8 @@
     "callsignLookup": "Callsign Lookup (untested)",
     "callsignLookupHint": "Requires internet connection",
     "installApp": "Install as app",
-    "installAppHint": "Install QSOlog as a progressive web app on your device."
+    "installAppHint": "Install QSOlog as a progressive web app on your device.",
+    "installAppUnavailable": "Installation not available in this browser or the app is already installed."
   },
   "map": {
     "title": "Map",
