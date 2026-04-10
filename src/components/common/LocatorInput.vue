@@ -98,7 +98,7 @@ function fetchGps() {
       autocomplete="off"
       :placeholder="t('qso.locatorHint')"
       :class="[
-        'w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:ring-1',
+        'mt-2 w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:ring-1',
         !isValid
           ? 'border-red-400 focus:border-red-500 focus:ring-red-500 dark:border-red-500'
           : 'border-gray-300 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600',
