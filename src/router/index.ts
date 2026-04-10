@@ -14,6 +14,11 @@ const router = createRouter({
       component: () => import('../views/QsoHistoryView.vue'),
     },
     {
+      path: '/statistics',
+      name: 'statistics',
+      component: () => import('../views/StatisticsView.vue'),
+    },
+    {
       path: '/operators',
       name: 'operators',
       component: () => import('../views/OperatorManagementView.vue'),

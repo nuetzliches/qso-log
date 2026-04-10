@@ -6,7 +6,8 @@
     "map": "Karte",
     "settings": "Einstellungen",
     "about": "Über",
-    "more": "Mehr"
+    "more": "Mehr",
+    "statistics": "Statistik"
   },
   "qso": {
     "title": "Neuer Funkkontakt",
@@ -45,8 +46,8 @@
     "totalPreviousQsos": "{count} frühere QSOs"
   },
   "history": {
-    "title": "QSO-Historie",
-    "filter": "Filtern",
+    "title": "QSO-Historie", 
+    "filter": "Filtern / Im- & Export",
     "noResults": "Keine Funkkontakte gefunden",
     "totalCount": "{count} Funkkontakt | {count} Funkkontakte",
     "dateRange": "Zeitraum",
@@ -124,6 +125,48 @@
     "aiHeading": "KI-Hinweis",
     "aiText": "Teile dieser Software wurden mit Unterstützung von KI-Codierungswerkzeugen (z. B. Claude, GitHub Copilot) entwickelt. Der gesamte Code wurde von menschlichen Entwicklern geprüft und wird von diesen gepflegt."
   },
+  "statistics": {
+    "title": "Statistik",
+    "tabBandMode": "Band / Mode",
+    "tabActivity": "Aktivität",
+    "tabDxcc": "DXCC / Länder",
+    "tabDistance": "Distanz",
+    "allOperators": "Alle Operatoren",
+    "noData": "Keine Daten vorhanden",
+    "totalQsos": "QSOs gesamt",
+    "uniqueBands": "Bänder",
+    "topBand": "Häufigstes Band",
+    "topMode": "Häufigster Mode",
+    "qsosByBand": "QSOs nach Band",
+    "modeDistribution": "Mode-Verteilung",
+    "thisWeek": "Diese Woche",
+    "thisMonth": "Dieser Monat",
+    "thisYear": "Dieses Jahr",
+    "currentStreak": "Aktueller Streak",
+    "longestStreak": "Längster Streak",
+    "mostActiveDay": "Aktivster Tag",
+    "days": "Tage",
+    "activityTimeline": "Aktivitätsverlauf",
+    "day": "Tag",
+    "week": "Woche",
+    "month": "Monat",
+    "uniqueCountries": "Länder (DXCC)",
+    "topCountry": "Häufigstes Land",
+    "unknownCountry": "Ohne Land",
+    "top20Countries": "Top 20 Länder",
+    "allCountries": "Alle Länder",
+    "firstQso": "Erstes QSO",
+    "lastQso": "Letztes QSO",
+    "farthestQso": "Weitestes QSO",
+    "avgDistance": "Ø Entfernung",
+    "gridSquares": "Grid-Squares",
+    "withLocator": "Mit Locator",
+    "withoutLocatorLabel": "ohne Locator",
+    "distanceDistribution": "Entfernungs-Verteilung",
+    "topDistances": "Top 10 Entfernungen",
+    "direction": "Richtung",
+    "noOwnLocator": "Eigener Locator nicht gesetzt – Entfernungen können nicht berechnet werden. Bitte unter Einstellungen konfigurieren."
+  },
   "common": {
     "yes": "Ja",
     "no": "Nein",
@@ -141,6 +184,8 @@
     "updateAvailable": "Eine neue Version ist verfügbar.",
     "update": "Aktualisieren",
     "installPrompt": "QSOlog als App installieren für schnellen Zugriff.",
-    "install": "Installieren"
+    "install": "Installieren",
+    "useGpsLocation": "GPS-Position verwenden",
+    "gpsError": "GPS nicht verfügbar"
   }
 }

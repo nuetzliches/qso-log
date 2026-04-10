@@ -6,7 +6,8 @@
     "map": "Map",
     "settings": "Settings",
     "about": "About",
-    "more": "More"
+    "more": "More",
+    "statistics": "Statistics"
   },
   "qso": {
     "title": "New Contact",
@@ -46,7 +47,7 @@
   },
   "history": {
     "title": "QSO History",
-    "filter": "Filter",
+    "filter": "Filter / Import & Export",
     "noResults": "No contacts found",
     "totalCount": "{count} contact | {count} contacts",
     "dateRange": "Date Range",
@@ -124,6 +125,48 @@
     "aiHeading": "AI Disclosure",
     "aiText": "Parts of this software were developed with the assistance of AI coding tools (e.g. Claude, GitHub Copilot). All code has been reviewed and is maintained by human contributors."
   },
+  "statistics": {
+    "title": "Statistics",
+    "tabBandMode": "Band / Mode",
+    "tabActivity": "Activity",
+    "tabDxcc": "DXCC / Countries",
+    "tabDistance": "Distance",
+    "allOperators": "All operators",
+    "noData": "No data available",
+    "totalQsos": "Total QSOs",
+    "uniqueBands": "Bands",
+    "topBand": "Top Band",
+    "topMode": "Top Mode",
+    "qsosByBand": "QSOs by Band",
+    "modeDistribution": "Mode Distribution",
+    "thisWeek": "This Week",
+    "thisMonth": "This Month",
+    "thisYear": "This Year",
+    "currentStreak": "Current Streak",
+    "longestStreak": "Longest Streak",
+    "mostActiveDay": "Most Active Day",
+    "days": "days",
+    "activityTimeline": "Activity Timeline",
+    "day": "Day",
+    "week": "Week",
+    "month": "Month",
+    "uniqueCountries": "Countries (DXCC)",
+    "topCountry": "Top Country",
+    "unknownCountry": "Unknown Country",
+    "top20Countries": "Top 20 Countries",
+    "allCountries": "All Countries",
+    "firstQso": "First QSO",
+    "lastQso": "Last QSO",
+    "farthestQso": "Farthest QSO",
+    "avgDistance": "Avg Distance",
+    "gridSquares": "Grid Squares",
+    "withLocator": "With Locator",
+    "withoutLocatorLabel": "without locator",
+    "distanceDistribution": "Distance Distribution",
+    "topDistances": "Top 10 Distances",
+    "direction": "Direction",
+    "noOwnLocator": "Own locator not set — distances cannot be calculated. Please configure in Settings."
+  },
   "common": {
     "yes": "Yes",
     "no": "No",
@@ -141,6 +184,8 @@
     "updateAvailable": "A new version is available.",
     "update": "Update",
     "installPrompt": "Install QSOlog as an app for quick access.",
-    "install": "Install"
+    "install": "Install",
+    "useGpsLocation": "Use GPS location",
+    "gpsError": "GPS not available"
   }
 }

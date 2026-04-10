@@ -23,7 +23,6 @@ onMounted(() => {
         <label for="settings-callsign" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
           {{ t('settings.ownCallsign') }}
         </label>
-        <p class="text-xs text-gray-500 dark:text-gray-400">{{ t('settings.ownCallsignHint') }}</p>
         <input
           id="settings-callsign"
           :value="settings.ownCallsign"
@@ -31,20 +30,19 @@ onMounted(() => {
           class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm uppercase shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
           @change="settings.setSetting('ownCallsign', ($event.target as HTMLInputElement).value.toUpperCase())"
         />
+        <p class="text-xs text-gray-500 dark:text-gray-400">{{ t('settings.ownCallsignHint') }}</p>
       </div>
 
       <div class="space-y-2">
-        <label for="settings-locator" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-          {{ t('settings.ownLocator') }}
-        </label>
-        <p class="text-xs text-gray-500 dark:text-gray-400">{{ t('settings.ownLocatorHint') }}</p>
         <LocatorInput
           :model-value="settings.ownLocator"
           :show-distance="false"
-          :label="''"
+          :show-gps-button="true"
+          :label="t('settings.ownLocator')"
           id="settings-locator"
           @update:model-value="settings.setSetting('ownLocator', $event)"
         />
+        <p class="text-xs text-gray-500 dark:text-gray-400">{{ t('settings.ownLocatorHint') }}</p>
       </div>
     </section>
 

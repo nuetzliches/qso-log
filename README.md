@@ -11,7 +11,8 @@ Offline-first PWA logbook for amateur radio operators.
 - **Offline-first** - works entirely without internet after the first load. All data is stored locally in the browser (IndexedDB).
 - **QSO logging** - log contacts with auto-incrementing sequence numbers, UTC timestamps, mode-aware RST defaults, and automatic band detection from frequency. Form drafts are auto-saved so nothing is lost on accidental page reloads.
 - **Map view** - visualize QSO locations on an interactive Leaflet map with marker clustering and dark-mode support.
-- **Maidenhead locator** - enter grid squares for your station and contacts. Distance and bearing are calculated automatically.
+- **Statistics** - interactive charts for band/mode distribution, activity timeline with streaks, DXCC/country tracking, and distance analysis. Supports operator filtering.
+- **Maidenhead locator** - enter grid squares for your station and contacts. Distance and bearing are calculated automatically. A GPS button can auto-fill your locator from device coordinates.
 - **QSL tracking** - track QSL sent/received status per QSO (yes / no / requested).
 - **Import & Export** - ADIF 3.1.4, CSV, and JSON. Import includes validation, duplicate detection, and preview before committing.
 - **PDF reports** - generate printable QSO reports (A4 landscape) with summary statistics.
@@ -41,12 +42,13 @@ npm run preview
 
 ## Usage
 
-QSOlog has six main views:
+QSOlog has seven main views:
 
 | View | Description |
 |------|-------------|
 | **New QSO** | Log a new contact. Select mode, enter frequency (band auto-detects), callsign, RST, locator, and remarks. Common FT8/SSB/FM frequencies are available as presets. |
 | **History** | Browse, filter, and search your logged QSOs. Export to ADIF/CSV/JSON, import from files (drag & drop supported), and generate PDF reports. |
+| **Statistics** | Interactive charts and stats: band/mode distribution, activity timeline with streaks, DXCC countries, and distance analysis. Filter by operator. |
 | **Map** | Interactive map showing QSO locations based on Maidenhead locators, with marker clustering. |
 | **Operators** | Manage operator profiles with callsign, name, and QTH. |
 | **Settings** | Configure language, theme, your station callsign (used in PDF headers), and optional QRZ.com / HamQTH API credentials for callsign lookups. |
@@ -62,6 +64,7 @@ IARU Region 1: 160m, 80m, 60m, 40m, 30m, 20m, 17m, 15m, 12m, 10m, 6m, 2m, 70cm, 
 - [Pinia](https://pinia.vuejs.org/) (state management)
 - [Dexie.js](https://dexie.org/) (IndexedDB)
 - [Tailwind CSS](https://tailwindcss.com/) + [Headless UI](https://headlessui.com/)
+- [Chart.js](https://www.chartjs.org/) + [vue-chartjs](https://vue-chartjs.org/) (interactive charts)
 - [Leaflet](https://leafletjs.com/) + [leaflet.markercluster](https://github.com/Leaflet/Leaflet.markercluster) (map & clustering)
 - [jsPDF](https://github.com/parallax/jsPDF) + [jspdf-autotable](https://github.com/simonbengtsson/jsPDF-AutoTable) (PDF generation)
 - [adif-parser-ts](https://github.com/tcort/adif-parser-ts) (ADIF parsing)
@@ -111,7 +114,14 @@ gh auth login
 
 Alternatively, set a `GITHUB_TOKEN` environment variable with `contents: write` permission.
 
-### Creating a release
+### Workflow
+
+Since direct commits to `main` are not allowed, every release is created from a release branch:
+
+1. Make sure `main` is up to date:
+   ```bash
+   git checkout main
+   git pull
 
 ```bash
 # Interactive -- prompts for patch / minor / major
@@ -131,7 +141,7 @@ npm run release -- --dry-run
 2. Version in `package.json` is bumped
 3. `CHANGELOG.md` is updated from commits since the last tag
 4. A git commit (`chore: release vX.Y.Z`) and annotated tag (`vX.Y.Z`) are created
-5. Commit and tag are pushed to `origin/main`
+5. Commit and tag are pushed to `origin`
 6. A GitHub Release with auto-generated notes is published
 7. The existing GitHub Pages workflow deploys the new build
 

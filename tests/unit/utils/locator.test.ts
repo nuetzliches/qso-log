@@ -3,6 +3,7 @@ import {
   isValidLocator,
   formatLocator,
   locatorToLatLon,
+  latLonToLocator,
   calculateDistanceKm,
   calculateBearing,
   bearingToCompass,
@@ -80,6 +81,43 @@ describe('locatorToLatLon', () => {
   it('returns null for invalid locator', () => {
     expect(locatorToLatLon('')).toBeNull()
     expect(locatorToLatLon('ZZ99')).toBeNull()
+  })
+})
+
+describe('latLonToLocator', () => {
+  it('converts a known lat/lon to the correct locator', () => {
+    // lat=47.604, lon=8.042 is inside JN47ao
+    expect(latLonToLocator(47.604, 8.042)).toBe('JN47ao')
+  })
+
+  it('converts origin (0, 0) to JJ00aa', () => {
+    expect(latLonToLocator(0, 0)).toBe('JJ00aa')
+  })
+
+  it('handles south-west corner (-90, -180) without producing invalid characters', () => {
+    const result = latLonToLocator(-90, -180)
+    expect(isValidLocator(result)).toBe(true)
+    expect(result).toBe('AA00aa')
+  })
+
+  it('handles north-east boundary (90, 180) by clamping to a valid locator', () => {
+    const result = latLonToLocator(90, 180)
+    expect(isValidLocator(result)).toBe(true)
+    // field index must stay within A–R (0–17)
+    expect(result.charCodeAt(0)).toBeLessThanOrEqual('R'.charCodeAt(0))
+    expect(result.charCodeAt(1)).toBeLessThanOrEqual('R'.charCodeAt(0))
+  })
+
+  it('handles lat=90 boundary without out-of-range field character', () => {
+    const result = latLonToLocator(90, 0)
+    expect(isValidLocator(result)).toBe(true)
+    expect(result[1].toUpperCase()).not.toBe('S')
+  })
+
+  it('handles lon=180 boundary without out-of-range field character', () => {
+    const result = latLonToLocator(0, 180)
+    expect(isValidLocator(result)).toBe(true)
+    expect(result[0].toUpperCase()).not.toBe('S')
   })
 })
 

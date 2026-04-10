@@ -74,6 +74,30 @@ export function calculateBearing(from: string, to: string): number | null {
   return Math.round(bearing)
 }
 
+export function latLonToLocator(lat: number, lon: number): string {
+  const clampedLat = Math.max(-90, Math.min(lat, 90))
+  const clampedLon = Math.max(-180, Math.min(lon, 180))
+
+  const lonAdj = clampedLon + 180
+  const latAdj = clampedLat + 90
+
+  const fieldLon = Math.min(Math.floor(lonAdj / 20), 17)
+  const fieldLat = Math.min(Math.floor(latAdj / 10), 17)
+  const squareLon = Math.min(Math.floor((lonAdj % 20) / 2), 9)
+  const squareLat = Math.min(Math.floor(latAdj % 10), 9)
+  const subLon = Math.min(Math.floor((lonAdj % 2) / (2 / 24)), 23)
+  const subLat = Math.min(Math.floor((latAdj % 1) / (1 / 24)), 23)
+
+  return (
+    String.fromCharCode(65 + fieldLon) +
+    String.fromCharCode(65 + fieldLat) +
+    squareLon.toString() +
+    squareLat.toString() +
+    String.fromCharCode(97 + subLon) +
+    String.fromCharCode(97 + subLat)
+  )
+}
+
 const COMPASS_POINTS = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'] as const
 
 export function bearingToCompass(degrees: number): string {

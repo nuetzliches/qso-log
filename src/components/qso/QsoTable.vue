@@ -98,7 +98,7 @@ function qslLabel(value: string): string {
             <td class="px-3 py-2 font-mono">{{ qso.sequenceNumber }}</td>
             <td class="whitespace-nowrap px-3 py-2">{{ formatUtcDateTime(qso.date) }}</td>
             <td class="px-3 py-2 font-semibold">
-              <span v-if="qso.countryCode" :title="qso.country" class="mr-1">{{ toFlagEmoji(qso.countryCode) }}</span>{{ qso.callsign }}
+              <span v-if="qso.countryCode" :title="qso.country">{{ toFlagEmoji(qso.countryCode) }}&nbsp;</span>{{ qso.callsign }}
             </td>
             <td class="px-3 py-2 text-gray-500 dark:text-gray-400">
               <template v-if="qso.locator && qso.myLocator && isValidLocator(qso.locator) && isValidLocator(qso.myLocator)">
