@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.7.0](https://github.com/nuetzliches/qso-log/compare/v0.6.0...v0.7.0) (2026-04-10)
+
+### Features
+
+* **pwa:** persist install banner dismissal and add install button to settings ([f4da842](https://github.com/nuetzliches/qso-log/commit/f4da842d3bab1a16f9794adfafeb1195567993f6))
+
+### Bug Fixes
+
+* **locator:** clamp lat/lon inputs and guard indices in latLonToLocator ([b8d6a56](https://github.com/nuetzliches/qso-log/commit/b8d6a5683f5753ae32cae3641e0ee96d1057b540))
+
 ## [0.6.0](https://github.com/nuetzliches/qso-log/compare/v0.5.0...v0.6.0) (2026-04-10)
 
 ### Features
