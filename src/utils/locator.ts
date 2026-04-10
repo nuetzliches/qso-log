@@ -75,15 +75,18 @@ export function calculateBearing(from: string, to: string): number | null {
 }
 
 export function latLonToLocator(lat: number, lon: number): string {
-  const lonAdj = lon + 180
-  const latAdj = lat + 90
+  const clampedLat = Math.max(-90, Math.min(lat, 90))
+  const clampedLon = Math.max(-180, Math.min(lon, 180))
 
-  const fieldLon = Math.floor(lonAdj / 20)
-  const fieldLat = Math.floor(latAdj / 10)
-  const squareLon = Math.floor((lonAdj % 20) / 2)
-  const squareLat = Math.floor(latAdj % 10)
-  const subLon = Math.floor((lonAdj % 2) / (2 / 24))
-  const subLat = Math.floor((latAdj % 1) / (1 / 24))
+  const lonAdj = clampedLon + 180
+  const latAdj = clampedLat + 90
+
+  const fieldLon = Math.min(Math.floor(lonAdj / 20), 17)
+  const fieldLat = Math.min(Math.floor(latAdj / 10), 17)
+  const squareLon = Math.min(Math.floor((lonAdj % 20) / 2), 9)
+  const squareLat = Math.min(Math.floor(latAdj % 10), 9)
+  const subLon = Math.min(Math.floor((lonAdj % 2) / (2 / 24)), 23)
+  const subLat = Math.min(Math.floor((latAdj % 1) / (1 / 24)), 23)
 
   return (
     String.fromCharCode(65 + fieldLon) +
