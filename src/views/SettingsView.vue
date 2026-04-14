@@ -101,9 +101,12 @@ onMounted(() => {
     </section>
 
     <!-- PWA Install -->
-    <section v-if="canInstall">
+    <section>
       <button
-        class="rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-500"
+        :disabled="!canInstall"
+        :title="!canInstall ? t('settings.installAppUnavailable') : ''"
+        class="rounded-md px-4 py-2 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+        :class="canInstall ? 'bg-primary-600 text-white hover:bg-primary-500' : 'bg-gray-300 text-gray-500 dark:bg-gray-600 dark:text-gray-400'"
         @click="promptInstall()"
       >
         {{ t('settings.installApp') }}

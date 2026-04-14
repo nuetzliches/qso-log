@@ -92,7 +92,8 @@
     "callsignLookup": "Rufzeichen-Lookup (ungetestet)",
     "callsignLookupHint": "Erfordert Internetverbindung",
     "installApp": "Als App installieren",
-    "installAppHint": "QSOlog als Progressive Web App auf dem Gerät installieren."
+    "installAppHint": "QSOlog als Progressive Web App auf dem Gerät installieren.",
+    "installAppUnavailable": "Installation in diesem Browser nicht verfügbar oder die App ist bereits installiert."
   },
   "map": {
     "title": "Karte",
