@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.8.0](https://github.com/nuetzliches/qso-log/compare/v0.7.0...v0.8.0) (2026-04-14)
+
+### Features
+
+* **about:** combine License section into The App section ([2465642](https://github.com/nuetzliches/qso-log/commit/2465642117c10149b720f5f90fc73435eac6426c))
+* **navigation:** move Statistics menu item under Map in both desktop and mobile ([abb2065](https://github.com/nuetzliches/qso-log/commit/abb2065fd5e5e9fd5265f06f1189d74f50f899fe))
+* **pwa:** always show install button in settings ([fefcae9](https://github.com/nuetzliches/qso-log/commit/fefcae96c810ad23fc8a8af06bbf4d17de21a505))
+
+### Bug Fixes
+
+* **forms:** standardize label-to-input spacing in LocatorInput ([197151e](https://github.com/nuetzliches/qso-log/commit/197151eb63421990d6a5fe95a8d059e3f118f87f))
+
 ## [0.7.0](https://github.com/nuetzliches/qso-log/compare/v0.6.0...v0.7.0) (2026-04-10)
 
 ### Features
