@@ -20,7 +20,8 @@ onMounted(() => {
 })
 
 const navItems = [
-  { to: '/', labelKey: 'nav.logbook', icon: 'logbook' },
+  { to: '/', labelKey: 'nav.dashboard', icon: 'dashboard' },
+  { to: '/new', labelKey: 'nav.logbook', icon: 'logbook' },
   { to: '/history', labelKey: 'nav.history', icon: 'history' },
   { to: '/operators', labelKey: 'nav.operators', icon: 'operators' },
   { to: '/map', labelKey: 'nav.map', icon: 'map' },
@@ -30,11 +31,11 @@ const navItems = [
 ]
 
 // Mobile bottom nav: 3 main items + "Mehr..."-Button
-const mobileNavItems = navItems.filter((item) => ['/', '/history', '/operators'].includes(item.to))
-const moreItems = navItems.filter((item) => ['/map', '/statistics', '/settings', '/about'].includes(item.to))
+const mobileNavItems = navItems.filter((item) => ['/', '/new', '/history'].includes(item.to))
+const moreItems = navItems.filter((item) => ['/operators', '/map', '/statistics', '/settings', '/about'].includes(item.to))
 
 const showMore = ref(false)
-const isMoreActive = computed(() => route.path === '/map' || route.path === '/statistics' || route.path === '/settings' || route.path === '/about')
+const isMoreActive = computed(() => route.path === '/operators' || route.path === '/map' || route.path === '/statistics' || route.path === '/settings' || route.path === '/about')
 </script>
 
 <template>
@@ -69,8 +70,12 @@ const isMoreActive = computed(() => route.path === '/map' || route.path === '/st
             ? 'bg-primary-50 text-primary-700 dark:bg-primary-900/50 dark:text-primary-300'
             : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'"
         >
+          <!-- Dashboard icon -->
+          <svg v-if="item.icon === 'dashboard'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12 11.204 3.045c.44-.44 1.152-.44 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+          </svg>
           <!-- Logbook icon -->
-          <svg v-if="item.icon === 'logbook'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <svg v-else-if="item.icon === 'logbook'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
           </svg>
           <!-- History icon -->
@@ -143,8 +148,12 @@ const isMoreActive = computed(() => route.path === '/map' || route.path === '/st
           ? 'text-primary-600 dark:text-primary-400'
           : 'text-gray-500 dark:text-gray-400'"
       >
+        <!-- Dashboard icon -->
+        <svg v-if="item.icon === 'dashboard'" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12 11.204 3.045c.44-.44 1.152-.44 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+        </svg>
         <!-- Logbook icon -->
-        <svg v-if="item.icon === 'logbook'" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <svg v-else-if="item.icon === 'logbook'" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
         </svg>
         <!-- History icon -->
@@ -197,8 +206,12 @@ const isMoreActive = computed(() => route.path === '/map' || route.path === '/st
               : 'text-gray-700 dark:text-gray-300'"
             @click="showMore = false"
           >
+            <!-- Operators icon -->
+            <svg v-if="item.icon === 'operators'" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+            </svg>
             <!-- Map icon -->
-            <svg v-if="item.icon === 'map'" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <svg v-else-if="item.icon === 'map'" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z" />
             </svg>
             <!-- Statistics icon -->

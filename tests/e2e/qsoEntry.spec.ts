@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 
 test.describe('QSO Entry', () => {
   test('shows the QSO entry form', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/new')
     await expect(page.locator('h1')).toContainText(/Neuer Funkkontakt|New Contact/)
     await expect(page.locator('#qso-callsign')).toBeVisible()
     await expect(page.locator('#qso-date')).toBeVisible()
@@ -10,7 +10,7 @@ test.describe('QSO Entry', () => {
   })
 
   test('can fill in and submit a QSO', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/new')
 
     await page.fill('#qso-callsign', 'DL1ABC')
     await page.fill('#qso-date', '2024-03-15')
@@ -27,7 +27,7 @@ test.describe('QSO Entry', () => {
   })
 
   test('shows sequence number', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/new')
     await expect(page.getByText(/Nr\.|No\./)).toBeVisible()
   })
 })

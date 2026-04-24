@@ -1,5 +1,6 @@
 {
   "nav": {
+    "dashboard": "Dashboard",
     "logbook": "QSO",
     "history": "Logbuch",
     "operators": "Operatoren",
@@ -8,6 +9,20 @@
     "about": "Über",
     "more": "Mehr",
     "statistics": "Statistik"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "totalQsos": "QSOs gesamt",
+    "dxccCountries": "DXCC",
+    "bands": "Bänder",
+    "thisMonth": "Dieser Monat",
+    "quickActions": "Schnellaktionen",
+    "newQso": "Neues QSO",
+    "viewHistory": "Logbuch",
+    "viewMap": "Karte",
+    "viewStatistics": "Statistik",
+    "recentQsos": "Letzte QSOs",
+    "noRecentQsos": "Noch keine QSOs"
   },
   "qso": {
     "title": "Neuer Funkkontakt",

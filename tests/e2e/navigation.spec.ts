@@ -16,9 +16,13 @@ test.describe('Navigation', () => {
     await page.click('a[href="/settings"]')
     await expect(page.locator('h1')).toContainText(/Einstellungen|Settings/)
 
-    // Navigate back to logbook
-    await page.click('a[href="/"]')
+    // Navigate to QSO entry
+    await page.click('a[href="/new"]')
     await expect(page.locator('h1')).toContainText(/Neuer Funkkontakt|New Contact/)
+
+    // Navigate back to dashboard
+    await page.click('a[href="/"]')
+    await expect(page.locator('h1')).toContainText(/Dashboard/)
   })
 
   test('has skip-to-content link', async ({ page }) => {
