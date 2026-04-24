@@ -9,11 +9,12 @@ import { useCallsignLookup } from '../../composables/useCallsignLookup'
 import { usePreviousContact } from '../../composables/usePreviousContact'
 import { nowUtcIso, formatUtcDate, formatUtcTime } from '../../utils/dateTime'
 import { getDefaultRst } from '../../utils/rst'
-import { lookupDxcc, toFlagEmoji } from '../../utils/dxcc'
+import { lookupDxcc } from '../../utils/dxcc'
 import ModeSelect from './ModeSelect.vue'
 import BandSelect from './BandSelect.vue'
 import OperatorSelect from '../operators/OperatorSelect.vue'
 import LocatorInput from '../common/LocatorInput.vue'
+import FlagIcon from '../common/FlagIcon.vue'
 import { useFormDraftStore } from '../../stores/formDraftStore'
 import { useSettingsStore } from '../../stores/settingsStore'
 import type { QslStatus, QSO } from '../../types/qso'
@@ -367,7 +368,7 @@ async function handleSubmit() {
             {{ t('qso.callsign') }}
           </label>
           <span v-if="country" class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400" :title="country">
-            <span v-if="countryCode">[{{ countryCode }}] {{ toFlagEmoji(countryCode) }}</span>
+            <span v-if="countryCode" class="inline-flex items-center gap-1">[{{ countryCode }}] <FlagIcon :iso2="countryCode" /></span>
             <span v-else>{{ country }}</span>
           </span>
         </div>

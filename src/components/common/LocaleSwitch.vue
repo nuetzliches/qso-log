@@ -2,6 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '../../stores/settingsStore'
+import FlagIcon from './FlagIcon.vue'
 
 const props = withDefaults(defineProps<{ placement?: 'top' | 'bottom' }>(), { placement: 'bottom' })
 
@@ -13,8 +14,8 @@ const button = ref<HTMLElement | null>(null)
 const dropdownStyle = ref<Record<string, string>>({})
 
 const locales = [
-  { code: 'de', flag: '🇩🇪', labelKey: 'settings.localeDe' },
-  { code: 'en', flag: '🇬🇧', labelKey: 'settings.localeEn' },
+  { code: 'de', iso2: 'de', labelKey: 'settings.localeDe' },
+  { code: 'en', iso2: 'gb', labelKey: 'settings.localeEn' },
 ]
 
 function openDropdown() {
@@ -74,7 +75,7 @@ const current = () => locales.find(l => l.code === locale.value) ?? locales[0]
       class="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
       @click="open ? open = false : openDropdown()"
     >
-      <span aria-hidden="true" class="text-base leading-none">{{ current().flag }}</span>
+      <FlagIcon :iso2="current().iso2" />
       <span class="flex-1 text-left">{{ t(current().labelKey) }}</span>
       <!-- Chevron -->
       <svg class="h-3.5 w-3.5 flex-shrink-0 transition-transform" :class="open ? 'rotate-180' : ''" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
@@ -102,7 +103,7 @@ const current = () => locales.find(l => l.code === locale.value) ?? locales[0]
             : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'"
           @click="setLocale(loc.code)"
         >
-          <span aria-hidden="true" class="text-base leading-none">{{ loc.flag }}</span>
+          <FlagIcon :iso2="loc.iso2" />
           {{ t(loc.labelKey) }}
         </button>
       </div>

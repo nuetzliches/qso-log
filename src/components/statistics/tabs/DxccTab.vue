@@ -6,6 +6,7 @@ import { aggregateByCountry, countUniqueDxcc } from '../../../composables/useSta
 import { CHART_COLORS } from '../charts/useChartTheme'
 import StatCard from '../StatCard.vue'
 import BarChart from '../charts/BarChart.vue'
+import FlagIcon from '../../common/FlagIcon.vue'
 
 const { t } = useI18n()
 
@@ -19,7 +20,7 @@ const unknownCount = computed(() => props.qsos.filter((q) => !q.country).length)
 const top20 = computed(() => countries.value.slice(0, 20))
 
 const barData = computed(() => ({
-  labels: top20.value.map((c) => `${c.flag} ${c.country}`),
+  labels: top20.value.map((c) => c.country),
   datasets: [{
     label: 'QSOs',
     data: top20.value.map((c) => c.count),
@@ -34,7 +35,7 @@ const barData = computed(() => ({
       <StatCard :label="t('statistics.uniqueCountries')" :value="uniqueCount" />
       <StatCard
         :label="t('statistics.topCountry')"
-        :value="topCountry ? `${topCountry.flag} ${topCountry.country}` : '–'"
+        :value="topCountry ? topCountry.country : '–'"
         :detail="topCountry ? `${topCountry.count} QSOs` : undefined"
       />
       <StatCard :label="t('statistics.unknownCountry')" :value="unknownCount" />
@@ -65,7 +66,7 @@ const barData = computed(() => ({
           </thead>
           <tbody>
             <tr v-for="c in countries" :key="c.country" class="border-t border-gray-100 dark:border-gray-800">
-              <td class="px-4 py-2">{{ c.flag }}</td>
+              <td class="px-4 py-2"><FlagIcon :iso2="c.iso2" /></td>
               <td class="whitespace-nowrap px-4 py-2 text-gray-900 dark:text-white">{{ c.country }}</td>
               <td class="px-4 py-2 text-right font-medium text-gray-900 dark:text-white">{{ c.count }}</td>
               <td class="hidden whitespace-nowrap px-4 py-2 text-gray-500 dark:text-gray-400 sm:table-cell">{{ c.firstDate }}</td>

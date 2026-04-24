@@ -19,6 +19,7 @@
     "adif-parser-ts": "^0.6.37",
     "chart.js": "^4.5.1",
     "dexie": "^4.4.2",
+    "flag-icons": "^7.5.0",
     "jspdf": "^4.2.1",
     "jspdf-autotable": "^5.0.7",
     "leaflet": "^1.9.4",

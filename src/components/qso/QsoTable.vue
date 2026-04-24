@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { formatUtcDateTime } from '../../utils/dateTime'
-import { toFlagEmoji } from '../../utils/dxcc'
 import { calculateDistanceKm, isValidLocator } from '../../utils/locator'
 import { useOperatorStore } from '../../stores/operatorStore'
+import FlagIcon from '../common/FlagIcon.vue'
 import type { QSO, QSOSort } from '../../types/qso'
 
 const { t } = useI18n()
@@ -98,7 +98,11 @@ function qslLabel(value: string): string {
             <td class="px-3 py-2 font-mono">{{ qso.sequenceNumber }}</td>
             <td class="whitespace-nowrap px-3 py-2">{{ formatUtcDateTime(qso.date) }}</td>
             <td class="px-3 py-2 font-semibold">
-              <span v-if="qso.countryCode" :title="qso.country">{{ toFlagEmoji(qso.countryCode) }}&nbsp;</span>{{ qso.callsign }}
+              <div v-if="qso.countryCode" class="inline-flex items-center gap-1" :title="qso.country">
+                <FlagIcon :iso2="qso.countryCode" />
+                <span>{{ qso.callsign }}</span>
+              </div>
+              <span v-else>{{ qso.callsign }}</span>
             </td>
             <td class="px-3 py-2 text-gray-500 dark:text-gray-400">
               <template v-if="qso.locator && qso.myLocator && isValidLocator(qso.locator) && isValidLocator(qso.myLocator)">

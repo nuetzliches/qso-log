@@ -6,6 +6,7 @@ import { useSettingsStore } from '../../../stores/settingsStore'
 import { calculateDistanceStats, getDistanceBuckets, getTopDistances } from '../../../composables/useStatisticsAggregation'
 import StatCard from '../StatCard.vue'
 import BarChart from '../charts/BarChart.vue'
+import FlagIcon from '../../common/FlagIcon.vue'
 
 const { t } = useI18n()
 const settings = useSettingsStore()
@@ -42,7 +43,7 @@ function formatKm(km: number): string {
       <StatCard
         :label="t('statistics.farthestQso')"
         :value="stats.farthest ? `${formatKm(stats.farthest.distance)} km` : '–'"
-        :detail="stats.farthest ? `${stats.farthest.flag} ${stats.farthest.callsign}` : undefined"
+        :detail="stats.farthest ? stats.farthest.callsign : undefined"
       />
       <StatCard
         :label="t('statistics.avgDistance')"
@@ -82,8 +83,11 @@ function formatKm(km: number): string {
               <tr v-for="(entry, i) in topDistances" :key="i" class="border-t border-gray-100 dark:border-gray-800">
                 <td class="px-4 py-2 text-gray-400">{{ i + 1 }}</td>
                 <td class="whitespace-nowrap px-4 py-2">
-                  <span class="font-medium text-gray-900 dark:text-white">{{ entry.flag }} {{ entry.callsign }}</span>
-                  <span v-if="entry.country" class="ml-1 text-xs text-gray-400">{{ entry.country }}</span>
+                  <div class="flex items-center gap-1">
+                    <FlagIcon :iso2="entry.flag" />
+                    <span class="font-medium text-gray-900 dark:text-white">{{ entry.callsign }}</span>
+                    <span v-if="entry.country" class="text-xs text-gray-400">{{ entry.country }}</span>
+                  </div>
                 </td>
                 <td class="whitespace-nowrap px-4 py-2 text-right font-medium text-gray-900 dark:text-white">
                   {{ formatKm(entry.distance) }}
