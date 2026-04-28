@@ -20,7 +20,7 @@ QSOlog is a Vue 3 PWA for amateur radio operators to log QSO (radio contact) rec
 
 **Data flow:** Views → Pinia stores → Repositories → Dexie (IndexedDB)
 
-- **`src/views/`** — 7 page-level components, lazy-loaded by Vue Router
+- **`src/views/`** — 8 page-level components, lazy-loaded by Vue Router (Dashboard at `/`, plus New QSO, History, Statistics, Map, Operators, Settings, About)
 - **`src/stores/`** — Pinia stores: `qsoStore` (CRUD + filtering/sorting/pagination), `operatorStore`, `settingsStore`, `formDraftStore` (auto-saves to localStorage)
 - **`src/db/`** — `database.ts` defines the Dexie schema (4 versions). `repositories/` contains `qsoRepository.ts` and `operatorRepository.ts` as the data access layer
 - **`src/composables/`** — Feature-scoped reusable logic (statistics, leaflet map, PWA install, export/import, callsign lookup)
