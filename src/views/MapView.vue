@@ -101,11 +101,12 @@ function handleToggleLines() {
       <div class="ml-auto flex gap-1.5">
         <button
           class="flex items-center gap-1 rounded-md bg-white px-2 py-1 text-xs font-medium text-gray-600 shadow-sm ring-1 ring-gray-200 hover:bg-gray-50 dark:bg-gray-900 dark:text-gray-300 dark:ring-gray-700 dark:hover:bg-gray-800"
+          :aria-label="t('a11y.centerMap')"
           :title="t('map.centerMap')"
           @click="handleFitBounds"
         >
           <!-- Target/center icon -->
-          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" focusable="false">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
           </svg>
           <span class="hidden sm:inline">{{ t('map.centerMap') }}</span>
@@ -116,11 +117,13 @@ function handleToggleLines() {
           :class="showLines
             ? 'bg-primary-50 text-primary-700 ring-primary-300 hover:bg-primary-100 dark:bg-primary-900/40 dark:text-primary-300 dark:ring-primary-700'
             : 'bg-white text-gray-600 ring-gray-200 hover:bg-gray-50 dark:bg-gray-900 dark:text-gray-300 dark:ring-gray-700 dark:hover:bg-gray-800'"
+          :aria-label="t('a11y.toggleConnections')"
+          :aria-pressed="showLines"
           :title="t('map.connections')"
           @click="handleToggleLines"
         >
           <!-- Line icon -->
-          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" focusable="false">
             <path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
           </svg>
           <span class="hidden sm:inline">{{ t('map.connections') }}</span>

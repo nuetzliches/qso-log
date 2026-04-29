@@ -342,10 +342,11 @@ async function handleSubmit() {
           <button
             type="button"
             @click="setNow()"
-            title="Now"
+            :aria-label="t('a11y.setNow')"
+            :title="t('a11y.setNow')"
             class="rounded p-0.5 text-gray-400 hover:text-primary-600 dark:hover:text-primary-400"
           >
-            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" focusable="false">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
             </svg>
           </button>

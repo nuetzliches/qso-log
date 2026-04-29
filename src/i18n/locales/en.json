@@ -239,5 +239,23 @@
     "install": "Install",
     "useGpsLocation": "Use GPS location",
     "gpsError": "GPS not available"
+  },
+  "a11y": {
+    "required": "Required field",
+    "requiredHint": "* = required field",
+    "loading": "Loading",
+    "showDataTable": "Show data table",
+    "hideDataTable": "Hide data table",
+    "setNow": "Set current time",
+    "detectLocation": "Detect location via GPS",
+    "centerMap": "Center map",
+    "toggleConnections": "Toggle connection lines",
+    "openMore": "Open more options",
+    "closeMore": "Close more options",
+    "editQso": "Edit QSO",
+    "deleteQso": "Delete QSO",
+    "chartLineSummary": "Line chart: {label}",
+    "chartBarSummary": "Bar chart: {label}",
+    "chartPieSummary": "Pie chart: {label}"
   }
 }

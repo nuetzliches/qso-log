@@ -182,9 +182,12 @@ const isMoreActive = computed(() => route.path === '/operators' || route.path ==
         :class="isMoreActive || showMore
           ? 'text-primary-600 dark:text-primary-400'
           : 'text-gray-500 dark:text-gray-400'"
+        :aria-label="showMore ? t('a11y.closeMore') : t('a11y.openMore')"
+        :aria-expanded="showMore"
+        aria-controls="mobile-more-panel"
         @click="showMore = !showMore"
       >
-        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" focusable="false">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
         </svg>
         {{ t('nav.more') }}
@@ -193,7 +196,7 @@ const isMoreActive = computed(() => route.path === '/operators' || route.path ==
 
     <!-- Mehr-Panel -->
     <Teleport to="body">
-      <div v-if="showMore" class="fixed inset-0 z-[900] md:hidden" @click.self="showMore = false">
+      <div v-if="showMore" id="mobile-more-panel" class="fixed inset-0 z-[900] md:hidden" @click.self="showMore = false">
         <div class="absolute inset-0 bg-black/30" @click="showMore = false" />
         <div class="absolute bottom-16 left-0 right-0 rounded-t-2xl border-t border-gray-200 bg-white shadow-xl dark:border-gray-800 dark:bg-gray-950">
           <RouterLink

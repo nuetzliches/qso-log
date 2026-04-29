@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Doughnut } from 'vue-chartjs'
+import { useI18n } from 'vue-i18n'
 import {
   Chart as ChartJS,
   ArcElement,
@@ -8,10 +9,11 @@ import {
   Legend,
 } from 'chart.js'
 import { useChartTheme } from './useChartTheme'
+import ChartDataTable from '../../common/ChartDataTable.vue'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
-defineProps<{
+const props = defineProps<{
   chartData: {
     labels: string[]
     datasets: {
@@ -20,9 +22,16 @@ defineProps<{
     }[]
   }
   title?: string
+  labelHeader?: string
+  seriesLabel?: string
 }>()
 
+const { t } = useI18n()
 const { colors } = useChartTheme()
+
+const a11yLabel = computed(() =>
+  t('a11y.chartPieSummary', { label: props.title || props.seriesLabel || '' }),
+)
 
 const options = computed(() => ({
   responsive: true,
@@ -46,7 +55,15 @@ const options = computed(() => ({
 </script>
 
 <template>
-  <div class="h-[300px]">
-    <Doughnut :data="chartData" :options="options" />
-  </div>
+  <figure>
+    <div class="h-[300px]" role="img" :aria-label="a11yLabel">
+      <Doughnut :data="chartData" :options="options" />
+    </div>
+    <ChartDataTable
+      :caption="a11yLabel"
+      :label-header="labelHeader ?? ''"
+      :labels="chartData.labels"
+      :datasets="chartData.datasets.map((d, i) => ({ label: seriesLabel ?? `Series ${i + 1}`, data: d.data }))"
+    />
+  </figure>
 </template>

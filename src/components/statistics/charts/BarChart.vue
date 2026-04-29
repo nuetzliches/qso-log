@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Bar } from 'vue-chartjs'
+import { useI18n } from 'vue-i18n'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,6 +12,7 @@ import {
   Legend,
 } from 'chart.js'
 import { useChartTheme } from './useChartTheme'
+import ChartDataTable from '../../common/ChartDataTable.vue'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -26,9 +28,15 @@ const props = defineProps<{
   horizontal?: boolean
   stacked?: boolean
   title?: string
+  labelHeader?: string
 }>()
 
+const { t } = useI18n()
 const { colors } = useChartTheme()
+
+const a11yLabel = computed(() =>
+  t('a11y.chartBarSummary', { label: props.title || props.chartData.datasets[0]?.label || '' }),
+)
 
 const options = computed(() => ({
   responsive: true,
@@ -65,7 +73,15 @@ const options = computed(() => ({
 </script>
 
 <template>
-  <div class="h-[300px]">
-    <Bar :data="chartData" :options="options" />
-  </div>
+  <figure>
+    <div class="h-[300px]" role="img" :aria-label="a11yLabel">
+      <Bar :data="chartData" :options="options" />
+    </div>
+    <ChartDataTable
+      :caption="a11yLabel"
+      :label-header="labelHeader ?? ''"
+      :labels="chartData.labels"
+      :datasets="chartData.datasets.map(d => ({ label: d.label, data: d.data }))"
+    />
+  </figure>
 </template>

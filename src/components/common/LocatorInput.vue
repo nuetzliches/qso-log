@@ -76,15 +76,16 @@ function fetchGps() {
         v-if="showGpsButton"
         type="button"
         :disabled="gpsLoading"
+        :aria-label="t('a11y.detectLocation')"
         :title="t('common.useGpsLocation')"
         class="rounded p-0.5 text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 disabled:opacity-50"
         @click="fetchGps"
       >
-        <svg v-if="gpsLoading" class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
+        <svg v-if="gpsLoading" class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
         </svg>
-        <svg v-else class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <svg v-else class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" focusable="false">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
           <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 0 1 15 0Z" />
         </svg>

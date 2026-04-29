@@ -239,5 +239,23 @@
     "install": "Installieren",
     "useGpsLocation": "GPS-Position verwenden",
     "gpsError": "GPS nicht verfügbar"
+  },
+  "a11y": {
+    "required": "Pflichtfeld",
+    "requiredHint": "* = Pflichtfeld",
+    "loading": "Wird geladen",
+    "showDataTable": "Datentabelle anzeigen",
+    "hideDataTable": "Datentabelle ausblenden",
+    "setNow": "Aktuelle Zeit übernehmen",
+    "detectLocation": "Standort per GPS bestimmen",
+    "centerMap": "Karte zentrieren",
+    "toggleConnections": "Verbindungslinien ein- oder ausblenden",
+    "openMore": "Weitere Optionen öffnen",
+    "closeMore": "Weitere Optionen schließen",
+    "editQso": "QSO bearbeiten",
+    "deleteQso": "QSO löschen",
+    "chartLineSummary": "Liniendiagramm: {label}",
+    "chartBarSummary": "Balkendiagramm: {label}",
+    "chartPieSummary": "Kreisdiagramm: {label}"
   }
 }

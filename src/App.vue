@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import AppLayout from './components/common/AppLayout.vue'
+import { useDocumentLang } from './composables/useDocumentLang'
 import { usePwaInstall } from './composables/usePwaInstall'
 import { useServiceWorker } from './composables/useServiceWorker'
 import { useStoragePersistence } from './composables/useStoragePersistence'
@@ -9,6 +10,7 @@ const { t } = useI18n()
 const { needRefresh, offlineReady, updateServiceWorker, close } = useServiceWorker()
 const { showInstallBanner, promptInstall, dismissInstall } = usePwaInstall()
 useStoragePersistence()
+useDocumentLang()
 </script>
 
 <template>

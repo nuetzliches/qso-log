@@ -1,5 +1,6 @@
 import { ref, watch, onUnmounted } from 'vue'
 import { useSettingsStore } from '../stores/settingsStore'
+import { useReducedMotion } from './useReducedMotion'
 import type { MapMarker } from '../types/map'
 import { bearingToCompass } from '../utils/locator'
 
@@ -11,6 +12,7 @@ const TILE_CARTO_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright
 
 export function useLeafletMap() {
   const settings = useSettingsStore()
+  const reducedMotion = useReducedMotion()
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let map: any = null
@@ -54,7 +56,12 @@ export function useLeafletMap() {
     L = leafletModule.default
     await import('leaflet.markercluster')
 
-    map = L.map(containerEl, { zoomControl: true, fadeAnimation: false })
+    map = L.map(containerEl, {
+      zoomControl: true,
+      fadeAnimation: !reducedMotion.value,
+      zoomAnimation: !reducedMotion.value,
+      markerZoomAnimation: !reducedMotion.value,
+    })
 
     lightLayer = L.tileLayer(TILE_OSM, { attribution: TILE_OSM_ATTR, maxZoom: 19 })
     darkLayer = L.tileLayer(TILE_CARTO_DARK, { attribution: TILE_CARTO_ATTR, maxZoom: 19 })
