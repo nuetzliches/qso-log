@@ -91,6 +91,8 @@ async function handleConfirmImport() {
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
+          aria-hidden="true"
+          focusable="false"
         >
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
         </svg>
@@ -196,8 +198,13 @@ async function handleConfirmImport() {
               {{ t('history.importConfirm', importResult.qsos.length) }}
             </p>
 
-            <div v-if="importResult.validation.errors.length > 0" class="rounded-md bg-amber-50 p-3 text-sm text-amber-800 dark:bg-amber-900/20 dark:text-amber-200">
-              {{ importResult.validation.errors.length }} validation errors
+            <div
+              v-if="importResult.validation.errors.length > 0"
+              role="alert"
+              aria-live="polite"
+              class="rounded-md bg-amber-50 p-3 text-sm text-amber-800 dark:bg-amber-900/20 dark:text-amber-200"
+            >
+              {{ t('a11y.importErrors', { count: importResult.validation.errors.length }) }}
             </div>
 
             <!-- Preview table -->

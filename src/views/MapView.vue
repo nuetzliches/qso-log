@@ -138,8 +138,8 @@ function handleToggleLines() {
         v-if="!isLoaded"
         class="absolute inset-0 z-[1000] flex items-center justify-center bg-gray-100 dark:bg-gray-900"
       >
-        <div class="text-center text-sm text-gray-500 dark:text-gray-400">
-          <svg class="mx-auto mb-2 h-8 w-8 animate-spin text-primary-500" fill="none" viewBox="0 0 24 24">
+        <div class="text-center text-sm text-gray-600 dark:text-gray-300">
+          <svg class="mx-auto mb-2 h-8 w-8 animate-spin text-primary-500" fill="none" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
           </svg>
@@ -153,7 +153,7 @@ function handleToggleLines() {
         class="pointer-events-none absolute inset-0 z-[1000] flex items-center justify-center"
       >
         <div class="rounded-lg bg-white/90 px-6 py-4 text-center shadow-lg dark:bg-gray-900/90">
-          <p class="text-sm text-gray-500 dark:text-gray-400">{{ t('map.emptyState') }}</p>
+          <p class="text-sm text-gray-600 dark:text-gray-300">{{ t('map.emptyState') }}</p>
         </div>
       </div>
     </div>

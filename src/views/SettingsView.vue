@@ -96,7 +96,7 @@ function onConsentCancel() {
           class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm uppercase shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
           @change="settings.setSetting('ownCallsign', ($event.target as HTMLInputElement).value.toUpperCase())"
         />
-        <p class="text-xs text-gray-500 dark:text-gray-400">{{ t('settings.ownCallsignHint') }}</p>
+        <p class="text-xs text-gray-600 dark:text-gray-300">{{ t('settings.ownCallsignHint') }}</p>
       </div>
 
       <div class="space-y-2">
@@ -108,7 +108,7 @@ function onConsentCancel() {
           id="settings-locator"
           @update:model-value="settings.setSetting('ownLocator', $event)"
         />
-        <p class="text-xs text-gray-500 dark:text-gray-400">{{ t('settings.ownLocatorHint') }}</p>
+        <p class="text-xs text-gray-600 dark:text-gray-300">{{ t('settings.ownLocatorHint') }}</p>
       </div>
     </section>
 
@@ -116,7 +116,7 @@ function onConsentCancel() {
     <section class="space-y-4">
       <div>
         <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-300">{{ t('settings.callsignLookup') }}</h2>
-        <p class="text-xs text-gray-500 dark:text-gray-400">{{ t('settings.callsignLookupHint') }}</p>
+        <p class="text-xs text-gray-600 dark:text-gray-300">{{ t('settings.callsignLookupHint') }}</p>
       </div>
 
       <!-- QRZ.com + HamQTH -->
@@ -179,7 +179,7 @@ function onConsentCancel() {
           <span class="block text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ t('settings.propagation.toggleLabel') }}
           </span>
-          <span class="block text-xs text-gray-500 dark:text-gray-400">
+          <span class="block text-xs text-gray-600 dark:text-gray-300">
             {{ t('settings.propagation.toggleHint') }}
           </span>
         </span>
@@ -207,14 +207,14 @@ function onConsentCancel() {
         >
           {{ t('settings.propagation.resetButton') }}
         </button>
-        <span v-if="backfillRunning" class="text-xs text-gray-500 dark:text-gray-400">
+        <span v-if="backfillRunning" class="text-xs text-gray-600 dark:text-gray-300">
           {{ t('settings.propagation.backfillRunning', { done: backfillProgress.done, total: backfillProgress.total }) }}
         </span>
         <span v-else-if="backfillMessage" class="text-xs text-gray-600 dark:text-gray-300">
           {{ backfillMessage }}
         </span>
       </div>
-      <p v-if="settings.propagation.enabled" class="text-xs text-gray-500 dark:text-gray-400">
+      <p v-if="settings.propagation.enabled" class="text-xs text-gray-600 dark:text-gray-300">
         {{ t('settings.propagation.resetHint') }}
       </p>
     </section>
@@ -230,7 +230,7 @@ function onConsentCancel() {
       >
         {{ t('settings.installApp') }}
       </button>
-      <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ t('settings.installAppHint') }}</p>
+      <p class="mt-1 text-xs text-gray-600 dark:text-gray-300">{{ t('settings.installAppHint') }}</p>
     </section>
 
     <PropagationConsentDialog

@@ -102,17 +102,18 @@ const correlations = computed(() => correlationByBand(props.qsos, settings.ownLo
         Korrelation SFI ↔ Distanz (Pearson r)
       </h2>
       <table class="min-w-full text-sm">
+        <caption class="sr-only">Korrelation SFI ↔ Distanz pro Band</caption>
         <thead>
-          <tr class="text-left text-xs uppercase text-gray-500 dark:text-gray-400">
-            <th class="pb-2">Band</th>
-            <th class="pb-2">QSOs</th>
-            <th class="pb-2">r</th>
+          <tr class="text-left text-xs uppercase text-gray-600 dark:text-gray-300">
+            <th scope="col" class="pb-2">Band</th>
+            <th scope="col" class="pb-2">QSOs</th>
+            <th scope="col" class="pb-2">r</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
           <tr v-for="row in correlations" :key="row.band">
             <td class="py-1.5 font-medium text-gray-700 dark:text-gray-300">{{ row.band }}</td>
-            <td class="py-1.5 text-gray-500 dark:text-gray-400">{{ row.count }}</td>
+            <td class="py-1.5 text-gray-600 dark:text-gray-300">{{ row.count }}</td>
             <td class="py-1.5 font-mono">
               <span v-if="row.sfiVsDistance === undefined" class="text-gray-400">–</span>
               <span v-else>{{ row.sfiVsDistance.toFixed(2) }}</span>

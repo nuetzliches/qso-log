@@ -56,13 +56,13 @@ const tooltip = computed(() => {
     :title="tooltip"
   >
     <span v-if="propagation.sfi !== undefined" :class="sfiClass">
-      <span class="text-gray-500 dark:text-gray-400">{{ compact ? '' : 'SFI ' }}</span>{{ Math.round(propagation.sfi) }}
+      <span class="text-gray-600 dark:text-gray-300">{{ compact ? '' : 'SFI ' }}</span>{{ Math.round(propagation.sfi) }}
     </span>
     <span v-if="propagation.ssn !== undefined && !compact" class="text-gray-600 dark:text-gray-300">
-      <span class="text-gray-500 dark:text-gray-400">SSN </span>{{ Math.round(propagation.ssn) }}
+      <span class="text-gray-600 dark:text-gray-300">SSN </span>{{ Math.round(propagation.ssn) }}
     </span>
     <span v-if="propagation.kIndex !== undefined" :class="kClass">
-      <span class="text-gray-500 dark:text-gray-400">K </span>{{ propagation.kIndex }}
+      <span class="text-gray-600 dark:text-gray-300">K </span>{{ propagation.kIndex }}
     </span>
   </span>
 </template>

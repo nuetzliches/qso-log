@@ -256,6 +256,8 @@
     "deleteQso": "QSO löschen",
     "chartLineSummary": "Liniendiagramm: {label}",
     "chartBarSummary": "Balkendiagramm: {label}",
-    "chartPieSummary": "Kreisdiagramm: {label}"
+    "chartPieSummary": "Kreisdiagramm: {label}",
+    "locatorInvalid": "Ungültiger Locator. Erwartet werden 4 oder 6 Zeichen im Maidenhead-Format (z. B. JN47ao).",
+    "importErrors": "{count} Fehler beim Import"
   }
 }

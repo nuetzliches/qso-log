@@ -95,6 +95,6 @@ const lineData = computed(() => {
       <LineChart :chart-data="lineData" />
     </div>
 
-    <p v-else class="text-center text-sm text-gray-500 dark:text-gray-400">{{ t('statistics.noData') }}</p>
+    <p v-else class="text-center text-sm text-gray-600 dark:text-gray-300">{{ t('statistics.noData') }}</p>
   </div>
 </template>

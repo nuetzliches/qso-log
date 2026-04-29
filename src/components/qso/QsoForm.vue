@@ -309,7 +309,7 @@ async function handleSubmit() {
 <template>
   <form @submit.prevent="handleSubmit" class="space-y-4">
     <!-- Sequence number (read-only) -->
-    <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+    <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
       <span class="font-medium">{{ t('qso.sequenceNumber') }}</span>
       <span class="rounded bg-gray-100 px-2 py-0.5 font-mono dark:bg-gray-800">{{ props.editQso ? props.editQso.sequenceNumber : nextNumber }}</span>
       <span v-if="props.editQso?.updatedAt" class="text-xs text-amber-600 dark:text-amber-400">
@@ -368,7 +368,7 @@ async function handleSubmit() {
           <label for="qso-callsign" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ t('qso.callsign') }}
           </label>
-          <span v-if="country" class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400" :title="country">
+          <span v-if="country" class="flex items-center gap-1 text-xs text-gray-600 dark:text-gray-300" :title="country">
             <span v-if="countryCode" class="inline-flex items-center gap-1">[{{ countryCode }}] <FlagIcon :iso2="countryCode" /></span>
             <span v-else>{{ country }}</span>
           </span>

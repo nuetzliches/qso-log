@@ -17,17 +17,18 @@ const operatorStore = useOperatorStore()
 <template>
   <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+      <caption class="sr-only">{{ t('dashboard.recentQsos') }}</caption>
       <thead class="bg-gray-50 dark:bg-gray-800">
         <tr>
-          <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.sequenceNumber') }}</th>
-          <th class="whitespace-nowrap px-2 py-2 md:px-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.date') }}</th>
-          <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.callsign') }}</th>
-          <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.mode') }}</th>
-          <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.band') }}</th>
-          <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.rstSent') }}</th>
-          <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.rstReceived') }}</th>
-          <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('propagation.title') }}</th>
-          <th v-if="operatorStore.hasMultipleOperators" class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.operator') }}</th>
+          <th scope="col" class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-600 dark:text-gray-300">{{ t('qso.sequenceNumber') }}</th>
+          <th scope="col" class="whitespace-nowrap px-2 py-2 md:px-3 text-left text-xs font-medium uppercase text-gray-600 dark:text-gray-300">{{ t('qso.date') }}</th>
+          <th scope="col" class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-600 dark:text-gray-300">{{ t('qso.callsign') }}</th>
+          <th scope="col" class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-600 dark:text-gray-300">{{ t('qso.mode') }}</th>
+          <th scope="col" class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-600 dark:text-gray-300">{{ t('qso.band') }}</th>
+          <th scope="col" class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-600 dark:text-gray-300">{{ t('qso.rstSent') }}</th>
+          <th scope="col" class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-600 dark:text-gray-300">{{ t('qso.rstReceived') }}</th>
+          <th scope="col" class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-600 dark:text-gray-300">{{ t('propagation.title') }}</th>
+          <th v-if="operatorStore.hasMultipleOperators" class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-600 dark:text-gray-300">{{ t('qso.operator') }}</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">

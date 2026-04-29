@@ -70,13 +70,14 @@ function formatKm(km: number): string {
         </h3>
         <div class="overflow-auto">
           <table class="w-full text-left text-sm">
+            <caption class="sr-only">{{ t('statistics.topDistances') }}</caption>
             <thead class="bg-gray-50 dark:bg-gray-800">
               <tr>
-                <th class="px-4 py-2 font-medium text-gray-600 dark:text-gray-400">#</th>
-                <th class="px-4 py-2 font-medium text-gray-600 dark:text-gray-400">{{ t('qso.callsign') }}</th>
-                <th class="px-4 py-2 text-right font-medium text-gray-600 dark:text-gray-400">km</th>
-                <th class="hidden px-4 py-2 font-medium text-gray-600 dark:text-gray-400 sm:table-cell">{{ t('statistics.direction') }}</th>
-                <th class="hidden px-4 py-2 font-medium text-gray-600 dark:text-gray-400 sm:table-cell">{{ t('qso.locator') }}</th>
+                <th scope="col" class="px-4 py-2 font-medium text-gray-600 dark:text-gray-400">#</th>
+                <th scope="col" class="px-4 py-2 font-medium text-gray-600 dark:text-gray-400">{{ t('qso.callsign') }}</th>
+                <th scope="col" class="px-4 py-2 text-right font-medium text-gray-600 dark:text-gray-400">km</th>
+                <th scope="col" class="hidden px-4 py-2 font-medium text-gray-600 dark:text-gray-400 sm:table-cell">{{ t('statistics.direction') }}</th>
+                <th scope="col" class="hidden px-4 py-2 font-medium text-gray-600 dark:text-gray-400 sm:table-cell">{{ t('qso.locator') }}</th>
               </tr>
             </thead>
             <tbody>
@@ -92,10 +93,10 @@ function formatKm(km: number): string {
                 <td class="whitespace-nowrap px-4 py-2 text-right font-medium text-gray-900 dark:text-white">
                   {{ formatKm(entry.distance) }}
                 </td>
-                <td class="hidden whitespace-nowrap px-4 py-2 text-gray-500 dark:text-gray-400 sm:table-cell">
+                <td class="hidden whitespace-nowrap px-4 py-2 text-gray-600 dark:text-gray-300 sm:table-cell">
                   {{ entry.bearing }}° {{ entry.compass }}
                 </td>
-                <td class="hidden whitespace-nowrap px-4 py-2 text-gray-500 dark:text-gray-400 sm:table-cell">
+                <td class="hidden whitespace-nowrap px-4 py-2 text-gray-600 dark:text-gray-300 sm:table-cell">
                   {{ entry.locator }}
                 </td>
               </tr>
@@ -105,6 +106,6 @@ function formatKm(km: number): string {
       </div>
     </div>
 
-    <p v-if="qsos.length === 0" class="text-center text-sm text-gray-500 dark:text-gray-400">{{ t('statistics.noData') }}</p>
+    <p v-if="qsos.length === 0" class="text-center text-sm text-gray-600 dark:text-gray-300">{{ t('statistics.noData') }}</p>
   </div>
 </template>

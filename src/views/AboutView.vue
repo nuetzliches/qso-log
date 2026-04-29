@@ -15,7 +15,7 @@ const { t } = useI18n()
     <!-- Die App -->
     <section class="space-y-3">
       <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-300">{{ t('about.appHeading') }}</h2>
-      <p class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+      <p class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
         QSOlog v{{ version }}
         <span v-if="isDev" class="rounded bg-amber-100 px-1.5 py-0.5 text-xs font-medium text-amber-800 dark:bg-amber-900 dark:text-amber-200">dev</span>
       </p>
@@ -48,7 +48,7 @@ const { t } = useI18n()
     <!-- Impressum -->
     <section class="space-y-2 border-t border-gray-200 pt-6 dark:border-gray-700">
       <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-300">{{ t('about.legalHeading') }}</h2>
-      <p class="text-xs text-gray-400 dark:text-gray-500">{{ t('about.legalBasis') }}</p>
+      <p class="text-xs text-gray-600 dark:text-gray-400">{{ t('about.legalBasis') }}</p>
       <address class="not-italic text-sm text-gray-600 dark:text-gray-400">
         nützliche.IT – Philipp Draese<br />
         Ringstr. 1<br />

@@ -256,6 +256,8 @@
     "deleteQso": "Delete QSO",
     "chartLineSummary": "Line chart: {label}",
     "chartBarSummary": "Bar chart: {label}",
-    "chartPieSummary": "Pie chart: {label}"
+    "chartPieSummary": "Pie chart: {label}",
+    "locatorInvalid": "Invalid locator. Expected 4 or 6 characters in Maidenhead format (e.g. JN47ao).",
+    "importErrors": "{count} errors during import"
   }
 }

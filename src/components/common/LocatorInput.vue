@@ -98,6 +98,8 @@ function fetchGps() {
       maxlength="6"
       autocomplete="off"
       :placeholder="t('qso.locatorHint')"
+      :aria-invalid="!isValid || undefined"
+      :aria-describedby="[!isValid ? `${id}-error` : null, gpsError ? `${id}-gps-error` : null].filter(Boolean).join(' ') || undefined"
       :class="[
         'mt-2 w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:ring-1',
         !isValid
@@ -107,12 +109,15 @@ function fetchGps() {
       ]"
       @input="onInput"
     />
-    <p v-if="gpsError" class="mt-1 text-xs text-red-500">{{ gpsError }}</p>
+    <p v-if="!isValid" :id="`${id}-error`" class="mt-1 text-xs text-red-600 dark:text-red-400">
+      {{ t('a11y.locatorInvalid') }}
+    </p>
+    <p v-if="gpsError" :id="`${id}-gps-error`" class="mt-1 text-xs text-red-600 dark:text-red-400">{{ gpsError }}</p>
     <div
       v-if="distanceInfo"
       class="mt-1 inline-flex items-center gap-1.5 rounded-full bg-primary-50 px-2.5 py-0.5 text-xs font-medium text-primary-700 dark:bg-primary-900/30 dark:text-primary-300"
     >
-      <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+      <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" focusable="false">
         <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
         <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 0 1 15 0Z" />
       </svg>
