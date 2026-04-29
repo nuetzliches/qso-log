@@ -58,7 +58,8 @@
     "country": "Land",
     "previousContact": "Früherer Kontakt",
     "lastQso": "Letztes QSO",
-    "totalPreviousQsos": "{count} frühere QSOs"
+    "totalPreviousQsos": "{count} frühere QSOs",
+    "lookingUp": "Rufzeichen wird abgefragt …"
   },
   "history": {
     "title": "QSO-Historie", 

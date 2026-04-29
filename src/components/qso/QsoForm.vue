@@ -392,11 +392,16 @@ async function handleSubmit() {
           @input="handleCallsignInput($event)"
         />
         <!-- Callsign lookup info -->
-        <div v-if="lookupLoading" class="mt-1 text-xs text-gray-400">
-          Looking up...
+        <div
+          aria-live="polite"
+          class="mt-1"
+        >
+          <p v-if="lookupLoading" class="text-xs text-gray-600 dark:text-gray-300">
+            {{ t('qso.lookingUp') }}
+          </p>
         </div>
         <div
-          v-else-if="callsignInfo"
+          v-if="callsignInfo && !lookupLoading"
           class="mt-1 rounded-md bg-blue-50 px-3 py-1.5 text-xs text-blue-800 dark:bg-blue-900/30 dark:text-blue-200"
         >
           <span class="font-medium">{{ callsignInfo.name }}</span>

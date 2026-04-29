@@ -5,9 +5,30 @@
 QSOlog ist eine Vue 3 PWA, die offline läuft und vollständig im Browser arbeitet. Das Audit vom 2026-04-29 hat ergeben, dass die App eine solide semantische Grundlage hat (Skip-Link, Landmarks, Form-Labels, Headlessui), aber für eine WCAG 2.1 AA / BITV-konforme Auslieferung mehrere kritische und schwerwiegende Lücken zu schließen sind. Geschätzte aktuelle AA-Konformität: **~70 %**.
 
 **Datum:** 2026-04-29
-**Status:** Entwurf — noch nicht implementiert
+**Status:** Phasen 1–3 implementiert (Befunde A1–A16 abgeschlossen). Offen: Lighthouse-CI-Integration, manueller Screenreader-Smoke-Test, Release v0.11.0.
 **Speicherort:** `docs/plans/2026-04-29_accessibility.md`
 **Zielkonformität:** WCAG 2.1 Level AA (Pflicht für BITV/EN 301 549)
+
+### Status pro Befund (Stand 2026-04-29)
+
+| # | Status | Commit |
+|---|--------|--------|
+| A1 | abgeschlossen | Phase 1 (`useDocumentLang`) |
+| A2 | abgeschlossen | Phase 1 (icon-only buttons aria-label) |
+| A3 | abgeschlossen | Phase 1 (`ChartDataTable`) |
+| A4 | abgeschlossen | Phase 1 (`useReducedMotion` + globales CSS) |
+| A5 | abgeschlossen | Phase 2 (`bb04af6`) — weitere Folge-Fixes in Phase 3 |
+| A6 | abgeschlossen | Phase 2 (`bb04af6`) |
+| A7 | abgeschlossen | Phase 2 (`bb04af6`) |
+| A8 | abgeschlossen | Phase 2 (`bb04af6`) |
+| A9 | abgeschlossen | Phase 3 (`48a00b8`) |
+| A10 | abgeschlossen | Phase 3 (`48a00b8`) — Mobile-Tab-Bar bereits OK, GPS/Now-Button erweitert |
+| A11 | abgeschlossen | Phase 3 (`48a00b8`) |
+| A12 | abgeschlossen | Phase 3 (`48a00b8`) — Inputs bewusst weiter mit `focus:` |
+| A13 | abgeschlossen | Phase 3 (`48a00b8`) |
+| A14 | abgeschlossen | Phase 3 (`48a00b8`) |
+| A15 | abgeschlossen | Phase 3 (`48a00b8`) |
+| A16 | abgeschlossen | Phase 3 (`48a00b8`) — Tooltips als SR-Brücke; Karte bleibt Zusatzmedium |
 
 ---
 

@@ -58,7 +58,8 @@
     "country": "Country",
     "previousContact": "Previous Contact",
     "lastQso": "Last QSO",
-    "totalPreviousQsos": "{count} previous QSOs"
+    "totalPreviousQsos": "{count} previous QSOs",
+    "lookingUp": "Looking up callsign …"
   },
   "history": {
     "title": "QSO History",
