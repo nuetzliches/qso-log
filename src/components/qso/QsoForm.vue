@@ -10,6 +10,7 @@ import { usePreviousContact } from '../../composables/usePreviousContact'
 import { nowUtcIso, formatUtcDate, formatUtcTime } from '../../utils/dateTime'
 import { getDefaultRst } from '../../utils/rst'
 import { lookupDxcc } from '../../utils/dxcc'
+import { isValidCallsign, suggestCallsign } from '../../utils/callsign'
 import ModeSelect from './ModeSelect.vue'
 import BandSelect from './BandSelect.vue'
 import OperatorSelect from '../operators/OperatorSelect.vue'
@@ -32,6 +33,14 @@ const formDraft = useFormDraftStore()
 const settings = useSettingsStore()
 
 const savedMessage = ref(false)
+
+const callsignValidation = computed(() => {
+  const cs = callsign.value
+  if (cs.length < 3) return null          // still typing, no feedback yet
+  if (isValidCallsign(cs)) return null    // valid
+  const suggestion = suggestCallsign(cs)
+  return { suggestion }
+})
 
 // Form fields
 const date = ref(formatUtcDate(nowUtcIso()))
@@ -308,16 +317,14 @@ async function handleSubmit() {
 
 <template>
   <form @submit.prevent="handleSubmit" class="space-y-4">
-    <p class="text-xs text-gray-600 dark:text-gray-300">
-      {{ t('a11y.requiredHint') }}
-    </p>
-    <!-- Sequence number (read-only) -->
+    <!-- Sequence number (read-only) + required hint -->
     <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
       <span class="font-medium">{{ t('qso.sequenceNumber') }}</span>
       <span class="rounded bg-gray-100 px-2 py-0.5 font-mono dark:bg-gray-800">{{ props.editQso ? props.editQso.sequenceNumber : nextNumber }}</span>
       <span v-if="props.editQso?.updatedAt" class="text-xs text-amber-600 dark:text-amber-400">
         {{ t('qso.updatedAt') }}: {{ new Date(props.editQso.updatedAt).toLocaleString() }}
       </span>
+      <span class="ml-auto text-xs text-gray-500 dark:text-gray-400">{{ t('a11y.requiredHint') }}</span>
     </div>
 
     <!-- Operator -->
@@ -388,9 +395,26 @@ async function handleSubmit() {
           type="text"
           required
           autocomplete="off"
-          class="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm uppercase shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          :aria-invalid="callsignValidation ? true : undefined"
+          aria-describedby="qso-callsign-error"
+          :class="[
+            'mt-1 w-full rounded-md border px-3 py-2 text-sm uppercase shadow-sm focus:ring-1',
+            callsignValidation
+              ? 'border-red-400 focus:border-red-500 focus:ring-red-500 dark:border-red-500'
+              : 'border-gray-300 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600',
+            'bg-white dark:bg-gray-800 dark:text-white',
+          ]"
           @input="handleCallsignInput($event)"
         />
+        <!-- Callsign validation warning -->
+        <div aria-live="polite">
+          <p v-if="callsignValidation" id="qso-callsign-error" class="mt-1 text-xs text-red-600 dark:text-red-400">
+            <span v-if="callsignValidation.suggestion">
+              {{ t('qso.callsignInvalidSuggestion', { example: callsignValidation.suggestion }) }}
+            </span>
+            <span v-else>{{ t('qso.callsignInvalid') }}</span>
+          </p>
+        </div>
         <!-- Callsign lookup info -->
         <div aria-live="polite">
           <p v-if="lookupLoading" class="mt-1 text-xs text-gray-600 dark:text-gray-300">

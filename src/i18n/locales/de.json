@@ -59,7 +59,9 @@
     "previousContact": "Früherer Kontakt",
     "lastQso": "Letztes QSO",
     "totalPreviousQsos": "{count} frühere QSOs",
-    "lookingUp": "Rufzeichen wird abgefragt …"
+    "lookingUp": "Rufzeichen wird abgefragt …",
+    "callsignInvalid": "Ungültiges Rufzeichen.",
+    "callsignInvalidSuggestion": "Ungültiges Rufzeichen. Meintest du z. B. {example}?"
   },
   "history": {
     "title": "QSO-Historie", 

@@ -59,7 +59,9 @@
     "previousContact": "Previous Contact",
     "lastQso": "Last QSO",
     "totalPreviousQsos": "{count} previous QSOs",
-    "lookingUp": "Looking up callsign …"
+    "lookingUp": "Looking up callsign …",
+    "callsignInvalid": "Invalid callsign.",
+    "callsignInvalidSuggestion": "Invalid callsign. Did you mean e.g. {example}?"
   },
   "history": {
     "title": "QSO History",
