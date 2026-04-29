@@ -40,8 +40,23 @@ QSOlog is a Vue 3 PWA for amateur radio operators to log QSO (radio contact) rec
 ## Testing
 
 - **Unit tests:** `tests/unit/**/*.test.ts` using Vitest + jsdom + Vue Test Utils
-- **E2E tests:** `tests/e2e/**/*.spec.ts` using Playwright (Chromium only)
+- **E2E tests:** `tests/e2e/**/*.spec.ts` using Playwright (Chromium only). a11y specs live under `tests/e2e/a11y/`; the axe-core scan is auto-skipped until `@axe-core/playwright` is installed.
 - Test directory structure mirrors `src/`
+
+## Accessibility
+
+Target: WCAG 2.1 AA / EN 301 549 / BITV 2.0. When adding or modifying UI, follow these patterns:
+
+- **Contrast:** secondary text uses `text-gray-600 dark:text-gray-300` (avoid `gray-500`/`gray-400` for body text). Reverse pattern (`text-gray-400 dark:text-gray-500`) fails AA in both themes.
+- **SVGs:** decorative icons get `aria-hidden="true" focusable="false"`. Icon-only buttons need an `aria-label` (use `t('a11y.*')` keys).
+- **Forms:** invalid inputs need `aria-invalid` + `aria-describedby` pointing to a visible error element; error containers use `role="alert"` + `aria-live="polite"` for async/import flows.
+- **Tables:** add `<caption class="sr-only">` and `scope="col"` on every `<th>` in the head; use `scope="row"` for row headers.
+- **Charts:** wrap chart canvas in `<figure>` with `role="img"` + `:aria-label`, and provide a `<details>`-toggled `ChartDataTable` companion (see `src/components/common/ChartDataTable.vue`).
+- **Reduced motion:** `useReducedMotion` composable + global `@media (prefers-reduced-motion: reduce)` override in `src/assets/styles/main.css`. Don't add JS-driven animations that ignore this signal.
+- **Lang sync:** `useDocumentLang()` keeps `<html lang>` in sync with the active i18n locale — call it once in `App.vue`, not per-view.
+- **i18n keys:** all a11y strings live under the `a11y.*` namespace in `src/i18n/locales/{de,en}.json`. Add German *and* English when introducing new keys.
+
+The full audit and remaining backlog live in `docs/plans/2026-04-29_accessibility.md`.
 
 ## Domain Concepts
 
