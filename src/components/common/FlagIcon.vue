@@ -3,7 +3,7 @@ defineProps<{ iso2?: string }>()
 </script>
 
 <template>
-  <span v-if="iso2" class="inline-block" :class="`fi fi-${iso2}`" />
+  <span v-if="iso2" class="inline-block" :class="`fi fi-${iso2.toLowerCase()}`" />
 </template>
 
 <style scoped>
