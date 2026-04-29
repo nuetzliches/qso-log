@@ -78,14 +78,16 @@ const lineData = computed(() => {
     <div v-if="qsos.length > 0" class="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-900">
       <div class="mb-3 flex items-center justify-between">
         <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300">{{ t('statistics.activityTimeline') }}</h3>
-        <div class="flex gap-1">
+        <div role="group" :aria-label="t('statistics.activityTimeline')" class="flex gap-1">
           <button
             v-for="g in (['day', 'week', 'month'] as Granularity[])"
             :key="g"
+            type="button"
+            :aria-pressed="granularity === g"
             class="rounded-md px-2.5 py-1 text-xs font-medium transition-colors"
             :class="granularity === g
               ? 'bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300'
-              : 'text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800'"
+              : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'"
             @click="granularity = g"
           >
             {{ t(`statistics.${g}`) }}

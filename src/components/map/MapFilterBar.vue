@@ -53,7 +53,10 @@ function clearFilters() {
     <!-- Toggle button (mobile) / header -->
     <div class="flex items-center gap-2 px-3 py-2">
       <button
-        class="flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium text-gray-600 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-800"
+        type="button"
+        :aria-expanded="isExpanded"
+        :aria-label="t('history.filter')"
+        class="flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium text-gray-600 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
         @click="isExpanded = !isExpanded"
       >
         <!-- Filter icon -->
@@ -85,10 +88,12 @@ function clearFilters() {
 
       <button
         v-if="hasActiveFilters"
-        class="ml-auto text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+        type="button"
+        :aria-label="t('a11y.clearFilters')"
+        class="ml-auto text-xs text-gray-600 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-200"
         @click="clearFilters"
       >
-        ✕
+        <span aria-hidden="true">✕</span>
       </button>
     </div>
 
@@ -125,7 +130,7 @@ function clearFilters() {
             class="inline-flex cursor-pointer items-center rounded-md border px-2 py-0.5 text-xs transition-colors"
             :class="selectedModes.includes(mode)
               ? 'border-primary-500 bg-primary-50 text-primary-700 dark:bg-primary-900/50 dark:text-primary-300'
-              : 'border-gray-300 text-gray-600 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-800'"
+              : 'border-gray-300 text-gray-600 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800'"
           >
             <input :id="`map-mode-${mode}`" type="checkbox" :value="mode" v-model="selectedModes" class="sr-only" />
             {{ mode }}
@@ -144,7 +149,7 @@ function clearFilters() {
             class="inline-flex cursor-pointer items-center rounded-md border px-2 py-0.5 text-xs transition-colors"
             :class="selectedBands.includes(band)
               ? 'border-primary-500 bg-primary-50 text-primary-700 dark:bg-primary-900/50 dark:text-primary-300'
-              : 'border-gray-300 text-gray-600 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-800'"
+              : 'border-gray-300 text-gray-600 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800'"
           >
             <input :id="`map-band-${band}`" type="checkbox" :value="band" v-model="selectedBands" class="sr-only" />
             {{ band }}

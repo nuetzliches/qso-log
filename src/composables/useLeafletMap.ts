@@ -115,6 +115,12 @@ export function useLeafletMap() {
         weight: 2,
       })
       circle.bindPopup(buildPopupHtml(marker), { maxWidth: 260 })
+      const qsoCount = marker.qsos.length
+      const tooltipText =
+        marker.distanceKm !== undefined
+          ? `${marker.locator} — ${qsoCount} QSO${qsoCount > 1 ? 's' : ''}, ${marker.distanceKm} km`
+          : `${marker.locator} — ${qsoCount} QSO${qsoCount > 1 ? 's' : ''}`
+      circle.bindTooltip(tooltipText, { direction: 'top' })
       clusterGroup.addLayer(circle)
     }
 
@@ -139,6 +145,7 @@ export function useLeafletMap() {
       weight: 3,
     })
     ownMarker.bindPopup(`<div class="map-popup"><strong>${callsign || ownStationLabel}</strong><br>${ownStationLabel}</div>`)
+    ownMarker.bindTooltip(callsign ? `${ownStationLabel}: ${callsign}` : ownStationLabel, { direction: 'top' })
     ownMarker.addTo(map)
   }
 

@@ -72,7 +72,7 @@ const current = () => locales.find(l => l.code === locale.value) ?? locales[0]
       :title="t(current().labelKey)"
       aria-haspopup="listbox"
       :aria-expanded="open"
-      class="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+      class="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
       @click="open ? open = false : openDropdown()"
     >
       <FlagIcon :iso2="current().iso2" />

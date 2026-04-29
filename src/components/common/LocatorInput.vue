@@ -77,8 +77,9 @@ function fetchGps() {
         type="button"
         :disabled="gpsLoading"
         :aria-label="t('a11y.detectLocation')"
+        :aria-busy="gpsLoading"
         :title="t('common.useGpsLocation')"
-        class="rounded p-0.5 text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 disabled:opacity-50"
+        class="inline-flex h-7 w-7 items-center justify-center rounded text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 disabled:opacity-50"
         @click="fetchGps"
       >
         <svg v-if="gpsLoading" class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true" focusable="false">

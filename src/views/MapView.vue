@@ -90,7 +90,7 @@ function handleToggleLines() {
     <MapFilterBar v-model="filters" />
 
     <!-- Status bar -->
-    <div class="flex items-center gap-2 border-b border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-500 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-400">
+    <div class="flex items-center gap-2 border-b border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-600 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-300">
       <span v-if="isLoaded && !isLoadingData">
         {{ t('map.status', { shown: markers.length, hidden: hiddenQsos }) }}
       </span>
@@ -132,13 +132,13 @@ function handleToggleLines() {
     </div>
 
     <!-- Map container (always rendered so Leaflet gets correct dimensions) -->
-    <div ref="mapContainer" class="relative flex-1 min-h-0">
+    <div ref="mapContainer" role="application" :aria-label="t('nav.map')" class="relative flex-1 min-h-0">
       <!-- Loading overlay (absolute, on top of map area) -->
       <div
         v-if="!isLoaded"
         class="absolute inset-0 z-[1000] flex items-center justify-center bg-gray-100 dark:bg-gray-900"
       >
-        <div class="text-center text-sm text-gray-600 dark:text-gray-300">
+        <div role="status" :aria-label="t('map.loading')" class="text-center text-sm text-gray-600 dark:text-gray-300">
           <svg class="mx-auto mb-2 h-8 w-8 animate-spin text-primary-500" fill="none" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />

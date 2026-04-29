@@ -308,6 +308,9 @@ async function handleSubmit() {
 
 <template>
   <form @submit.prevent="handleSubmit" class="space-y-4">
+    <p class="text-xs text-gray-600 dark:text-gray-300">
+      {{ t('a11y.requiredHint') }}
+    </p>
     <!-- Sequence number (read-only) -->
     <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
       <span class="font-medium">{{ t('qso.sequenceNumber') }}</span>
@@ -325,6 +328,8 @@ async function handleSubmit() {
       <div>
         <label for="qso-date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
           {{ t('qso.date') }}
+          <span class="text-red-600 dark:text-red-400" aria-hidden="true">*</span>
+          <span class="sr-only">{{ t('a11y.required') }}</span>
         </label>
         <input
           id="qso-date"
@@ -338,13 +343,15 @@ async function handleSubmit() {
         <div class="flex items-center justify-between">
           <label for="qso-time" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ t('qso.time') }}
+            <span class="text-red-600 dark:text-red-400" aria-hidden="true">*</span>
+            <span class="sr-only">{{ t('a11y.required') }}</span>
           </label>
           <button
             type="button"
             @click="setNow()"
             :aria-label="t('a11y.setNow')"
             :title="t('a11y.setNow')"
-            class="rounded p-0.5 text-gray-400 hover:text-primary-600 dark:hover:text-primary-400"
+            class="inline-flex h-11 w-11 items-center justify-center rounded text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
           >
             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" focusable="false">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -367,6 +374,8 @@ async function handleSubmit() {
         <div class="flex items-center justify-between">
           <label for="qso-callsign" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ t('qso.callsign') }}
+            <span class="text-red-600 dark:text-red-400" aria-hidden="true">*</span>
+            <span class="sr-only">{{ t('a11y.required') }}</span>
           </label>
           <span v-if="country" class="flex items-center gap-1 text-xs text-gray-600 dark:text-gray-300" :title="country">
             <span v-if="countryCode" class="inline-flex items-center gap-1">[{{ countryCode }}] <FlagIcon :iso2="countryCode" /></span>
@@ -550,7 +559,7 @@ async function handleSubmit() {
     <div class="flex items-center gap-4">
       <button
         type="submit"
-        class="rounded-md bg-primary-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary-500 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
+        class="rounded-md bg-primary-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary-500 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-950"
       >
         {{ editQso ? t('common.update') : t('qso.save') }}
       </button>
