@@ -4,6 +4,7 @@ import { formatUtcDateTime } from '../../utils/dateTime'
 import { calculateDistanceKm, isValidLocator } from '../../utils/locator'
 import { useOperatorStore } from '../../stores/operatorStore'
 import FlagIcon from '../common/FlagIcon.vue'
+import PropagationBadge from '../propagation/PropagationBadge.vue'
 import type { QSO, QSOSort } from '../../types/qso'
 
 const { t } = useI18n()
@@ -82,6 +83,7 @@ function qslLabel(value: string): string {
                 </template>
               </span>
             </th>
+            <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('propagation.title') }}</th>
             <th v-if="operatorStore.hasMultipleOperators" class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.operator') }}</th>
             <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.qslSent') }}</th>
             <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.qslReceived') }}</th>
@@ -114,6 +116,9 @@ function qslLabel(value: string): string {
             <td class="px-3 py-2">{{ qso.band }}</td>
             <td class="px-3 py-2">{{ qso.rstSent }}</td>
             <td class="px-3 py-2">{{ qso.rstReceived }}</td>
+            <td class="px-3 py-2">
+              <PropagationBadge :propagation="qso.propagation" compact />
+            </td>
             <td v-if="operatorStore.hasMultipleOperators" class="px-3 py-2">{{ operatorStore.operators.find(o => o.id === qso.operatorId)?.callsign ?? '' }}</td>
             <td class="px-3 py-2">{{ qslLabel(qso.qslSent) }}</td>
             <td class="px-3 py-2">{{ qslLabel(qso.qslReceived) }}</td>
@@ -136,7 +141,7 @@ function qslLabel(value: string): string {
             </td>
           </tr>
           <tr v-if="qsos.length === 0">
-            <td :colspan="operatorStore.hasMultipleOperators ? 14 : 13" class="px-3 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
+            <td :colspan="operatorStore.hasMultipleOperators ? 15 : 14" class="px-3 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
               {{ t('history.noResults') }}
             </td>
           </tr>

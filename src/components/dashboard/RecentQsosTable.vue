@@ -2,6 +2,7 @@
 import { useI18n } from 'vue-i18n'
 import { useOperatorStore } from '../../stores/operatorStore'
 import FlagIcon from '../common/FlagIcon.vue'
+import PropagationBadge from '../propagation/PropagationBadge.vue'
 import { formatUtcDateTime } from '../../utils/dateTime'
 import type { QSO } from '../../types/qso'
 
@@ -25,6 +26,7 @@ const operatorStore = useOperatorStore()
           <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.band') }}</th>
           <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.rstSent') }}</th>
           <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.rstReceived') }}</th>
+          <th class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('propagation.title') }}</th>
           <th v-if="operatorStore.hasMultipleOperators" class="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">{{ t('qso.operator') }}</th>
         </tr>
       </thead>
@@ -43,6 +45,9 @@ const operatorStore = useOperatorStore()
           <td class="px-3 py-2">{{ qso.band }}</td>
           <td class="px-3 py-2">{{ qso.rstSent }}</td>
           <td class="px-3 py-2">{{ qso.rstReceived }}</td>
+          <td class="px-3 py-2">
+            <PropagationBadge :propagation="qso.propagation" compact />
+          </td>
           <td v-if="operatorStore.hasMultipleOperators" class="px-3 py-2">{{ operatorStore.operators.find(o => o.id === qso.operatorId)?.callsign ?? '' }}</td>
         </tr>
       </tbody>

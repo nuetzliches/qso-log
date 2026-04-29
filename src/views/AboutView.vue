@@ -61,6 +61,7 @@ const { t } = useI18n()
       <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-300">{{ t('about.privacyHeading') }}</h2>
       <p class="text-sm text-gray-600 dark:text-gray-400">{{ t('about.privacyLocal') }}</p>
       <p class="text-sm text-gray-600 dark:text-gray-400">{{ t('about.privacyLookup') }}</p>
+      <p class="text-sm text-gray-600 dark:text-gray-400">{{ t('about.privacyPropagation') }}</p>
       <p class="text-sm text-gray-600 dark:text-gray-400">
         {{ t('about.privacyGitHub') }}
         <a

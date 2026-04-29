@@ -1,3 +1,5 @@
+import type { Propagation } from '../services/propagation/types'
+
 export type QslStatus = 'yes' | 'no' | 'requested'
 export type SyncStatus = 'synced' | 'pending' | 'conflict'
 
@@ -25,6 +27,7 @@ export interface QSO {
   _lastModified: number
   _syncStatus: SyncStatus
   updatedAt?: number
+  propagation?: Propagation
 }
 
 export type QSOInput = Omit<QSO, 'id' | 'uuid' | 'sequenceNumber' | '_lastModified' | '_syncStatus'>

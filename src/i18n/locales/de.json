@@ -108,7 +108,40 @@
     "callsignLookupHint": "Erfordert Internetverbindung",
     "installApp": "Als App installieren",
     "installAppHint": "QSOlog als Progressive Web App auf dem Gerät installieren.",
-    "installAppUnavailable": "Installation in diesem Browser nicht verfügbar oder die App ist bereits installiert."
+    "installAppUnavailable": "Installation in diesem Browser nicht verfügbar oder die App ist bereits installiert.",
+    "propagation": {
+      "heading": "Ausbreitungsbedingungen",
+      "toggleLabel": "Propagationsdaten von NOAA abrufen",
+      "toggleHint": "Sendet beim Speichern eines QSOs Anfragen an services.swpc.noaa.gov (USA). Default: aus.",
+      "consentTitle": "Einwilligung erforderlich",
+      "consentBody": "Zur Anzeige der Ausbreitungsbedingungen werden Sonnen- und Geomagnetik-Daten von der US-Behörde NOAA abgerufen. Dabei wird Ihre IP-Adresse in die USA übertragen. Ein angemessenes Datenschutzniveau im Sinne der DSGVO ist dort nicht garantiert; US-Behörden können auf Daten zugreifen. Es werden keine QSO-Daten übertragen. Sie können die Funktion jederzeit in den Einstellungen deaktivieren.",
+      "consentAccept": "Aktivieren",
+      "consentCancel": "Abbrechen",
+      "backfillButton": "Propagationsdaten ergänzen",
+      "backfillRunning": "Lädt … {done} / {total}",
+      "backfillDone": "Fertig: {count} QSOs aktualisiert",
+      "backfillCancel": "Abbrechen",
+      "backfillNothing": "Keine QSOs ohne Propagationsdaten gefunden",
+      "resetButton": "Propagationsdaten zurücksetzen",
+      "resetHint": "Löscht alle gespeicherten Propagationswerte und den Cache. Anschließend kann der Backfill erneut laufen.",
+      "resetDone": "Propagationsdaten gelöscht"
+    }
+  },
+  "propagation": {
+    "title": "Ausbreitungsbedingungen",
+    "noData": "Keine Propagationsdaten",
+    "sfi": {
+      "veryLow": "SFI sehr niedrig — schwache Bedingungen",
+      "low": "SFI niedrig — eingeschränkte Bedingungen",
+      "good": "SFI gut — solide HF-Bedingungen",
+      "excellent": "SFI sehr gut — höhere Bänder offen"
+    },
+    "k": {
+      "quiet": "K ruhig — geomagnetisch stabil",
+      "unsettled": "K unruhig",
+      "minor": "K = 5 — kleiner geomagnetischer Sturm",
+      "major": "K ≥ 6 — starker geomagnetischer Sturm"
+    }
   },
   "map": {
     "title": "Karte",
@@ -134,6 +167,7 @@
     "privacyHeading": "Datenschutzhinweis",
     "privacyLocal": "QSOlog speichert alle Daten ausschließlich lokal in Ihrem Browser (IndexedDB). Es werden keine personenbezogenen Daten an den Betreiber dieser Website übermittelt.",
     "privacyLookup": "Wenn Sie die optionale Rufzeichen-Abfrage über QRZ.com oder HamQTH aktivieren, werden Anfragen direkt von Ihrem Browser an den jeweiligen Drittanbieter gesendet. Es gelten die Datenschutzbestimmungen des jeweiligen Anbieters.",
+    "privacyPropagation": "Wenn Sie die optionale Anzeige der Ausbreitungsbedingungen aktivieren, werden Sonnen- und Geomagnetik-Daten direkt von Ihrem Browser bei der US-Behörde NOAA (services.swpc.noaa.gov) abgerufen. Dabei wird Ihre IP-Adresse in die USA übertragen. Für die USA besteht kein Angemessenheitsbeschluss der EU-Kommission; US-Behörden können auf Daten zugreifen. Es werden keine QSO-Daten übermittelt. Rechtsgrundlage ist Ihre ausdrückliche Einwilligung (Art. 6 Abs. 1 lit. a, Art. 49 Abs. 1 lit. a DSGVO). Sie können die Einwilligung jederzeit in den Einstellungen widerrufen.",
     "privacyGitHub": "Diese Website wird über GitHub Pages bereitgestellt. GitHub kann dabei technische Zugriffsdaten (z. B. IP-Adresse) erheben. Näheres regelt die Datenschutzerklärung von GitHub.",
     "licenseHeading": "Lizenz",
     "licenseText": "QSOlog ist freie Software unter der",

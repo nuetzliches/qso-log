@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { qsoRepository } from '../db/repositories/qsoRepository'
+import { enrichQso } from '../services/propagation/propagationService'
+import { useSettingsStore } from './settingsStore'
 import type { QSO, QSOFilters, QSOSort, QSOPagination, QSOInput } from '../types/qso'
 
 export const useQsoStore = defineStore('qsos', () => {
@@ -38,6 +40,14 @@ export const useQsoStore = defineStore('qsos', () => {
   async function addQso(input: QSOInput): Promise<number> {
     const id = await qsoRepository.add(input)
     await loadRecentQsos()
+    // Fire-and-forget: only when the user has consented.
+    const settings = useSettingsStore()
+    if (settings.propagation.enabled && settings.propagation.consent.granted && input.date) {
+      void enrichQso(id, input.date).then(() => {
+        // Refresh recent list so the propagation snapshot becomes visible
+        return loadRecentQsos()
+      })
+    }
     return id
   }
 

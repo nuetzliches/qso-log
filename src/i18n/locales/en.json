@@ -108,7 +108,40 @@
     "callsignLookupHint": "Requires internet connection",
     "installApp": "Install as app",
     "installAppHint": "Install QSOlog as a progressive web app on your device.",
-    "installAppUnavailable": "Installation not available in this browser or the app is already installed."
+    "installAppUnavailable": "Installation not available in this browser or the app is already installed.",
+    "propagation": {
+      "heading": "Propagation conditions",
+      "toggleLabel": "Fetch propagation data from NOAA",
+      "toggleHint": "Sends requests to services.swpc.noaa.gov (USA) when saving a QSO. Default: off.",
+      "consentTitle": "Consent required",
+      "consentBody": "To display propagation conditions, solar and geomagnetic data is fetched from the US agency NOAA. Your IP address is transmitted to the United States. The level of data protection is not equivalent to GDPR standards; US authorities may access the data. No QSO data is transmitted. You can disable this feature at any time in the settings.",
+      "consentAccept": "Enable",
+      "consentCancel": "Cancel",
+      "backfillButton": "Backfill propagation data",
+      "backfillRunning": "Loading … {done} / {total}",
+      "backfillDone": "Done: {count} QSOs updated",
+      "backfillCancel": "Cancel",
+      "backfillNothing": "No QSOs without propagation data found",
+      "resetButton": "Reset propagation data",
+      "resetHint": "Deletes all stored propagation values and the cache. The backfill can then be re-run.",
+      "resetDone": "Propagation data cleared"
+    }
+  },
+  "propagation": {
+    "title": "Propagation conditions",
+    "noData": "No propagation data",
+    "sfi": {
+      "veryLow": "SFI very low — weak conditions",
+      "low": "SFI low — limited conditions",
+      "good": "SFI good — solid HF conditions",
+      "excellent": "SFI excellent — high bands open"
+    },
+    "k": {
+      "quiet": "K quiet — geomagnetically stable",
+      "unsettled": "K unsettled",
+      "minor": "K = 5 — minor geomagnetic storm",
+      "major": "K ≥ 6 — major geomagnetic storm"
+    }
   },
   "map": {
     "title": "Map",
@@ -134,6 +167,7 @@
     "privacyHeading": "Privacy Notice",
     "privacyLocal": "QSOlog stores all data exclusively in your browser (IndexedDB). No personal data is transmitted to the operator of this website.",
     "privacyLookup": "If you enable the optional callsign lookup via QRZ.com or HamQTH, requests are sent directly from your browser to the respective third-party service. The privacy policies of the respective providers apply.",
+    "privacyPropagation": "If you enable the optional propagation display, solar and geomagnetic data is fetched directly from your browser from the US agency NOAA (services.swpc.noaa.gov). Your IP address is transmitted to the United States in this process. The EU Commission has not issued an adequacy decision for US authorities; US authorities may access this data. No QSO data is transmitted. Legal basis is your explicit consent (Art. 6(1)(a), Art. 49(1)(a) GDPR). You can withdraw consent at any time in the settings.",
     "privacyGitHub": "This website is hosted on GitHub Pages. GitHub may collect technical access data (e.g. IP addresses). For details, see the GitHub Privacy Statement.",
     "licenseHeading": "License",
     "licenseText": "QSOlog is free software under the",

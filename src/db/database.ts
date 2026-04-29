@@ -2,11 +2,13 @@ import Dexie, { type Table } from 'dexie'
 import type { QSO } from '../types/qso'
 import type { Operator } from '../types/operator'
 import type { Setting } from '../types/settings'
+import type { PropagationCacheEntry } from '../services/propagation/types'
 
 export class FunkLogDB extends Dexie {
   qsos!: Table<QSO, number>
   operators!: Table<Operator, number>
   settings!: Table<Setting, string>
+  propagationCache!: Table<PropagationCacheEntry, string>
 
   constructor() {
     super('funklog')
@@ -36,6 +38,14 @@ export class FunkLogDB extends Dexie {
       qsos: '++id, uuid, sequenceNumber, date, callsign, mode, band, operatorId, _syncStatus, [date+operatorId], [band+mode]',
       operators: '++id, uuid, callsign',
       settings: 'key',
+    })
+
+    // v5: Added propagation snapshot to QSO + propagationCache table (keyed by UTC hour 'YYYY-MM-DDTHH')
+    this.version(5).stores({
+      qsos: '++id, uuid, sequenceNumber, date, callsign, mode, band, operatorId, _syncStatus, [date+operatorId], [band+mode]',
+      operators: '++id, uuid, callsign',
+      settings: 'key',
+      propagationCache: 'utcHour',
     })
 
     this.qsos.hook('creating', (_primKey, obj) => {

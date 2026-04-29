@@ -43,6 +43,16 @@ export const adifStrategy: ExportStrategy = {
       fields.push(adifField('QSL_SENT', qslSentMap[qso.qslSent] ?? 'N'))
       fields.push(adifField('QSL_RCVD', qslRcvdMap[qso.qslReceived] ?? 'N'))
 
+      // Propagation snapshot — exported as user-defined fields so consumers
+      // ignoring them stay compatible. Names use the APP_QSOLOG_ prefix per ADIF.
+      if (qso.propagation) {
+        const p = qso.propagation
+        if (p.sfi !== undefined) fields.push(adifField('APP_QSOLOG_SFI', String(p.sfi)))
+        if (p.ssn !== undefined) fields.push(adifField('APP_QSOLOG_SSN', String(p.ssn)))
+        if (p.kIndex !== undefined) fields.push(adifField('APP_QSOLOG_K_INDEX', String(p.kIndex)))
+        if (p.aIndex !== undefined) fields.push(adifField('APP_QSOLOG_A_INDEX', String(p.aIndex)))
+      }
+
       fields.push('<EOR>')
       return fields.join(' ')
     })

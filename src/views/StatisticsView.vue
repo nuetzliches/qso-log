@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useStatistics } from '../composables/useStatistics'
 import { useOperatorStore } from '../stores/operatorStore'
@@ -8,19 +8,28 @@ import BandModeTab from '../components/statistics/tabs/BandModeTab.vue'
 import ActivityTab from '../components/statistics/tabs/ActivityTab.vue'
 import DxccTab from '../components/statistics/tabs/DxccTab.vue'
 import DistanceTab from '../components/statistics/tabs/DistanceTab.vue'
+import PropagationTab from '../components/statistics/tabs/PropagationTab.vue'
+import { useSettingsStore } from '../stores/settingsStore'
 
 const { t } = useI18n()
 const { qsos, loading, selectedOperatorId, loadQsos } = useStatistics()
 const operatorStore = useOperatorStore()
+const settings = useSettingsStore()
 
 const activeTab = ref(0)
 
-const tabs = [
-  { key: 'bandMode', labelKey: 'statistics.tabBandMode' },
-  { key: 'activity', labelKey: 'statistics.tabActivity' },
-  { key: 'dxcc', labelKey: 'statistics.tabDxcc' },
-  { key: 'distance', labelKey: 'statistics.tabDistance' },
-]
+const tabs = computed(() => {
+  const base = [
+    { key: 'bandMode', labelKey: 'statistics.tabBandMode' },
+    { key: 'activity', labelKey: 'statistics.tabActivity' },
+    { key: 'dxcc', labelKey: 'statistics.tabDxcc' },
+    { key: 'distance', labelKey: 'statistics.tabDistance' },
+  ]
+  if (settings.propagation.enabled) {
+    base.push({ key: 'propagation', labelKey: 'propagation.title' })
+  }
+  return base
+})
 
 onMounted(async () => {
   await operatorStore.loadOperators()
@@ -67,6 +76,7 @@ onMounted(async () => {
       <ActivityTab v-else-if="activeTab === 1" :qsos="qsos" />
       <DxccTab v-else-if="activeTab === 2" :qsos="qsos" />
       <DistanceTab v-else-if="activeTab === 3" :qsos="qsos" />
+      <PropagationTab v-else-if="activeTab === 4 && settings.propagation.enabled" :qsos="qsos" />
     </div>
   </div>
 </template>
