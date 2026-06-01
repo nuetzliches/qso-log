@@ -15,7 +15,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div v-if="operators.length === 0" class="py-8 text-center text-sm text-gray-500 dark:text-gray-400">
+  <div v-if="operators.length === 0" class="py-8 text-center text-sm text-gray-600 dark:text-gray-300">
     {{ t('operators.noOperators') }}
   </div>
 
@@ -27,7 +27,7 @@ const emit = defineEmits<{
     >
       <div>
         <span class="font-semibold text-gray-900 dark:text-white">{{ op.callsign }}</span>
-        <span class="ml-2 text-sm text-gray-500 dark:text-gray-400">{{ op.name }}</span>
+        <span class="ml-2 text-sm text-gray-600 dark:text-gray-300">{{ op.name }}</span>
       </div>
       <div class="flex gap-2">
         <button

@@ -61,4 +61,29 @@ describe('adifStrategy', () => {
     expect(adifStrategy.mimeType).toBe('application/adif')
     expect(adifStrategy.fileExtension).toBe('adi')
   })
+
+  it('includes propagation as APP_QSOLOG_* user-defined fields when present', () => {
+    const qsoWithPropagation: QSO = {
+      ...sampleQso,
+      propagation: {
+        sfi: 142,
+        ssn: 89,
+        kIndex: 3,
+        aIndex: 15,
+        source: 'live',
+        fetchedAt: '2024-03-15T14:30:00.000Z',
+      },
+    }
+    const result = adifStrategy.export([qsoWithPropagation], { stationCallsign: '' })
+    expect(result).toContain('<APP_QSOLOG_SFI:3>142')
+    expect(result).toContain('<APP_QSOLOG_SSN:2>89')
+    expect(result).toContain('<APP_QSOLOG_K_INDEX:1>3')
+    expect(result).toContain('<APP_QSOLOG_A_INDEX:2>15')
+  })
+
+  it('omits propagation fields when not present', () => {
+    const result = adifStrategy.export([sampleQso], { stationCallsign: '' })
+    expect(result).not.toContain('APP_QSOLOG_SFI')
+    expect(result).not.toContain('APP_QSOLOG_K_INDEX')
+  })
 })

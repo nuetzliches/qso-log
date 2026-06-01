@@ -90,7 +90,7 @@ function handleToggleLines() {
     <MapFilterBar v-model="filters" />
 
     <!-- Status bar -->
-    <div class="flex items-center gap-2 border-b border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-500 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-400">
+    <div class="flex items-center gap-2 border-b border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-600 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-300">
       <span v-if="isLoaded && !isLoadingData">
         {{ t('map.status', { shown: markers.length, hidden: hiddenQsos }) }}
       </span>
@@ -101,11 +101,12 @@ function handleToggleLines() {
       <div class="ml-auto flex gap-1.5">
         <button
           class="flex items-center gap-1 rounded-md bg-white px-2 py-1 text-xs font-medium text-gray-600 shadow-sm ring-1 ring-gray-200 hover:bg-gray-50 dark:bg-gray-900 dark:text-gray-300 dark:ring-gray-700 dark:hover:bg-gray-800"
+          :aria-label="t('a11y.centerMap')"
           :title="t('map.centerMap')"
           @click="handleFitBounds"
         >
           <!-- Target/center icon -->
-          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" focusable="false">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
           </svg>
           <span class="hidden sm:inline">{{ t('map.centerMap') }}</span>
@@ -116,11 +117,13 @@ function handleToggleLines() {
           :class="showLines
             ? 'bg-primary-50 text-primary-700 ring-primary-300 hover:bg-primary-100 dark:bg-primary-900/40 dark:text-primary-300 dark:ring-primary-700'
             : 'bg-white text-gray-600 ring-gray-200 hover:bg-gray-50 dark:bg-gray-900 dark:text-gray-300 dark:ring-gray-700 dark:hover:bg-gray-800'"
+          :aria-label="t('a11y.toggleConnections')"
+          :aria-pressed="showLines"
           :title="t('map.connections')"
           @click="handleToggleLines"
         >
           <!-- Line icon -->
-          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" focusable="false">
             <path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
           </svg>
           <span class="hidden sm:inline">{{ t('map.connections') }}</span>
@@ -129,14 +132,14 @@ function handleToggleLines() {
     </div>
 
     <!-- Map container (always rendered so Leaflet gets correct dimensions) -->
-    <div ref="mapContainer" class="relative flex-1 min-h-0">
+    <div ref="mapContainer" role="application" :aria-label="t('nav.map')" class="relative flex-1 min-h-0">
       <!-- Loading overlay (absolute, on top of map area) -->
       <div
         v-if="!isLoaded"
         class="absolute inset-0 z-[1000] flex items-center justify-center bg-gray-100 dark:bg-gray-900"
       >
-        <div class="text-center text-sm text-gray-500 dark:text-gray-400">
-          <svg class="mx-auto mb-2 h-8 w-8 animate-spin text-primary-500" fill="none" viewBox="0 0 24 24">
+        <div role="status" :aria-label="t('map.loading')" class="text-center text-sm text-gray-600 dark:text-gray-300">
+          <svg class="mx-auto mb-2 h-8 w-8 animate-spin text-primary-500" fill="none" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
           </svg>
@@ -150,7 +153,7 @@ function handleToggleLines() {
         class="pointer-events-none absolute inset-0 z-[1000] flex items-center justify-center"
       >
         <div class="rounded-lg bg-white/90 px-6 py-4 text-center shadow-lg dark:bg-gray-900/90">
-          <p class="text-sm text-gray-500 dark:text-gray-400">{{ t('map.emptyState') }}</p>
+          <p class="text-sm text-gray-600 dark:text-gray-300">{{ t('map.emptyState') }}</p>
         </div>
       </div>
     </div>

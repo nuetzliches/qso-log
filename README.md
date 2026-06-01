@@ -21,7 +21,9 @@ Offline-first PWA logbook for amateur radio operators.
 - **Internationalization** - German and English UI with automatic browser-language detection on first visit.
 - **Dark mode** - light, dark, or system-preference theme.
 - **PWA** - installable on desktop and mobile with home screen shortcuts and a custom install prompt.
-- **Mobile-optimized** - responsive navigation 
+- **Mobile-optimized** - responsive navigation and touch-friendly layout for phones and tablets.
+- **Dashboard** - landing page with quick stats (total QSOs, DXCC, bands, QSOs this month) and recent contacts.
+
 ## Quick Start
 
 **Prerequisites:** Node.js 18+
@@ -42,10 +44,11 @@ npm run preview
 
 ## Usage
 
-QSOlog has seven main views:
+QSOlog has eight main views:
 
 | View | Description |
 |------|-------------|
+| **Dashboard** | Landing page at `/` with quick stats (total QSOs, DXCC countries, bands worked, QSOs this month) and a list of recent contacts. |
 | **New QSO** | Log a new contact. Select mode, enter frequency (band auto-detects), callsign, RST, locator, and remarks. Common FT8/SSB/FM frequencies are available as presets. |
 | **History** | Browse, filter, and search your logged QSOs. Export to ADIF/CSV/JSON, import from files (drag & drop supported), and generate PDF reports. |
 | **Statistics** | Interactive charts and stats: band/mode distribution, activity timeline with streaks, DXCC countries, and distance analysis. Filter by operator. |
@@ -116,24 +119,26 @@ Alternatively, set a `GITHUB_TOKEN` environment variable with `contents: write` 
 
 ### Workflow
 
-Since direct commits to `main` are not allowed, every release is created from a release branch:
-
 1. Make sure `main` is up to date:
+
    ```bash
    git checkout main
    git pull
+   ```
 
-```bash
-# Interactive -- prompts for patch / minor / major
-npm run release
+2. Run release-it:
 
-# Directly bump a specific level
-npm run release -- patch
-npm run release -- minor
+   ```bash
+   # Interactive -- prompts for patch / minor / major
+   npm run release
 
-# Preview without making any changes
-npm run release -- --dry-run
-```
+   # Directly bump a specific level
+   npm run release -- patch
+   npm run release -- minor
+
+   # Preview without making any changes
+   npm run release -- --dry-run
+   ```
 
 ### What happens automatically
 

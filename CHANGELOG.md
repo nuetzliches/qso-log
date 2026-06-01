@@ -1,5 +1,32 @@
 # Changelog
 
+## [0.9.0](https://github.com/nuetzliches/qso-log/compare/v0.8.0...v0.9.0) (2026-06-01)
+
+### Features
+
+* **a11y:** phase 1 — html lang sync, aria labels, chart alternatives, reduced motion ([49c5777](https://github.com/nuetzliches/qso-log/commit/49c577702722ab7383de7b58e4b35314d26a9967))
+* **a11y:** phase 2 — contrast, form aria, table semantics, decorative SVGs ([bb04af6](https://github.com/nuetzliches/qso-log/commit/bb04af6d7eb9550172a59dbdbde2226699b2af3d))
+* **a11y:** phase 3 — tab pattern, aria-pressed, required markers, map labels ([48a00b8](https://github.com/nuetzliches/qso-log/commit/48a00b8ebe442386b98ae3aeef9476c2d579d716))
+* **dashboard:** add dashboard home view at / ([0640bf1](https://github.com/nuetzliches/qso-log/commit/0640bf1c8710c7a670b958420faa29e91d6c4f94))
+* **flags:** replace emoji flags with SVG icons for Windows compatibility ([be247f9](https://github.com/nuetzliches/qso-log/commit/be247f9fca10054f4d0fc928e0218b4157f26b0d))
+* **propagation:** correlate QSOs with NOAA solar/geomagnetic indices ([c40db3e](https://github.com/nuetzliches/qso-log/commit/c40db3e0d96222b94bae2982b6bb23fd1676162c))
+* **seo:** add Open Graph meta tags and og-image banner ([69a01f2](https://github.com/nuetzliches/qso-log/commit/69a01f20f97cf545701a93bf2fa09845b5ad5c24))
+* **validation:** add callsign validator with example suggestion ([c937a83](https://github.com/nuetzliches/qso-log/commit/c937a830200f1e0775a67a897339ae8247bec857))
+
+### Bug Fixes
+
+* **ui:** align form label rows with icon buttons ([55e3129](https://github.com/nuetzliches/qso-log/commit/55e3129e77b390fa7f0a068b1ad21a6cb735034c))
+
+### Tests
+
+* **a11y:** enable axe-core e2e scan and add a11y unit tests ([a3ceef7](https://github.com/nuetzliches/qso-log/commit/a3ceef7a1e122ac15ce21b83cb9028841aaade9c))
+
+### Documentation
+
+* add accessibility section to AGENTS.md ([3efd5bb](https://github.com/nuetzliches/qso-log/commit/3efd5bb93660d7d0653c1ad03da7b100c29ab848))
+* add AGENTS.md as shared AI assistant guide ([ad1572f](https://github.com/nuetzliches/qso-log/commit/ad1572ffcd2330846817e29e4306848c5efbf17b))
+* document dashboard view and fix release workflow markup ([96bb1ab](https://github.com/nuetzliches/qso-log/commit/96bb1ab12da56dfc2659dba82bf22adf10436a03))
+
 ## [0.8.0](https://github.com/nuetzliches/qso-log/compare/v0.7.0...v0.8.0) (2026-04-14)
 
 ### Features

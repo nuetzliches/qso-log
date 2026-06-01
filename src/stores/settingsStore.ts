@@ -2,7 +2,12 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import i18n from '../i18n'
 import { db } from '../db/database'
-import type { ThemeMode } from '../types/settings'
+import { PROPAGATION_CONSENT_VERSION, type PropagationSettings, type ThemeMode } from '../types/settings'
+
+const defaultPropagation = (): PropagationSettings => ({
+  enabled: false,
+  consent: { granted: false, version: PROPAGATION_CONSENT_VERSION },
+})
 
 export const useSettingsStore = defineStore('settings', () => {
   const locale = ref<'de' | 'en'>('en')
@@ -12,6 +17,7 @@ export const useSettingsStore = defineStore('settings', () => {
   const qrzApiKey = ref('')
   const hamqthUsername = ref('')
   const hamqthPassword = ref('')
+  const propagation = ref<PropagationSettings>(defaultPropagation())
 
   async function loadSettings() {
     const settings = await db.settings.toArray()
@@ -25,6 +31,21 @@ export const useSettingsStore = defineStore('settings', () => {
         case 'qrzApiKey': qrzApiKey.value = s.value as string; break
         case 'hamqthUsername': hamqthUsername.value = s.value as string; break
         case 'hamqthPassword': hamqthPassword.value = s.value as string; break
+        case 'propagation': {
+          const stored = s.value as PropagationSettings | undefined
+          if (stored && stored.consent) {
+            // Re-Consent erforderlich, wenn die Version sich geändert hat
+            if (stored.consent.version !== PROPAGATION_CONSENT_VERSION) {
+              propagation.value = {
+                enabled: false,
+                consent: { ...stored.consent, granted: false, version: PROPAGATION_CONSENT_VERSION },
+              }
+            } else {
+              propagation.value = stored
+            }
+          }
+          break
+        }
       }
     }
     if (!localeFromDB) {
@@ -49,7 +70,33 @@ export const useSettingsStore = defineStore('settings', () => {
       case 'qrzApiKey': qrzApiKey.value = value as string; break
       case 'hamqthUsername': hamqthUsername.value = value as string; break
       case 'hamqthPassword': hamqthPassword.value = value as string; break
+      case 'propagation': propagation.value = value as PropagationSettings; break
     }
+  }
+
+  async function grantPropagationConsent() {
+    const next: PropagationSettings = {
+      enabled: true,
+      consent: {
+        granted: true,
+        grantedAt: new Date().toISOString(),
+        version: PROPAGATION_CONSENT_VERSION,
+      },
+    }
+    await setSetting('propagation', next)
+  }
+
+  async function revokePropagationConsent() {
+    const next: PropagationSettings = {
+      enabled: false,
+      consent: {
+        ...propagation.value.consent,
+        granted: false,
+        revokedAt: new Date().toISOString(),
+        version: PROPAGATION_CONSENT_VERSION,
+      },
+    }
+    await setSetting('propagation', next)
   }
 
   function applyTheme() {
@@ -85,8 +132,11 @@ export const useSettingsStore = defineStore('settings', () => {
     qrzApiKey,
     hamqthUsername,
     hamqthPassword,
+    propagation,
     loadSettings,
     setSetting,
     applyTheme,
+    grantPropagationConsent,
+    revokePropagationConsent,
   }
 })

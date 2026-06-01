@@ -107,19 +107,19 @@ describe('lookupDxcc', () => {
 })
 
 describe('toFlagEmoji', () => {
-  it('converts DE to German flag', () => {
-    expect(toFlagEmoji('DE')).toBe('🇩🇪')
+  it('converts DE to lowercase flag code', () => {
+    expect(toFlagEmoji('DE')).toBe('de')
   })
 
-  it('converts US to US flag', () => {
-    expect(toFlagEmoji('US')).toBe('🇺🇸')
+  it('converts US to lowercase flag code', () => {
+    expect(toFlagEmoji('US')).toBe('us')
   })
 
-  it('converts GB to UK flag', () => {
-    expect(toFlagEmoji('GB')).toBe('🇬🇧')
+  it('converts GB to lowercase flag code', () => {
+    expect(toFlagEmoji('GB')).toBe('gb')
   })
 
   it('accepts lowercase input', () => {
-    expect(toFlagEmoji('de')).toBe('🇩🇪')
+    expect(toFlagEmoji('de')).toBe('de')
   })
 })

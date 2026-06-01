@@ -41,7 +41,7 @@ function handleSelect(e: Event) {
     <svg class="mb-2 h-8 w-8 text-gray-400" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
     </svg>
-    <p class="text-sm text-gray-500 dark:text-gray-400">{{ t('common.dragDropHint') }}</p>
+    <p class="text-sm text-gray-600 dark:text-gray-300">{{ t('common.dragDropHint') }}</p>
     <input ref="fileInput" type="file" class="hidden" accept=".csv,.json,.adi,.adif" aria-label="Select file" @change="handleSelect" />
   </div>
 </template>

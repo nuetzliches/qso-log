@@ -53,11 +53,14 @@ function clearFilters() {
     <!-- Toggle button (mobile) / header -->
     <div class="flex items-center gap-2 px-3 py-2">
       <button
-        class="flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium text-gray-600 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-800"
+        type="button"
+        :aria-expanded="isExpanded"
+        :aria-label="t('history.filter')"
+        class="flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium text-gray-600 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
         @click="isExpanded = !isExpanded"
       >
         <!-- Filter icon -->
-        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" focusable="false">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591L15.25 12.75v6.196a.75.75 0 0 1-1.007.708l-4.5-1.5A.75.75 0 0 1 9 17.25v-4.5L4.659 7.409A2.25 2.25 0 0 1 4 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
         </svg>
         {{ t('history.filter') }}
@@ -66,28 +69,31 @@ function clearFilters() {
           class="h-3 w-3 transition-transform"
           :class="isExpanded ? 'rotate-180' : ''"
           fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+          aria-hidden="true" focusable="false"
         >
           <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
         </svg>
       </button>
 
       <!-- Date range summary when collapsed -->
-      <span v-if="!isExpanded && (dateFrom || dateTo)" class="text-xs text-gray-500 dark:text-gray-400">
+      <span v-if="!isExpanded && (dateFrom || dateTo)" class="text-xs text-gray-600 dark:text-gray-300">
         {{ dateFrom || '…' }} – {{ dateTo || '…' }}
       </span>
-      <span v-if="!isExpanded && selectedModes.length > 0" class="text-xs text-gray-500 dark:text-gray-400">
+      <span v-if="!isExpanded && selectedModes.length > 0" class="text-xs text-gray-600 dark:text-gray-300">
         {{ selectedModes.join(', ') }}
       </span>
-      <span v-if="!isExpanded && selectedBands.length > 0" class="text-xs text-gray-500 dark:text-gray-400">
+      <span v-if="!isExpanded && selectedBands.length > 0" class="text-xs text-gray-600 dark:text-gray-300">
         {{ selectedBands.join(', ') }}
       </span>
 
       <button
         v-if="hasActiveFilters"
-        class="ml-auto text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+        type="button"
+        :aria-label="t('a11y.clearFilters')"
+        class="ml-auto text-xs text-gray-600 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-200"
         @click="clearFilters"
       >
-        ✕
+        <span aria-hidden="true">✕</span>
       </button>
     </div>
 
@@ -124,7 +130,7 @@ function clearFilters() {
             class="inline-flex cursor-pointer items-center rounded-md border px-2 py-0.5 text-xs transition-colors"
             :class="selectedModes.includes(mode)
               ? 'border-primary-500 bg-primary-50 text-primary-700 dark:bg-primary-900/50 dark:text-primary-300'
-              : 'border-gray-300 text-gray-600 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-800'"
+              : 'border-gray-300 text-gray-600 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800'"
           >
             <input :id="`map-mode-${mode}`" type="checkbox" :value="mode" v-model="selectedModes" class="sr-only" />
             {{ mode }}
@@ -143,7 +149,7 @@ function clearFilters() {
             class="inline-flex cursor-pointer items-center rounded-md border px-2 py-0.5 text-xs transition-colors"
             :class="selectedBands.includes(band)
               ? 'border-primary-500 bg-primary-50 text-primary-700 dark:bg-primary-900/50 dark:text-primary-300'
-              : 'border-gray-300 text-gray-600 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-800'"
+              : 'border-gray-300 text-gray-600 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800'"
           >
             <input :id="`map-band-${band}`" type="checkbox" :value="band" v-model="selectedBands" class="sr-only" />
             {{ band }}

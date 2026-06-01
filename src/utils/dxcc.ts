@@ -623,11 +623,9 @@ export function lookupDxcc(callsign: string): DxccResult | undefined {
 }
 
 /**
- * Convert an ISO 3166-1 alpha-2 country code to the corresponding flag emoji.
- * E.g. 'DE' → '🇩🇪'
+ * Converts ISO 3166-1 alpha-2 country code to lowercase for flag-icons CSS.
+ * E.g. 'DE' → 'de'
  */
 export function toFlagEmoji(iso2: string): string {
-  return [...iso2.toUpperCase()]
-    .map((c) => String.fromCodePoint(0x1f1e6 + c.charCodeAt(0) - 65))
-    .join('')
+  return iso2.toLowerCase()
 }

@@ -6,6 +6,7 @@ import { aggregateByCountry, countUniqueDxcc } from '../../../composables/useSta
 import { CHART_COLORS } from '../charts/useChartTheme'
 import StatCard from '../StatCard.vue'
 import BarChart from '../charts/BarChart.vue'
+import FlagIcon from '../../common/FlagIcon.vue'
 
 const { t } = useI18n()
 
@@ -19,7 +20,7 @@ const unknownCount = computed(() => props.qsos.filter((q) => !q.country).length)
 const top20 = computed(() => countries.value.slice(0, 20))
 
 const barData = computed(() => ({
-  labels: top20.value.map((c) => `${c.flag} ${c.country}`),
+  labels: top20.value.map((c) => c.country),
   datasets: [{
     label: 'QSOs',
     data: top20.value.map((c) => c.count),
@@ -34,7 +35,7 @@ const barData = computed(() => ({
       <StatCard :label="t('statistics.uniqueCountries')" :value="uniqueCount" />
       <StatCard
         :label="t('statistics.topCountry')"
-        :value="topCountry ? `${topCountry.flag} ${topCountry.country}` : '–'"
+        :value="topCountry ? topCountry.country : '–'"
         :detail="topCountry ? `${topCountry.count} QSOs` : undefined"
       />
       <StatCard :label="t('statistics.unknownCountry')" :value="unknownCount" />
@@ -54,28 +55,29 @@ const barData = computed(() => ({
       </h3>
       <div class="max-h-[400px] overflow-auto">
         <table class="w-full text-left text-sm">
+          <caption class="sr-only">{{ t('statistics.allCountries') }}</caption>
           <thead class="sticky top-0 bg-gray-50 dark:bg-gray-800">
             <tr>
-              <th class="px-4 py-2 font-medium text-gray-600 dark:text-gray-400"></th>
-              <th class="px-4 py-2 font-medium text-gray-600 dark:text-gray-400">{{ t('qso.country') }}</th>
-              <th class="px-4 py-2 text-right font-medium text-gray-600 dark:text-gray-400">QSOs</th>
-              <th class="hidden px-4 py-2 font-medium text-gray-600 dark:text-gray-400 sm:table-cell">{{ t('statistics.firstQso') }}</th>
-              <th class="hidden px-4 py-2 font-medium text-gray-600 dark:text-gray-400 sm:table-cell">{{ t('statistics.lastQso') }}</th>
+              <th scope="col" class="px-4 py-2 font-medium text-gray-600 dark:text-gray-400"></th>
+              <th scope="col" class="px-4 py-2 font-medium text-gray-600 dark:text-gray-400">{{ t('qso.country') }}</th>
+              <th scope="col" class="px-4 py-2 text-right font-medium text-gray-600 dark:text-gray-400">QSOs</th>
+              <th scope="col" class="hidden px-4 py-2 font-medium text-gray-600 dark:text-gray-400 sm:table-cell">{{ t('statistics.firstQso') }}</th>
+              <th scope="col" class="hidden px-4 py-2 font-medium text-gray-600 dark:text-gray-400 sm:table-cell">{{ t('statistics.lastQso') }}</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="c in countries" :key="c.country" class="border-t border-gray-100 dark:border-gray-800">
-              <td class="px-4 py-2">{{ c.flag }}</td>
+              <td class="px-4 py-2"><FlagIcon :iso2="c.iso2" /></td>
               <td class="whitespace-nowrap px-4 py-2 text-gray-900 dark:text-white">{{ c.country }}</td>
               <td class="px-4 py-2 text-right font-medium text-gray-900 dark:text-white">{{ c.count }}</td>
-              <td class="hidden whitespace-nowrap px-4 py-2 text-gray-500 dark:text-gray-400 sm:table-cell">{{ c.firstDate }}</td>
-              <td class="hidden whitespace-nowrap px-4 py-2 text-gray-500 dark:text-gray-400 sm:table-cell">{{ c.lastDate }}</td>
+              <td class="hidden whitespace-nowrap px-4 py-2 text-gray-600 dark:text-gray-300 sm:table-cell">{{ c.firstDate }}</td>
+              <td class="hidden whitespace-nowrap px-4 py-2 text-gray-600 dark:text-gray-300 sm:table-cell">{{ c.lastDate }}</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <p v-if="qsos.length === 0" class="text-center text-sm text-gray-500 dark:text-gray-400">{{ t('statistics.noData') }}</p>
+    <p v-if="qsos.length === 0" class="text-center text-sm text-gray-600 dark:text-gray-300">{{ t('statistics.noData') }}</p>
   </div>
 </template>

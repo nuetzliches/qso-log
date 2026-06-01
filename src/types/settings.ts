@@ -5,6 +5,20 @@ export interface Setting {
 
 export type ThemeMode = 'light' | 'dark' | 'system'
 
+export interface PropagationConsent {
+  granted: boolean
+  grantedAt?: string
+  revokedAt?: string
+  version: number
+}
+
+export interface PropagationSettings {
+  enabled: boolean
+  consent: PropagationConsent
+}
+
+export const PROPAGATION_CONSENT_VERSION = 1
+
 export interface AppSettings {
   locale: 'de' | 'en'
   theme: ThemeMode
@@ -13,4 +27,5 @@ export interface AppSettings {
   qrzApiKey: string
   hamqthUsername: string
   hamqthPassword: string
+  propagation: PropagationSettings
 }

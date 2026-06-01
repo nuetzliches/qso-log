@@ -9,11 +9,13 @@ import { useCallsignLookup } from '../../composables/useCallsignLookup'
 import { usePreviousContact } from '../../composables/usePreviousContact'
 import { nowUtcIso, formatUtcDate, formatUtcTime } from '../../utils/dateTime'
 import { getDefaultRst } from '../../utils/rst'
-import { lookupDxcc, toFlagEmoji } from '../../utils/dxcc'
+import { lookupDxcc } from '../../utils/dxcc'
+import { isValidCallsign, suggestCallsign } from '../../utils/callsign'
 import ModeSelect from './ModeSelect.vue'
 import BandSelect from './BandSelect.vue'
 import OperatorSelect from '../operators/OperatorSelect.vue'
 import LocatorInput from '../common/LocatorInput.vue'
+import FlagIcon from '../common/FlagIcon.vue'
 import { useFormDraftStore } from '../../stores/formDraftStore'
 import { useSettingsStore } from '../../stores/settingsStore'
 import type { QslStatus, QSO } from '../../types/qso'
@@ -31,6 +33,14 @@ const formDraft = useFormDraftStore()
 const settings = useSettingsStore()
 
 const savedMessage = ref(false)
+
+const callsignValidation = computed(() => {
+  const cs = callsign.value
+  if (cs.length < 3) return null          // still typing, no feedback yet
+  if (isValidCallsign(cs)) return null    // valid
+  const suggestion = suggestCallsign(cs)
+  return { suggestion }
+})
 
 // Form fields
 const date = ref(formatUtcDate(nowUtcIso()))
@@ -307,13 +317,14 @@ async function handleSubmit() {
 
 <template>
   <form @submit.prevent="handleSubmit" class="space-y-4">
-    <!-- Sequence number (read-only) -->
-    <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+    <!-- Sequence number (read-only) + required hint -->
+    <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
       <span class="font-medium">{{ t('qso.sequenceNumber') }}</span>
       <span class="rounded bg-gray-100 px-2 py-0.5 font-mono dark:bg-gray-800">{{ props.editQso ? props.editQso.sequenceNumber : nextNumber }}</span>
       <span v-if="props.editQso?.updatedAt" class="text-xs text-amber-600 dark:text-amber-400">
         {{ t('qso.updatedAt') }}: {{ new Date(props.editQso.updatedAt).toLocaleString() }}
       </span>
+      <span class="ml-auto text-xs text-gray-500 dark:text-gray-400">{{ t('a11y.requiredHint') }}</span>
     </div>
 
     <!-- Operator -->
@@ -324,6 +335,8 @@ async function handleSubmit() {
       <div>
         <label for="qso-date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
           {{ t('qso.date') }}
+          <span class="text-red-600 dark:text-red-400" aria-hidden="true">*</span>
+          <span class="sr-only">{{ t('a11y.required') }}</span>
         </label>
         <input
           id="qso-date"
@@ -337,14 +350,17 @@ async function handleSubmit() {
         <div class="flex items-center justify-between">
           <label for="qso-time" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ t('qso.time') }}
+            <span class="text-red-600 dark:text-red-400" aria-hidden="true">*</span>
+            <span class="sr-only">{{ t('a11y.required') }}</span>
           </label>
           <button
             type="button"
             @click="setNow()"
-            title="Now"
-            class="rounded p-0.5 text-gray-400 hover:text-primary-600 dark:hover:text-primary-400"
+            :aria-label="t('a11y.setNow')"
+            :title="t('a11y.setNow')"
+            class="inline-flex h-7 w-7 -my-1 items-center justify-center rounded text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
           >
-            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" focusable="false">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
             </svg>
           </button>
@@ -365,9 +381,11 @@ async function handleSubmit() {
         <div class="flex items-center justify-between">
           <label for="qso-callsign" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ t('qso.callsign') }}
+            <span class="text-red-600 dark:text-red-400" aria-hidden="true">*</span>
+            <span class="sr-only">{{ t('a11y.required') }}</span>
           </label>
-          <span v-if="country" class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400" :title="country">
-            <span v-if="countryCode">[{{ countryCode }}] {{ toFlagEmoji(countryCode) }}</span>
+          <span v-if="country" class="flex items-center gap-1 text-xs text-gray-600 dark:text-gray-300" :title="country">
+            <span v-if="countryCode" class="inline-flex items-center gap-1">[{{ countryCode }}] <FlagIcon :iso2="countryCode" /></span>
             <span v-else>{{ country }}</span>
           </span>
         </div>
@@ -377,15 +395,34 @@ async function handleSubmit() {
           type="text"
           required
           autocomplete="off"
-          class="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm uppercase shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          :aria-invalid="callsignValidation ? true : undefined"
+          aria-describedby="qso-callsign-error"
+          :class="[
+            'mt-1 w-full rounded-md border px-3 py-2 text-sm uppercase shadow-sm focus:ring-1',
+            callsignValidation
+              ? 'border-red-400 focus:border-red-500 focus:ring-red-500 dark:border-red-500'
+              : 'border-gray-300 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600',
+            'bg-white dark:bg-gray-800 dark:text-white',
+          ]"
           @input="handleCallsignInput($event)"
         />
+        <!-- Callsign validation warning -->
+        <div aria-live="polite">
+          <p v-if="callsignValidation" id="qso-callsign-error" class="mt-1 text-xs text-red-600 dark:text-red-400">
+            <span v-if="callsignValidation.suggestion">
+              {{ t('qso.callsignInvalidSuggestion', { example: callsignValidation.suggestion }) }}
+            </span>
+            <span v-else>{{ t('qso.callsignInvalid') }}</span>
+          </p>
+        </div>
         <!-- Callsign lookup info -->
-        <div v-if="lookupLoading" class="mt-1 text-xs text-gray-400">
-          Looking up...
+        <div aria-live="polite">
+          <p v-if="lookupLoading" class="mt-1 text-xs text-gray-600 dark:text-gray-300">
+            {{ t('qso.lookingUp') }}
+          </p>
         </div>
         <div
-          v-else-if="callsignInfo"
+          v-if="callsignInfo && !lookupLoading"
           class="mt-1 rounded-md bg-blue-50 px-3 py-1.5 text-xs text-blue-800 dark:bg-blue-900/30 dark:text-blue-200"
         >
           <span class="font-medium">{{ callsignInfo.name }}</span>
@@ -548,7 +585,7 @@ async function handleSubmit() {
     <div class="flex items-center gap-4">
       <button
         type="submit"
-        class="rounded-md bg-primary-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary-500 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
+        class="rounded-md bg-primary-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary-500 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-950"
       >
         {{ editQso ? t('common.update') : t('qso.save') }}
       </button>

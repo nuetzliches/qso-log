@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Line } from 'vue-chartjs'
+import { useI18n } from 'vue-i18n'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,10 +14,11 @@ import {
   Filler,
 } from 'chart.js'
 import { useChartTheme } from './useChartTheme'
+import ChartDataTable from '../../common/ChartDataTable.vue'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler)
 
-defineProps<{
+const props = defineProps<{
   chartData: {
     labels: string[]
     datasets: {
@@ -28,9 +30,15 @@ defineProps<{
     }[]
   }
   title?: string
+  labelHeader?: string
 }>()
 
+const { t } = useI18n()
 const { colors } = useChartTheme()
+
+const a11yLabel = computed(() =>
+  t('a11y.chartLineSummary', { label: props.title || props.chartData.datasets[0]?.label || '' }),
+)
 
 const options = computed(() => ({
   responsive: true,
@@ -67,7 +75,15 @@ const options = computed(() => ({
 </script>
 
 <template>
-  <div class="h-[300px]">
-    <Line :data="chartData" :options="options" />
-  </div>
+  <figure>
+    <div class="h-[300px]" role="img" :aria-label="a11yLabel">
+      <Line :data="chartData" :options="options" />
+    </div>
+    <ChartDataTable
+      :caption="a11yLabel"
+      :label-header="labelHeader ?? ''"
+      :labels="chartData.labels"
+      :datasets="chartData.datasets.map(d => ({ label: d.label, data: d.data }))"
+    />
+  </figure>
 </template>
